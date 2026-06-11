@@ -32,7 +32,7 @@
 
         /* --- Typography Hierarchy --- */
         h1, h2, h3, .monospace, .ascii-art, .receipt-content, footer {
-            font-family: lucida-grande-w1g, 'Courier New', monospace;
+            font-family: 'Consolas', 'Courier New', Courier, monospace !important;
         }
 
         .year-link, .center-prose {
@@ -62,8 +62,8 @@
             line-height: 1.1;
             letter-spacing: 0.05em;
             white-space: pre;
-            color: var(--wing-accent); /* Updated custom aesthetic accent fill */
-            text-shadow: 0 0 2px rgba(42, 42, 42, 0.05); /* Soft structural grounding */
+            color: var(--wing-accent); 
+            text-shadow: 0 0 2px rgba(42, 42, 42, 0.05); 
             opacity: 0.95;
             user-select: none;
         }
@@ -209,7 +209,7 @@
             right: -4px;
             background: none;
             border: none;
-            font-family: consolas, monospace;
+            font-family: 'Consolas', monospace;
             font-size: 0.95rem;
             color: var(--charcoal);
             cursor: pointer;
@@ -327,8 +327,7 @@
         <div class="receipt-window" id="receiptWindow">
             <div class="receipt-edge top"></div>
             <div class="receipt-scroll-area" id="scrollContainer">
-                <div class="receipt-content" id="receiptContent">
-                    </div>
+                <div class="receipt-content" id="receiptContent"></div>
             </div>
             <div class="receipt-edge bottom"></div>
         </div>
@@ -339,7 +338,6 @@
     </footer>
 
     <script>
-        // Media Library Data Engine (Books & Cinematic Curations)
         const archiveData = {
             2022: {
                 id: "B-2209",
@@ -396,72 +394,71 @@
                 id: "M-2606",
                 type: "TEXTS",
                 items: [
-{ title: "금각사", creator: "미시마 유키오" },
-{ title: "나의 곰", creator: "메리언 엥겔" },
-{ title: "Main Street", creator: "Sinclair Lewis" },
-{ title: "Naked", creator: "David Sedaris" },
-{ title: "영화의 맨살: 하스미 시게히코 영화비평선", creator: "하스미 시게히코" },
-{ title: "The Heart’s Invisible Furies", creator: "John Boyne" },
-{ title: "Vernon God Little", creator: "DBC Pierre" },
-{ title: "The Go-Between", creator: "L. P. Hartley" },
-{ title: "The Narrow Road to the Deep North", creator: "Richard Flanagan" },
-{ title: "Orbital", creator: "Samantha Harvey" },
-{ title: "The Children Act", creator: "Ian McEwan" },
-{ title: "Night", creator: "Elie Wiesel" },
-{ title: "Lincoln in the Bardo", creator: "George Saunders" },
-{ title: "Memoirs of Hadrian", creator: "Marguerite Yourcenar" },
-{ title: "Madonna in a Fur Coat", creator: "Sabahattin Ali" },
-{ title: "Brooklyn", creator: "Colm Tóibín" },
-{ title: "The Pillowman", creator: "Martin McDonagh" },
-{ title: "The Banshees of Inisherin", creator: "Martin McDonagh" },
-{ title: "Água Viva", creator: "Clarice Lispector/tr. Stefan Tobler" },
-{ title: "The Kites", creator: "Romain Gary" },
-{ title: "사이클로노피디아: 작자미상의 자료들을 엮음", creator: "레자 네가레스타니/윤원화 역" },
-{ title: "Drive Your Plow Over the Bones of the Dead", creator: "Olga Tokarezuk/tr. Antonia Lloyd-Jones" },
-{ title: "Having and Being Had", creator: "Eula Biss" },
-{ title: "Chess", creator: "Stefan Zweig/tr. Anthea Bell" },
-{ title: "A Behanding in Spokane", creator: "Martin McDonagh" },
-{ title: "A Swim in a Pond in the Rain", creator: "George Saunders" },
-{ title: "Cute Accelerationism", creator: "Amy Ireland, Maya B. Kronic" },
-{ title: "Flesh", creator: "David Szalay" },
-{ title: "Capitalist Realism: Is There No Alternative?", creator: "Mark Fisher" },
-{ title: "Translations", creator: "Brian Friel" },
-{ title: "21세기 사상의 최전선", creator: "김종갑 외" },
-{ title: "K-Punk: Music", creator: "Mark Fisher" },
-{ title: "랭스로 되돌아가다", creator: "디디에 에리봉/이상길 역" },
-{ title: "룰루", creator: "프랑크 베데킨트/이재진 역" },
-{ title: "A Good Man Is Hard to Find", creator: "Flannery O’Connor" },
-{ title: "개인적인 체험", creator: "오에 겐자부로/서은혜 역" },
-{ title: "눈뜨는 봄", creator: "프랑크 베데킨트/김미란 역" },
-{ title: "Object-Oriented Ontology: A New Theory of Everything", creator: "Graham Harman" },
-{ title: "Look Back in Anger", creator: "John Osborne" },
-{ title: "대머리 여가수 - 수업 - 의자", creator: "외젠 이오네스코/오세곤 역/민음사" },
-{ title: "어느 아이 이야기", creator: "김안나/최윤영 역" },
-{ title: "유진 오닐 단막극선", creator: "유진 오닐/이근삼 역" },
-{ title: "엘리펀트 송", creator: "니컬러스 빌런/주하영 역" },
-{ title: "A Horse Walks into a Bar", creator: "David Grossman/tr. Jessica Cohen" }
-
+                    { title: "금각사", creator: "미시마 유키오" },
+                    { title: "나의 곰", creator: "메리언 엥겔" },
+                    { title: "Main Street", creator: "Sinclair Lewis" },
+                    { title: "Naked", creator: "David Sedaris" },
+                    { title: "영화의 맨살: 하스미 시게히코 영화비평선", creator: "하스미 시게히코" },
+                    { title: "The Heart’s Invisible Furies", creator: "John Boyne" },
+                    { title: "Vernon God Little", creator: "DBC Pierre" },
+                    { title: "The Go-Between", creator: "L. P. Hartley" },
+                    { title: "The Narrow Road to the Deep North", creator: "Richard Flanagan" },
+                    { title: "Orbital", creator: "Samantha Harvey" },
+                    { title: "The Children Act", creator: "Ian McEwan" },
+                    { title: "Night", creator: "Elie Wiesel" },
+                    { title: "Lincoln in the Bardo", creator: "George Saunders" },
+                    { title: "Memoirs of Hadrian", creator: "Marguerite Yourcenar" },
+                    { title: "Madonna in a Fur Coat", creator: "Sabahattin Ali" },
+                    { title: "Brooklyn", creator: "Colm Tóibín" },
+                    { title: "The Pillowman", creator: "Martin McDonagh" },
+                    { title: "The Banshees of Inisherin", creator: "Martin McDonagh" },
+                    { title: "Água Viva", creator: "Clarice Lispector/tr. Stefan Tobler" },
+                    { title: "The Kites", creator: "Romain Gary" },
+                    { title: "사이클로노피디아: 작자미상의 자료들을 엮음", creator: "레자 네가레스타니/윤원화 역" },
+                    { title: "Drive Your Plow Over the Bones of the Dead", creator: "Olga Tokarezuk/tr. Antonia Lloyd-Jones" },
+                    { title: "Having and Being Had", creator: "Eula Biss" },
+                    { title: "Chess", creator: "Stefan Zweig/tr. Anthea Bell" },
+                    { title: "A Behanding in Spokane", creator: "Martin McDonagh" },
+                    { title: "A Swim in a Pond in the Rain", creator: "George Saunders" },
+                    { title: "Cute Accelerationism", creator: "Amy Ireland, Maya B. Kronic" },
+                    { title: "Flesh", creator: "David Szalay" },
+                    { title: "Capitalist Realism: Is There No Alternative?", creator: "Mark Fisher" },
+                    { title: "Translations", creator: "Brian Friel" },
+                    { title: "21세기 사상의 최전선", creator: "김종갑 외" },
+                    { title: "K-Punk: Music", creator: "Mark Fisher" },
+                    { title: "랭스로 되돌아가다", creator: "디디에 에리봉/이상길 역" },
+                    { title: "룰루", creator: "프랑크 베데킨트/이재진 역" },
+                    { title: "A Good Man Is Hard to Find", creator: "Flannery O’Connor" },
+                    { title: "개인적인 체험", creator: "오에 겐자부로/서은혜 역" },
+                    { title: "눈뜨는 봄", creator: "프랑크 베데킨트/김미란 역" },
+                    { title: "Object-Oriented Ontology: A New Theory of Everything", creator: "Graham Harman" },
+                    { title: "Look Back in Anger", creator: "John Osborne" },
+                    { title: "대머리 여가수 - 수업 - 의자", creator: "외젠 이오네스코/오세곤 역/민음사" },
+                    { title: "어느 아이 이야기", creator: "김안나/최윤영 역" },
+                    { title: "유진 오닐 단막극선", creator: "유진 오닐/이근삼 역" },
+                    { title: "엘리펀트 송", creator: "니컬러스 빌런/주하영 역" },
+                    { title: "A Horse Walks into a Bar", creator: "David Grossman/tr. Jessica Cohen" }
                 ],
                 footer: "On my knees I hoped you’d love me too. I would run till I feel the thrill of long ago. Now my inspiration but it won’t last and we’ll be just a photograph. I’ve forgotten you then? I can’t sleep, Blue Eyes, if I don’t have you. Do I love her? I love you I love you many splendored thing. Can’t even eat. Jelly on my mind back home. ‘Twas good bye deep in the true love. We’ll never meet again, darling, in my fashion. <i>(William Burroughs, The Ticket That Exploded)</i>"
             }
         };
 
-        // Anti-overlapping position generator matrix (Accounts for center prose block bounds too)
         function scatterLinks() {
             const links = document.querySelectorAll('.year-link');
             const centerProse = document.getElementById('centerProse');
             const placedElements = [];
 
-            // Add center text boundaries to exclusion map to prevent year overlaps
             if (centerProse) {
                 const proseRect = centerProse.getBoundingClientRect();
-                placedElements.push({
-                    x: proseRect.left,
-                    y: proseRect.top,
-                    width: proseRect.width,
-                    height: proseRect.height,
-                    isProse: true
-                });
+                if (proseRect.width > 0 && proseRect.height > 0) {
+                    placedElements.push({
+                        x: proseRect.left,
+                        y: proseRect.top,
+                        width: proseRect.width,
+                        height: proseRect.height,
+                        isProse: true
+                    });
+                }
             }
 
             links.forEach(link => {
@@ -469,20 +466,19 @@
                 let validPosition = false;
                 let x, y, width, height;
 
-                width = link.offsetWidth || 180;
-                height = link.offsetHeight || 44;
+                width = link.offsetWidth || 140;
+                height = link.offsetHeight || 40;
 
-                while (!validPosition && attempts < 300) {
+                while (!validPosition && attempts < 400) {
                     x = Math.floor(Math.random() * (window.innerWidth - width - 60)) + 30;
-                    y = Math.floor(Math.random() * (window.innerHeight - height - 120)) + 50;
+                    y = Math.floor(Math.random() * (window.innerHeight - height - 140)) + 50;
 
                     validPosition = true;
 
                     for (let i = 0; i < placedElements.length; i++) {
                         const existing = placedElements[i];
-                        // Larger separation padding when checking against the central paragraph block
-                        const horizontalBuffer = existing.isProse ? 40 : 25; 
-                        const verticalBuffer = existing.isProse ? 35 : 20;
+                        const horizontalBuffer = existing.isProse ? 35 : 20;
+                        const verticalBuffer = existing.isProse ? 30 : 15;
 
                         if (
                             x < existing.x + existing.width + horizontalBuffer &&
@@ -503,13 +499,10 @@
             });
         }
 
-        // Runtime Interaction Listeners
         document.querySelectorAll('.year-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 const numericYear = this.getAttribute('data-numeric');
-                
                 scatterLinks();
-
                 setTimeout(() => {
                     buildAndShowReceipt(numericYear);
                 }, 180);
@@ -575,10 +568,10 @@
             }, 350);
         }
 
-        // Initialize Layout Systems
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(scatterLinks, 50);
-        });
+        // Run when window asset tree is structurally absolute
+        window.onload = function() {
+            scatterLinks();
+        };
         window.addEventListener('resize', scatterLinks);
     </script>
 </body>
