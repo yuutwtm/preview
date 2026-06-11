@@ -29,41 +29,35 @@
         }
 
         /* --- Typography Hierarchy --- */
-        h1, h2, h3, .monospace, .ascii-art, .year-link, .receipt-content {
+        h1, h2, h3, .monospace, .ascii-art, .year-link, .receipt-content, footer {
             font-family: 'Consolas', 'Courier New', Courier, monospace;
         }
 
-        /* --- Layout Structures --- */
-        .desktop-bg-canvas {
+        /* --- Fluid Vector-Scale ASCII Layout --- */
+        .wings-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 96vw; /* Expanded from 90vw to structural limits */
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 4%;
             pointer-events: none;
             z-index: 1;
         }
 
-        .mobile-layout {
-            display: none;
-        }
-
-        /* --- High-Fidelity ASCII Art --- */
         .ascii-art {
-            font-size: 11px;
-            line-height: 1.15;
-            letter-spacing: 1px;
+            font-size: 1.35vw; /* Increased from 1.1vw to significantly amplify the asset scale on desktop */
+            line-height: 1.1;
+            letter-spacing: 0.05em;
             white-space: pre;
             color: var(--charcoal);
             opacity: 0.85;
             user-select: none;
         }
 
-        /* --- Dashboard Scatter Navigation --- */
+        /* --- Dashboard Scatter Navigation (Cross-Platform) --- */
         .nav-container {
             position: absolute;
             top: 0;
@@ -81,8 +75,10 @@
             color: var(--charcoal);
             font-size: 1.35rem;
             font-weight: bold;
-            padding: 10px;
+            padding: 12px;
             cursor: pointer;
+            background: transparent;
+            border: none;
             transition: color 0.2s ease, transform 0.1s ease;
             user-select: none;
         }
@@ -168,19 +164,48 @@
         }
 
         .receipt-header {
+            position: relative;
             text-align: center;
             border-bottom: 1px dashed var(--charcoal);
             padding-bottom: 14px;
             margin-bottom: 14px;
         }
 
-        .receipt-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
+        .receipt-ui-close {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: none;
+            border: none;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+            color: var(--charcoal);
+            cursor: pointer;
+            padding: 4px;
         }
 
-        .receipt-close-btn {
+        .receipt-ui-close:hover {
+            color: #7B68EE;
+        }
+
+        .receipt-row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 12px;
+        }
+
+        .item-title {
+            font-weight: bold;
+        }
+
+        .item-creator {
+            font-size: 0.75rem;
+            text-align: right;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        .receipt-close-footer {
             display: block;
             width: 100%;
             background: none;
@@ -192,54 +217,35 @@
             text-transform: uppercase;
             cursor: pointer;
             color: var(--charcoal);
-            transition: background 0.2s;
         }
 
-        .receipt-close-btn:hover {
-            background: rgba(0, 0, 0, 0.03);
+        .receipt-close-footer:hover {
+            background: rgba(0, 0, 0, 0.02);
         }
 
-        /* --- Responsive Viewport Matrix (Mobile) --- */
-        @media (max-width: 868px) {
-            body, html {
-                overflow: auto;
-            }
-            .desktop-bg-canvas {
-                display: none;
-            }
-            .nav-container {
-                position: relative;
-                height: auto;
-                width: 100%;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 16px;
-                padding: 30px 10px;
+        /* --- Footer Matrix --- */
+        footer {
+            position: absolute;
+            bottom: 16px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* --- Mobile Responsive Rules --- */
+        @media (max-width: 768px) {
+            .ascii-art {
+                font-size: 1.8vw; /* Preserved precisely as requested */
             }
             .year-link {
-                position: static !important;
-                font-size: 1.15rem;
-                padding: 6px 12px;
-                background: rgba(255, 255, 255, 0.4);
-                border-radius: 4px;
-                border: 1px solid rgba(0,0,0,0.05);
-            }
-            .mobile-layout {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                padding-top: 40px;
-            }
-            .mobile-layout .ascii-art {
-                font-size: 7px;
-                line-height: 1.1;
-                letter-spacing: 0.5px;
-                margin-bottom: 24px;
+                font-size: 1.1rem;
             }
             .receipt-window {
-                width: 90%;
+                width: 88%;
                 max-height: 85%;
             }
         }
@@ -247,7 +253,7 @@
 </head>
 <body>
 
-    <div class="desktop-bg-canvas">
+    <div class="wings-container">
         <div class="ascii-art">⠲⢒⠦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠙⢦⡀⠀⠉⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠇⣪⠟⢦⣀⠀⠀⣈⠚⠦⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -258,7 +264,7 @@
 ⠀⠀⠀⠀⠀⠘⢤⣀⠀⠉⠉⠉⠑⠒⠒⠭⠥⣯⣙⠉⡏⡲⣷⣈⠸⣇⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠅⠭⠴⠤⠤⠤⠤⣅⣉⣏⢖⠭⢎⣍⣟⡾⢠⠁⠚⠤⣀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠚⠴⣄⣀⣀⣀⣀⢐⠭⠿⣉⣞⣾⡿⢼⣟⣿⣄⣢⣏⠻⣺⢖⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠦⣀⣀⣀⣒⣒⠧⡛⡷⣽⣟⣮⢾⣏⢏⛛⢿⢟⣽⢼⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠦⣀⣀⣀⣒⣒⠧⡛⡷⣽⣟⣮⢾⣏⢏⠽⢿⢟⣽⢼⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢄⠑⠢⠑⢄⡜⣳⢻⠼⣟⢱⢹⣻⣯⢻⢹⣹⢏⡗⣜
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠸⠤⢤⣶⠜⠥⣆⢍⡝⡿⢒⢻⢻⣻⢷⣫⠆⢎⣪
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠆⠼⠦⠙⢇⢳⣧⢏⠀⣸⠘⠇⢳⠦
@@ -268,7 +274,7 @@
         <div class="ascii-art">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠴⠒⢲
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡤⠖⠉⠀⢀⡴⠋
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠴⠚⣁⠀⠀⣀⡴⠟⣪⠇
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠴⠚⣉⠤⢒⣩⠴⠒⠉⢁⡠⣚⢥⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠴⠚⣉⠤⢒⣩⠴⠒⠉⢁⡠⣚⢥⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣖⠪⠭⠈⣉⠽⣐⠮⢕⣊⡤⠤⠒⠋⢉⡤⠊⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⠏⡰⢅⣖⡲⠾⠍⣩⢯⣒⣋⠥⢤⣒⠠⠤⠐⢛⡶⠂⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡏⠀⣹⢥⡗⠶⠌⣉⠯⠔⣒⣊⠩⠁⠀⣀⣠⣖⣏⠀⠀⠀
@@ -281,17 +287,6 @@
 ⠀⠘⠦⢞⡇⢪⠇⠘⣸⠀⡗⣧⢳⢸⠙⠦⠼⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠈⠧⠾⡄⣠⠋⢧⣠⠎⠣⡼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</div>
-    </div>
-
-    <div class="mobile-layout">
-        <div class="ascii-art">⠀⠀⠀⠀⠀⠀⠀⠀⢀⡤⠖⠉⠀⢀⡴⠋⠀⠀⠙⢦⡀⠀⠉⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢀⣠⠴⠚⣁⠀⠀⣀⡴⠟⣪⠇⠀⠀⠀⠇⣪⠟⢦⣀⠀⠀⣈⠚⠦⣄⣀⠀⠀⠀⠀
-⣀⣤⣖⠪⠭⠈⣉⠽⣐⠮⢕⣊⡤⠤⠒⠋⠀⠀⠀⠉⠒⠤⢤⣊⠕⢎⠪⣗⠉⠭⠪⣖⣤⣀⠀
-⠀⢰⡏⠀⣹⢥⡗⠶⠌⣉⠯⠔⣒⣊⠩⠁⠀⠀⠀⠀⠀⠩⣊⣒⠔⠯⣉⠌⠶⡗⢥⣹⠀⢰⡏
-⠀⠀⢀⡤⠚⡁⢠⡾⣟⣍⡎⠭⢖⣏⣉⡥⠀⠀⠀⠀⠀⣅⣉⣏⢖⠭⢎⣍⣟⡾⢠⠁⠚⠤⣀
-⠀⠀⡼⣽⣟⡟⢿⢛⣎⡏⣾⢮⣟⣽⡷⡛⠀⠀⠀⠀⠀⡛⡷⣽⣟⣮⢾⣏⢏⛛⢿⢟⣽⢼⠀
-⠀⠀⢸⣪⡎⡰⣫⢷⣻⢳⢻⠒⡿⡝⡍⣆⠀⠀⠀⠀⠀⣆⢍⡝⡿⢒⢻⢻⣻⢷⣫⠆⢎⣪⠀
-⠀⠀⠀⠈⠧⠾⡄⣠⠋⢧⣠⠎⠣⡼⠀⠀⠀⠀⠀⠀⠀⠀⠣⡼⠦⠙⢇⢳⣧⢏⠀⣸⠘⠇⠀</div>
     </div>
 
     <nav class="nav-container" id="navContainer">
@@ -309,103 +304,97 @@
                 <div class="receipt-content" id="receiptContent">
                     </div>
             </div>
-            <button class="receipt-close-btn" onclick="closeReceipt()">[ Close Terminal ]</button>
+            <button class="receipt-close-footer" onclick="closeReceipt()">[ Close Archive ]</button>
             <div class="receipt-edge bottom"></div>
         </div>
     </div>
 
+    <footer>
+        &copy; 2026 INDEX ARCHIVE // ALL RIGHTS RESERVED CO-01
+    </footer>
+
     <script>
-        // Archive Database Engine
+        // Media Library Data Engine (Books & Cinematic Curations)
         const archiveData = {
             2022: {
-                id: "0094-22",
-                title: "Inception & Overdrive",
+                id: "B-2209",
+                type: "READING LOG",
                 items: [
-                    { desc: "System Initialization", val: "SUCCESS" },
-                    { desc: "Root Directory Setup", val: "100%" },
-                    { desc: "Corrupted Memory Fragments", val: "08 Items" },
-                    { desc: "Late Night Syntax Cascades", val: "420 Hrs" }
+                    { title: "No Longer Human", creator: "Osamu Dazai" },
+                    { title: "Neuromancer", creator: "William Gibson" },
+                    { title: "Kafka on the Shore", creator: "Haruki Murakami" },
+                    { title: "Simulacra and Simulation", creator: "Jean Baudrillard" }
                 ],
-                footer: "First node anchored safely in the digital ether."
+                footer: "Data logs capture early ideological foundations."
             },
             2023: {
-                id: "1021-23",
-                title: "Hyper-Link Horizons",
+                id: "F-2311",
+                type: "CINEMA REEL",
                 items: [
-                    { desc: "Sub-optimal Protocols", val: "PURGED" },
-                    { desc: "Emotional Bandwidth Load", val: "94.2%" },
-                    { desc: "Aesthetic Iterations", val: "14 Units" },
-                    { desc: "Coffee-to-Code Conversion", val: "1.2K L" }
+                    { title: "Chungking Express", creator: "Wong Kar-wai" },
+                    { title: "Blade Runner 2049", creator: "Denis Villeneuve" },
+                    { title: "Perfect Blue", creator: "Satoshi Kon" },
+                    { title: "Neon Genesis Evangelion", creator: "Hideaki Anno" }
                 ],
-                footer: "Bandwidth exceeded. Signals stabilization active."
+                footer: "Visual syntax processed. High aesthetic saturation."
             },
             2024: {
-                id: "3044-24",
-                title: "The Static Era",
+                id: "B-2404",
+                type: "READING LOG",
                 items: [
-                    { desc: "White Noise Saturation", val: "HIGH" },
-                    { desc: "Decentralized Archives", val: "3 Active" },
-                    { desc: "UI Reconfiguration Phase", val: "DONE" },
-                    { desc: "Midnight Terminal Sessions", val: "88 Nights" }
+                    { title: "Do Androids Dream of Electric Sheep?", creator: "Philip K. Dick" },
+                    { title: "The Crying of Lot 49", creator: "Thomas Pynchon" },
+                    { title: "Dune", creator: "Frank Herbert" }
                 ],
-                footer: "The signal remains stable amidst the static."
+                footer: "Literary parameters successfully cached inside the system."
             },
             2025: {
-                id: "4401-25",
-                title: "Neon Restructuring",
+                id: "F-2501",
+                type: "CINEMA REEL",
                 items: [
-                    { desc: "Vector Paths Redrawn", val: "1,024 Px" },
-                    { desc: "Database Schema Migrated", val: "V2.0.1" },
-                    { desc: "Cached Intentions Cleared", val: "7.4 GB" },
-                    { desc: "Systemic Core Integrity", val: "OPTIMAL" }
+                    { title: "Fallen Angels", creator: "Wong Kar-wai" },
+                    { title: "Paprika", creator: "Satoshi Kon" },
+                    { title: "Metropolis", creator: "Rintaro" },
+                    { title: "Ghost in the Shell", creator: "Mamoru Oshii" }
                 ],
-                footer: "Refining the structural noise into clear metrics."
+                footer: "Cybernetic visual frameworks fully integrated."
             },
             2026: {
-                id: "9982-26",
-                title: "Present Continuum",
+                id: "M-2606",
+                type: "CURRENT SELECTIONS",
                 items: [
-                    { desc: "Current Epoch Analysis", val: "ACTIVE" },
-                    { desc: "Temporal Coordinates", val: "2026.06" },
-                    { desc: "Unwritten Data Streams", val: "PENDING" },
-                    { desc: "Total System Sync Rate", val: "99.98%" }
+                    { title: "The Dispossessed", creator: "Ursula K. Le Guin" },
+                    { title: "Stalker", creator: "Andrei Tarkovsky" },
+                    { title: "Cruel Angel Thesis Structure", creator: "Lab Analysis" }
                 ],
-                footer: "The current interface loop is executing perfectly."
+                footer: "Active evaluation loop continuous. Current coordinate active."
             }
         };
 
-        // Initialize Coordinates for Desktop Environment
+        // Absolute Coordinates Engine for Cross-Platform Random Layouts
         function positionLinksRandomly() {
-            if (window.innerWidth <= 868) return; // Prevent scatter logic overrides on mobile viewports
-
             const links = document.querySelectorAll('.year-link');
             links.forEach(link => {
-                const randomX = Math.floor(Math.random() * 70) + 15; // Boundaries safely within viewing range
-                const randomY = Math.floor(Math.random() * 70) + 15;
+                const randomX = Math.floor(Math.random() * 72) + 12; 
+                const randomY = Math.floor(Math.random() * 65) + 20; 
                 link.style.left = `${randomX}%`;
                 link.style.top = `${randomY}%`;
             });
         }
 
-        // Execution Matrix on Interaction
+        // Runtime Event Listeners
         document.querySelectorAll('.year-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 const selectedYear = this.getAttribute('data-year');
                 
-                if (window.innerWidth > 868) {
-                    // 1. Relocate trigger element dynamically 
-                    const randomX = Math.floor(Math.random() * 70) + 15;
-                    const randomY = Math.floor(Math.random() * 70) + 15;
-                    this.style.left = `${randomX}%`;
-                    this.style.top = `${randomY}%`;
+                const randomX = Math.floor(Math.random() * 72) + 12;
+                const randomY = Math.floor(Math.random() * 65) + 20;
+                this.style.left = `${randomX}%`;
+                this.style.top = `${randomY}%`;
 
-                    // 2. Small visual delay to simulate calculation step
-                    setTimeout(() => {
-                        buildAndShowReceipt(selectedYear);
-                    }, 250);
-                } else {
+                setTimeout(() => {
                     buildAndShowReceipt(selectedYear);
-                }
+                }, 180);
             });
         });
 
@@ -420,29 +409,30 @@
             data.items.forEach(item => {
                 itemsHTML += `
                     <div class="receipt-row">
-                        <span>${item.desc}</span>
-                        <span>${item.val}</span>
+                        <span class="item-title">> ${item.title}</span>
+                        <span class="item-creator">${item.creator}</span>
                     </div>
                 `;
             });
 
             const htmlContent = `
                 <div class="receipt-header">
-                    <h3>// DIGITAL ARCHIVE //</h3>
-                    <p style="font-size: 0.75rem; margin-top: 4px;">TERM-ID: ${data.id}</p>
-                    <p style="font-size: 0.75rem;">TS: ${timestamp}</p>
+                    <button class="receipt-ui-close" onclick="closeReceipt()">[x]</button>
+                    <h3>// SYSTEM ARCHIVE //</h3>
+                    <p style="font-size: 0.72rem; margin-top: 4px;">REF-ID: ${data.id}</p>
+                    <p style="font-size: 0.72rem;">DATE: ${timestamp}</p>
                 </div>
-                <div style="margin-bottom: 14px; font-weight: bold; text-align: center;">
-                    OBJECTIVE: ${data.title}
+                <div style="margin-bottom: 16px; font-weight: bold; text-align: center; letter-spacing: 1px;">
+                    LOG TYPE: ${data.type}
                 </div>
-                <div style="border-bottom: 1px dashed var(--charcoal); padding-bottom: 10px; margin-bottom: 14px;">
+                <div style="border-bottom: 1px dashed var(--charcoal); padding-bottom: 6px; margin-bottom: 14px;">
                     ${itemsHTML}
                 </div>
-                <p style="font-size: 0.75rem; text-align: center; font-style: italic; line-height: 1.4;">
+                <p style="font-size: 0.75rem; text-align: center; font-style: italic; line-height: 1.4; padding: 0 4px;">
                     "${data.footer}"
                 </p>
-                <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; letter-spacing: 2px;">
-                    *** THANK YOU FOR VISITING ***
+                <div style="text-align: center; margin-top: 24px; font-size: 0.65rem; letter-spacing: 2px; opacity: 0.7;">
+                    --- VERIFICATION COMPLETE ---
                 </div>
             `;
 
@@ -452,7 +442,6 @@
             const windowEl = document.getElementById('receiptWindow');
             
             overlay.style.display = 'flex';
-            // Force browser layout pass before adding transition triggers
             windowEl.offsetHeight; 
             windowEl.classList.add('spill-open');
         }
@@ -467,7 +456,7 @@
             }, 350);
         }
 
-        // Initialize Runtime Core
+        // Initialize Engine Systems
         window.addEventListener('DOMContentLoaded', positionLinksRandomly);
         window.addEventListener('resize', positionLinksRandomly);
     </script>
