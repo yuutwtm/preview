@@ -16,6 +16,7 @@
             --charcoal: #2A2A2A;
             --white: #FFFFFF;
             --receipt-bg: #FAFAFA;
+            --wing-accent: #FFFBC6;
         }
 
         body, html {
@@ -33,8 +34,11 @@
             font-family: 'Consolas', 'Courier New', Courier, monospace;
         }
 
-        .year-link {
+        .year-link, .center-prose {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .year-link {
             text-transform: lowercase;
         }
 
@@ -57,8 +61,27 @@
             line-height: 1.1;
             letter-spacing: 0.05em;
             white-space: pre;
+            color: var(--wing-accent); /* Updated custom aesthetic accent fill */
+            text-shadow: 0 0 2px rgba(42, 42, 42, 0.05); /* Soft structural grounding */
+            opacity: 0.95;
+            user-select: none;
+        }
+
+        /* --- Center Screen Prose Block --- */
+        .center-prose {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            letter-spacing: 0.01em;
             color: var(--charcoal);
             opacity: 0.85;
+            z-index: 5;
+            pointer-events: none;
             user-select: none;
         }
 
@@ -230,13 +253,17 @@
         @media (max-width: 768px) {
             .wings-container {
                 top: 50%;
-                transform: translate(-50%, -50%); /* Centered vertically precisely on mobile viewports */
+                transform: translate(-50%, -50%);
             }
             .ascii-art {
                 font-size: 1.8vw;
             }
             .year-link {
                 font-size: 1.05rem;
+            }
+            .center-prose {
+                width: 220px;
+                font-size: 0.75rem;
             }
             .receipt-window {
                 width: 88%;
@@ -281,6 +308,10 @@
 ⠀⠘⠦⢞⡇⢪⠇⠘⣸⠀⡗⣧⢳⢸⠙⠦⠼⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠈⠧⠾⡄⣠⠋⢧⣠⠎⠣⡼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</div>
+    </div>
+
+    <div class="center-prose" id="centerProse">
+        a sensory collection of curated fragments, literary anchors, and temporal frames tracking digital migration over lines of code.
     </div>
 
     <nav class="nav-container" id="navContainer">
@@ -374,32 +405,43 @@
             }
         };
 
-        // Anti-overlapping position generator matrix
+        // Anti-overlapping position generator matrix (Accounts for center prose block bounds too)
         function scatterLinks() {
             const links = document.querySelectorAll('.year-link');
+            const centerProse = document.getElementById('centerProse');
             const placedElements = [];
+
+            // Add center text boundaries to exclusion map to prevent year overlaps
+            if (centerProse) {
+                const proseRect = centerProse.getBoundingClientRect();
+                placedElements.push({
+                    x: proseRect.left,
+                    y: proseRect.top,
+                    width: proseRect.width,
+                    height: proseRect.height,
+                    isProse: true
+                });
+            }
 
             links.forEach(link => {
                 let attempts = 0;
                 let validPosition = false;
                 let x, y, width, height;
 
-                // Simple dimension estimation before DOM placement to avoid collisions
                 width = link.offsetWidth || 180;
                 height = link.offsetHeight || 44;
 
                 while (!validPosition && attempts < 300) {
-                    // Coordinates bounded safe inside view matrix thresholds
                     x = Math.floor(Math.random() * (window.innerWidth - width - 60)) + 30;
-                    y = Math.floor(Math.random() * (window.innerHeight - height - 100)) + 40;
+                    y = Math.floor(Math.random() * (window.innerHeight - height - 120)) + 50;
 
                     validPosition = true;
 
-                    // Collision checking loop
                     for (let i = 0; i < placedElements.length; i++) {
                         const existing = placedElements[i];
-                        const horizontalBuffer = 25; 
-                        const verticalBuffer = 20;
+                        // Larger separation padding when checking against the central paragraph block
+                        const horizontalBuffer = existing.isProse ? 40 : 25; 
+                        const verticalBuffer = existing.isProse ? 35 : 20;
 
                         if (
                             x < existing.x + existing.width + horizontalBuffer &&
@@ -425,7 +467,6 @@
             link.addEventListener('click', function(e) {
                 const numericYear = this.getAttribute('data-numeric');
                 
-                // Triggers an localized scatter execution for all elements to dynamically prevent overlap paths on updates
                 scatterLinks();
 
                 setTimeout(() => {
@@ -478,7 +519,7 @@
             const windowEl = document.getElementById('receiptWindow');
             
             overlay.style.display = 'flex';
-            document.getElementById('scrollContainer').scrollTop = 0; // Natural scroll reset action
+            document.getElementById('scrollContainer').scrollTop = 0; 
             windowEl.offsetHeight; 
             windowEl.classList.add('spill-open');
         }
@@ -495,7 +536,6 @@
 
         // Initialize Layout Systems
         window.addEventListener('DOMContentLoaded', () => {
-            // Short timeout lets layout tree calculate actual computed element dimensions cleanly
             setTimeout(scatterLinks, 50);
         });
         window.addEventListener('resize', scatterLinks);
