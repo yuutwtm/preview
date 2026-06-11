@@ -18,6 +18,7 @@
             --white: #FFFFFF;
             --receipt-bg: #FAFAFA;
             --wing-accent: #cfc9f2;
+            --hover-purple: #7B68EE;
         }
 
         body, html {
@@ -86,6 +87,23 @@
             user-select: none;
         }
 
+        /* Enable interaction for links inside prose */
+        .center-prose a {
+            pointer-events: auto;
+        }
+
+        /* Shared hover styles for inline links and scattered years */
+        .prose-link, .year-link {
+            display: inline-block;
+            transition: color 0.2s ease, transform 0.1s ease;
+            color: var(--charcoal);
+        }
+
+        .prose-link:hover, .year-link:hover {
+            color: var(--hover-purple);
+            transform: scale(1.05);
+        }
+
         /* --- Dashboard Scatter Navigation (Cross-Platform) --- */
         .nav-container {
             position: absolute;
@@ -101,7 +119,6 @@
             position: absolute;
             pointer-events: auto; /* Restores clickability specifically to links */
             text-decoration: none;
-            color: var(--charcoal);
             font-size: 1.2rem;
             font-weight: 500;
             letter-spacing: -0.02em;
@@ -109,14 +126,8 @@
             cursor: pointer;
             background: transparent;
             border: none;
-            transition: color 0.2s ease, transform 0.1s ease;
             user-select: none;
             white-space: nowrap;
-        }
-
-        .year-link:hover {
-            color: #7B68EE;
-            transform: scale(1.05);
         }
 
         /* --- Receipt Component (Popup) --- */
@@ -197,10 +208,11 @@
 
         .receipt-header {
             position: relative;
-            text-align: center;
+            text-align: left; /* Align text left to separate clearly from close action */
             border-bottom: 1px dashed var(--charcoal);
             padding-bottom: 14px;
             margin-bottom: 14px;
+            padding-right: 36px; /* Safeguard title layout against close button overlap */
         }
 
         .receipt-ui-close {
@@ -214,10 +226,11 @@
             color: var(--charcoal);
             cursor: pointer;
             padding: 4px;
+            z-index: 10;
         }
 
         .receipt-ui-close:hover {
-            color: #7B68EE;
+            color: var(--hover-purple);
         }
 
         .receipt-row {
@@ -315,7 +328,11 @@
        <b>KATURIAN.</b> The story was going to finish in fashionably downbeat mode, …… A fact which would have ruined the writer’s fashionably downbeat ending, but was somehow ... somehow ... more in keeping with the spirit of the thing. <i>(Martin McDonagh, The Pillowman)
     </i>
         <br>
-        <p><a href="https://letterboxd.com/jetpack6lues">letterboxd.</a> // <a href="https://goodreads.com/yuutalkwaytoomuch">goodreads.</a> // <a href="https://youtu.be/BxCIo_kb4AY">27a pitfield st.</a></p>
+        <p>
+            <a class="prose-link" href="https://letterboxd.com/jetpack6lues">letterboxd.</a> // 
+            <a class="prose-link" href="https://goodreads.com/yuutalkwaytoomuch">goodreads.</a> // 
+            <a class="prose-link" href="https://youtu.be/BxCIo_kb4AY">27a pitfield st.</a>
+        </p>
     </div>
 
     <nav class="nav-container" id="navContainer">
@@ -734,8 +751,9 @@
 
                     for (let i = 0; i < placedElements.length; i++) {
                         const existing = placedElements[i];
-                        const horizontalBuffer = existing.isProse ? 45 : 30;
-                        const verticalBuffer = existing.isProse ? 35 : 20;
+                        // Apply robust layout padding limits to protect overlaps
+                        const horizontalBuffer = existing.isProse ? 50 : 35;
+                        const verticalBuffer = existing.isProse ? 40 : 25;
 
                         if (
                             x < existing.x + existing.width + horizontalBuffer &&
