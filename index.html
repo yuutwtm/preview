@@ -17,7 +17,7 @@
             --charcoal: #2A2A2A;
             --white: #FFFFFF;
             --receipt-bg: #FAFAFA;
-            --wing-accent: #cdcdfa;
+            --wing-accent: #d9d9fa;
         }
 
         body, html {
@@ -32,7 +32,7 @@
 
         /* --- Typography Hierarchy --- */
         h1, h2, h3, .monospace, .ascii-art, .receipt-content, footer {
-            font-family: courier-new, monospace !important;
+            font-family: 'Consolas', 'Courier New', Courier, monospace !important;
         }
 
         .year-link, .center-prose {
@@ -77,7 +77,7 @@
             width: 280px;
             text-align: center;
             font-size: 0.85rem;
-            line-height: 1.5;
+            line-height: 1.6;
             letter-spacing: 0.01em;
             color: var(--charcoal);
             opacity: 0.85;
@@ -216,7 +216,7 @@
             padding: 4px;
         }
 
-        .receipt-ui-close:hover, .receipt-bottom-close:hover {
+        .receipt-ui-close:hover {
             color: #7B68EE;
         }
 
@@ -235,20 +235,6 @@
             text-align: right;
             opacity: 0.8;
             margin-top: 2px;
-        }
-
-        .receipt-bottom-close {
-            display: block;
-            margin: 24px auto 0 auto;
-            background: none;
-            border: none;
-            font-family: 'Consolas', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: var(--charcoal);
-            cursor: pointer;
-            padding: 8px 16px;
-            text-transform: uppercase;
         }
 
         /* --- Footer Matrix --- */
@@ -317,7 +303,7 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠁⣈⣷⡲⡏⠉⣙⡯⠭⠥⠒⠒⠊⠉⠉⠀⢀⡴⠃⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢀⡤⠚⡁⢠⡾⣟⣍⡎⠭⢖⣏⣉⡥⠤⠤⠤⠤⠴⠭⡅⠀⠀⠀⠀⠀
 ⠀⠀⠀⡖⣺⠻⣏⣰⣄⣿⣟⡼⡿⣾⣞⣉⠿⠭⢐⣀⣀⣀⣀⣤⡴⠚⠁⠀⠀⠀⠀⠀
-⠀⠀⡼⣽⣟⡟⢿⢛⣎⡏⣾⢮⣟⣽⡷⡛⠧⢖⣒⣂⢀⣀⣀⠴⠃⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⡼⣽⣟⡟⢿⢛⣎⡏⣾⢮⣟⣽⡷⡛⠧⢖⣒⣂⢀⣀⣀⠴⠃⠀⠀⠀⠀⠀⠀
 ⢀⣜⡗⣏⣹⡏⢻⣯⣻⢹⢱⣟⢼⢻⣳⡌⠑⠄⠑⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⢸⣪⡎⡰⣫⢷⣻⢳⢻⠒⡿⡝⡍⣆⠱⠜⣶⠤⠄⡸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠘⠦⢞⡇⢪⠇⠘⣸⠀⡗⣧⢳⢸⠙⠦⠼⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -523,6 +509,15 @@
             });
         });
 
+        // Outside Click Listener Matrix
+        document.getElementById('receiptOverlay').addEventListener('click', function(e) {
+            const windowEl = document.getElementById('receiptWindow');
+            // If the click did not happen inside the receipt window container, run close routine
+            if (!windowEl.contains(e.target)) {
+                closeReceipt();
+            }
+        });
+
         function buildAndShowReceipt(year) {
             const data = archiveData[year];
             if (!data) return;
@@ -556,7 +551,6 @@
                 <p style="font-size: 0.75rem; text-align: center; font-style: italic; line-height: 1.4; padding: 0 4px;">
                     "${data.footer}"
                 </p>
-                <button class="receipt-bottom-close" onclick="closeReceipt()">[ close archive ]</button>
                 <div style="text-align: center; margin-top: 24px; font-size: 0.65rem; letter-spacing: 2px; opacity: 0.7;">
                     --- VERIFICATION COMPLETE ---
                 </div>
