@@ -719,83 +719,102 @@
         };
 
         function scatterLinks() {
-            const links = Array.from(document.querySelectorAll('.year-link'));
-            const centerProse = document.getElementById('centerProse');
+    const links = Array.from(document.querySelectorAll('.year-link'));
+    const centerProse = document.getElementById('centerProse');
+    
+    // ==========================================
+    // DYNAMIC MOBILE RANDOM SCATTER (< 768px)
+    // ==========================================
+    if (window.innerWidth <= 768) {
+        const proseRect = centerProse.getBoundingClientRect();
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
+
+        // Define 5 distinct multi-directional bounding zones away from center prose
+        const mobileZones = [
+            // Zone 1: Top Left Quarter
+            { minX: 10, maxX: Math.floor(screenW * 0.4) - 80, minY: 20, maxY: Math.floor(proseRect.top) - 50 },
+            // Zone 2: Top Right Quarter
+            { minX: Math.floor(screenW * 0.5) + 10, maxX: screenW - 130, minY: 40, maxY: Math.floor(proseRect.top) - 30 },
+            // Zone 3: Left Margin Flank
+            { minX: 8, maxX: Math.floor(proseRect.left) - 90, minY: Math.floor(proseRect.top) - 20, maxY: Math.floor(proseRect.bottom) + 20 },
+            // Zone 4: Bottom Left Area
+            { minX: 10, maxX: Math.floor(screenW * 0.45) - 80, minY: Math.floor(proseRect.bottom) + 30, maxY: screenH - 120 },
+            // Zone 5: Bottom Right Area
+            { minX: Math.floor(screenW * 0.5), maxX: screenW - 140, minY: Math.floor(proseRect.bottom) + 40, maxY: screenH - 95 }
+        ];
+
+        links.forEach((link, idx) => {
+            const zone = mobileZones[idx] || mobileZones[0];
             
-            // Mobile Specific Safety Mapping Matrix (< 768px wide)
-            if (window.innerWidth <= 768) {
-                const proseRect = centerProse.getBoundingClientRect();
-                
-                // Clear and structured non-overlapping position zones for mobile layout spaces
-                const mobileCoordinates = [
-                    { left: 16, top: 25 },                                      // Top Left Corner
-                    { left: window.innerWidth - 170, top: 75 },                // Upper Right Space
-                    { left: 24, top: Math.floor(proseRect.bottom + 30) },      // Immediate Under Prose Left
-                    { left: window.innerWidth - 180, top: window.innerHeight - 150 }, // Lower Right Above Footer
-                    { left: 16, top: window.innerHeight - 95 }                 // Bottom Left Corner Above Footer
-                ];
+            // Generate fluid, organic offsets within the boundaries of each safe zone
+            const randomX = Math.floor(Math.random() * (zone.maxX - zone.minX + 1)) + zone.minX;
+            const randomY = Math.floor(Math.random() * (zone.maxY - zone.minY + 1)) + zone.minY;
 
-                links.forEach((link, idx) => {
-                    const coord = mobileCoordinates[idx] || { left: 20, top: idx * 60 };
-                    link.style.left = `${coord.left}px`;
-                    link.style.top = `${coord.top}px`;
-                });
-                return;
-            }
+            // Clamp positions to guarantee they stay within viewport bounds
+            const finalX = Math.max(8, Math.min(randomX, screenW - 130));
+            const finalY = Math.max(15, Math.min(randomY, screenH - 85));
 
-            // Desktop Placement Algorithmic Engine with strict collision boundaries
-            const placedElements = [];
-            if (centerProse) {
-                const proseRect = centerProse.getBoundingClientRect();
-                if (proseRect.width > 0 && proseRect.height > 0) {
-                    placedElements.push({
-                        x: proseRect.left,
-                        y: proseRect.top,
-                        width: proseRect.width,
-                        height: proseRect.height,
-                        isProse: true
-                    });
-                }
-            }
+            link.style.left = `${finalX}px`;
+            link.style.top = `${finalY}px`;
+        });
+        return;
+    }
 
-            links.forEach(link => {
-                let attempts = 0;
-                let validPosition = false;
-                let x, y, width, height;
-
-                width = link.getBoundingClientRect().width || link.offsetWidth || 140;
-                height = link.getBoundingClientRect().height || link.offsetHeight || 40;
-
-                while (!validPosition && attempts < 800) {
-                    x = Math.floor(Math.random() * (window.innerWidth - width - 60)) + 30;
-                    y = Math.floor(Math.random() * (window.innerHeight - height - 160)) + 60;
-
-                    validPosition = true;
-
-                    for (let i = 0; i < placedElements.length; i++) {
-                        const existing = placedElements[i];
-                        const horizontalBuffer = existing.isProse ? 60 : 45;
-                        const verticalBuffer = existing.isProse ? 50 : 30;
-
-                        if (
-                            x < existing.x + existing.width + horizontalBuffer &&
-                            x + width > existing.x - horizontalBuffer &&
-                            y < existing.y + existing.height + verticalBuffer &&
-                            y + height > existing.y - verticalBuffer
-                        ) {
-                            validPosition = false;
-                            break;
-                        }
-                    }
-                    attempts++;
-                }
-
-                placedElements.push({ x, y, width, height });
-                link.style.left = `${x}px`;
-                link.style.top = `${y}px`;
+    // ==========================================
+    // DESKTOP ALGORITHMIC SCATTER ENGINE
+    // ==========================================
+    const placedElements = [];
+    if (centerProse) {
+        const proseRect = centerProse.getBoundingClientRect();
+        if (proseRect.width > 0 && proseRect.height > 0) {
+            placedElements.push({
+                x: proseRect.left,
+                y: proseRect.top,
+                width: proseRect.width,
+                height: proseRect.height,
+                isProse: true
             });
         }
+    }
 
+    links.forEach(link => {
+        let attempts = 0;
+        let validPosition = false;
+        let x, y, width, height;
+
+        width = link.getBoundingClientRect().width || link.offsetWidth || 140;
+        height = link.getBoundingClientRect().height || link.offsetHeight || 40;
+
+        while (!validPosition && attempts < 800) {
+            x = Math.floor(Math.random() * (window.innerWidth - width - 60)) + 30;
+            y = Math.floor(Math.random() * (window.innerHeight - height - 160)) + 60;
+
+            validPosition = true;
+
+            for (let i = 0; i < placedElements.length; i++) {
+                const existing = placedElements[i];
+                const horizontalBuffer = existing.isProse ? 60 : 45;
+                const verticalBuffer = existing.isProse ? 50 : 30;
+
+                if (
+                    x < existing.x + existing.width + horizontalBuffer &&
+                    x + width > existing.x - horizontalBuffer &&
+                    y < existing.y + existing.height + verticalBuffer &&
+                    y + height > existing.y - verticalBuffer
+                ) {
+                    validPosition = false;
+                    break;
+                }
+            }
+            attempts++;
+        }
+
+        placedElements.push({ x, y, width, height });
+        link.style.left = `${x}px`;
+        link.style.top = `${y}px`;
+    });
+}
         document.querySelectorAll('.year-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 const numericYear = this.getAttribute('data-numeric');
