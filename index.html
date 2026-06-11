@@ -31,7 +31,6 @@
             position: relative;
         }
 
-        /* --- Typography Hierarchy --- */
         h1, h2, h3, .monospace, .ascii-art, .receipt-content, footer {
             font-family: courier-new, monospace !important;
         }
@@ -87,12 +86,10 @@
             user-select: none;
         }
 
-        /* Enable interaction for links inside prose */
         .center-prose a {
             pointer-events: auto;
         }
 
-        /* Shared hover styles for inline links and scattered years */
         .prose-link, .year-link {
             display: inline-block;
             transition: color 0.2s ease, transform 0.1s ease;
@@ -104,7 +101,7 @@
             transform: scale(1.05);
         }
 
-        /* --- Dashboard Scatter Navigation (Cross-Platform) --- */
+        /* --- Dashboard Scatter Navigation (Desktop Style) --- */
         .nav-container {
             position: absolute;
             top: 0;
@@ -112,12 +109,12 @@
             width: 100%;
             height: 100%;
             z-index: 10;
-            pointer-events: none; /* Allows clicks to pass through container space */
+            pointer-events: none;
         }
 
         .year-link {
             position: absolute;
-            pointer-events: auto; /* Restores clickability specifically to links */
+            pointer-events: auto;
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: 500;
@@ -178,7 +175,6 @@
             background-color: rgba(0,0,0,0.15);
         }
 
-        /* Perforated Edge Finish */
         .receipt-edge {
             width: 100%;
             height: 12px;
@@ -250,7 +246,6 @@
             margin-top: 2px;
         }
 
-        /* --- Footer Matrix --- */
         footer {
             position: absolute;
             bottom: 16px;
@@ -263,26 +258,70 @@
             pointer-events: none;
         }
 
-        /* --- Mobile Responsive Rules --- */
+        /* ==========================================================================
+           ROBUST MOBILE RESPONSIVE ENGINE (No Overlaps, Safe Viewport Containment)
+           ========================================================================== */
         @media (max-width: 768px) {
-            .wings-container {
-                top: 50%;
-                transform: translate(-50%, -50%);
+            body, html {
+                overflow-y: auto; /* Gracefully handles ultra-short devices if needed */
             }
-            .ascii-art {
-                font-size: 1.8vw;
+
+            /* Turn nav container into a cleanly padded grid layout that flows around content */
+            .nav-container {
+                position: relative;
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto 1fr auto;
+                gap: 20px;
+                padding: 30px 20px 80px 20px; /* Safe padding from top, sides, and footer */
             }
+
+            /* Explicitly layout links to cleanly bracket the upper and lower visual fields */
             .year-link {
-                font-size: 1rem;
-                padding: 8px;
+                position: relative !important; /* Overrides the absolute JS engine */
+                left: 0 !important;
+                top: 0 !important;
+                text-align: center;
+                font-size: 0.95rem;
+                padding: 10px 5px;
+                width: 100%;
+                white-space: normal; /* Permits wrapping if mobile fonts run large */
             }
+
+            /* Link Spatial Architecture Rules */
+            .year-link[data-numeric="2022"] { grid-column: 1; grid-row: 1; text-align: left; }
+            .year-link[data-numeric="2023"] { grid-column: 2; grid-row: 1; text-align: right; }
+            
+            /* Spacers preserve central real estate strictly for absolute center-prose layer */
+            .year-link[data-numeric="2024"] { grid-column: 1; grid-row: 3; text-align: left; }
+            .year-link[data-numeric="2025"] { grid-column: 2; grid-row: 3; text-align: right; }
+            
+            /* Center stack the extra link safely under prose zone */
+            .year-link[data-numeric="2026"] { 
+                grid-column: 1 / span 2; 
+                grid-row: 4; 
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .wings-container {
+                display: none; /* Hide complex wings to optimize processing & contrast on mobile screens */
+            }
+
             .center-prose {
-                width: 240px;
-                font-size: 0.78rem;
+                position: absolute;
+                width: 85%;
+                max-width: 290px;
+                top: 45%; /* Slightly elevated to comfortably sit balanced inside the grid space */
+                font-size: 0.8rem;
             }
+
             .receipt-window {
-                width: 88%;
-                max-height: 85%;
+                width: 90%;
+                max-height: 80%;
             }
         }
     </style>
@@ -300,601 +339,4 @@
 ⠀⠀⠀⠀⠀⠘⢤⣀⠀⠉⠉⠉⠑⠒⠒⠭⠥⣯⣙⠉⡏⡲⣷⣈⠸⣇⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠅⠭⠴⠤⠤⠤⠤⣅⣉⣏⢖⠭⢎⣍⣟⡾⢠⠁⠚⠤⣀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠚⠴⣄⣀⣀⣀⣀⢐⠭⠿⣉⣞⣾⡿⢼⣟⣿⣄⣢⣏⠻⣺⢖⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠦⣀⣀⣀⣒⣒⠧⡛⡷⣽⣟⣮⢾⣏⢏⠽⢿⢟⣽⢼⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢄⠑⠢⠑⢄⡜⣳⢻⠼⣟⢱⢹⣻⣯⢻⢹⣹⢏⡗⣜
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠸⠤⢤⣶⠜⠥⣆⢍⡝⡿⢒⢻⢻⣻⢷⣫⠆⢎⣪
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠆⠼⠦⠙⢇⢳⣧⢏⠀⣸⠘⠇⢳⠦
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢼⡥⠚⠎⣠⢧⠋⣠⡾⠦
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⠀</div>
-        
-        <div class="ascii-art">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠴⠒⢲
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡤⠖⠉⠀⢀⡴⠋
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠴⠚⣁⠀⠀⣀⡴⠟⣪⠇
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠴⠚⣉⠤⢒⣩⠴⠒⠉⢁⡠⣚⢥⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣖⠪⠭⠈⣉⠽⣐⠮⢕⣊⡤⠤⠒⠋⢉⡤⠊⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⠏⡰⢅⣖⡲⠾⠍⣩⢯⣒⣋⠥⢤⣒⠠⠤⠐⢛⡶⠂⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡏⠀⣹⢥⡗⠶⠌⣉⠯⠔⣒⣊⠩⠁⠀⣀⣠⣖⣏⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠁⣈⣷⡲⡏⠉⣙⡯⠭⠥⠒⠒⠊⠉⠉⠀⢀⡴⠃⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⡤⠚⡁⢠⡾⣟⣍⡎⠭⢖⣏⣉⡥⠤⠤⠤⠤⠴⠭⡅⠀⠀⠀⠀⠀
-⠀⠀⠀⡖⣺⠻⣏⣰⣄⣿⣟⡼⡿⣾⣞⣉⠿⠭⢐⣀⣀⣀⣀⣤⡴⠚⠁⠀⠀⠀⠀⠀
-⠀⠀⡼⣽⣟⡟⢿⢛⣎⡏⣾⢮⣟⣽⡷⡛⠧⢖⣒⣂⢀⣀⣀⠴⠃⠀⠀⠀⠀⠀⠀
-⢀⣜⡗⣏⣹⡏⢻⣯⣻⢹⢱⣟⢼⢻⣳⡌⠑⠄⠑⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⢸⣪⡎⡰⣫⢷⣻⢳⢻⠒⡿⡝⡍⣆⠱⠜⣶⠤⠄⡸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠘⠦⢞⡇⢪⠇⠘⣸⠀⡗⣧⢳⢸⠙⠦⠼⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠈⠧⠾⡄⣠⠋⢧⣠⠎⠣⡼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</div>
-    </div>
-
-    <div class="center-prose" id="centerProse">
-       <b>KATURIAN.</b> The story was going to finish in fashionably downbeat mode, …… A fact which would have ruined the writer’s fashionably downbeat ending, but was somehow ... somehow ... more in keeping with the spirit of the thing. <i>(Martin McDonagh, The Pillowman)
-    </i>
-        <br>
-        <p>
-            <a class="prose-link" href="https://letterboxd.com/jetpack6lues">letterboxd.</a> // 
-            <a class="prose-link" href="https://goodreads.com/yuutalkwaytoomuch">goodreads.</a> // 
-            <a class="prose-link" href="https://youtu.be/BxCIo_kb4AY">27a pitfield st.</a>
-        </p>
-    </div>
-
-    <nav class="nav-container" id="navContainer">
-        <a class="year-link" data-numeric="2022">twenty twenty-two</a>
-        <a class="year-link" data-numeric="2023">twenty twenty-three</a>
-        <a class="year-link" data-numeric="2024">twenty twenty-four</a>
-        <a class="year-link" data-numeric="2025">twenty twenty-five</a>
-        <a class="year-link" data-numeric="2026">twenty twenty-six</a>
-    </nav>
-
-    <div class="receipt-overlay" id="receiptOverlay">
-        <div class="receipt-window" id="receiptWindow">
-            <div class="receipt-edge top"></div>
-            <div class="receipt-scroll-area" id="scrollContainer">
-                <div class="receipt-content" id="receiptContent"></div>
-            </div>
-            <div class="receipt-edge bottom"></div>
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2026 pitfield.web.app all rights reserved.
-    </footer>
-
-    <script>
-        const archiveData = {
-            2022: {
-                id: "B-2209",
-                type: "TEXTS",
-                items: [
-                    { title: "혁명의 시대*", creator: "에릭 홉스봄" },
-                    { title: "1Q84", creator: "Haruki Murakami" },
-                    { title: "자유로부터의 도피", creator: "에리히 프롬" },
-                    { title: "인간실격", creator: "다자이 오사무" },
-                    { title: "애프터 다크", creator: "무라카미 하루키" },
-                    { title: "일기에도 거짓말을 쓰는 사람", creator: "차도하" },
-                    { title: "I Kissed Shara Wheeler", creator: "Casey McQuiston" },
-                    { title: "Little Stars", creator: "Jacqueline Wilson" },
-                    { title: "Rose Rivers", creator: "Jacqueline Wilson" },
-                    { title: "The Year of Magical Thinking", creator: "Joan Didion" },
-                    { title: "Why Fish Don't Exist", creator: "Lulu Miller" },
-                    { title: "일인칭 단수", creator: "무라카미 하루키" },
-                    { title: "나는 나를 파괴할 권리가 있다", creator: "김영하" },
-                    { title: "The Sea, The Sea!", creator: "Iris Murdoch" },
-                    { title: "여름의 빌라", creator: "백수린" },
-                    { title: "사랑을 위한 되풀이", creator: "황인찬" },
-                    { title: "나의 이브 생 로랑에게", creator: "피에르 베르쥬" },
-                    { title: "수전 손택의 말", creator: "수전 손택, 조너선 콧" },
-                    { title: "재와 물거품", creator: "김청귤" },
-                    { title: "파과", creator: "구병모" },
-                    { title: "Crying in H Mart", creator: "Michelle Zauner" },
-                    { title: "모순", creator: "양귀자" },
-                    { title: "나는 소망한다 내게 금지된 것을", creator: "양귀자" },
-                    { title: "미워하는 미워하는 미워하는 마음 없이", creator: "유지혜" },
-                    { title: "철학, 장애를 논하다", creator: "크리스티야나 크리스티안센 외 엮음" },
-                    { title: "Bittersweet: How Sorrow And Longing Make Us Whole", creator: "Susan Cain" },
-                    { title: "Normal People", creator: "Sally Rooney" },
-                    { title: "아몬드", creator: "손원평" },
-                    { title: "지구에서 한아뿐", creator: "정세랑" },
-                    { title: "아가미", creator: "구병모" },
-                    { title: "얼음나무 숲", creator: "하지은" },
-                    { title: "연의 편지", creator: "조현아" },
-                    { title: "I Fear My Pain Interests You", creator: "Stephanie LaCava" },
-                    { title: "The Superrationals", creator: "Stephanie LaCava" },
-                    { title: "내 생애 마지막 다이어트", creator: "권여름" },
-                    { title: "집착", creator: "아니 에르노" },
-                    { title: "개인주의자 선언", creator: "문유석" },
-                    { title: "Kafka on the Shore", creator: "Haruki Murakami" }
-                ],
-                footer: "That life – whatever else it is – is short. That fate is cruel but may not be random. That Nature (meaning Death) always wins but that doesn’t mean we have to bow and grovel to it. That maybe even if we’re not always so glad to be here, it’s our task to immerse ourselves anyway: wade straight through it, right through the cesspool, while keeping eyes and hearts open. (Donna Tartt, The Goldfinch)"
-            },
-            2023: {
-                id: "F-2311",
-                type: "TEXTS",
-                items: [
-                    { title: "The Anthropocene Reviewed*", creator: "John Green" },
-                    { title: "South of the Border, West of the Sun", creator: "Haruki Murakami" },
-                    { title: "Colorless Tazaki Tsukuru and His Year of Pilgrimage", creator: "Haruki Murakami" },
-                    { title: "악어 노트", creator: "구묘진" },
-                    { title: "Sputnik Sweetheart", creator: "Haruki Murakami" },
-                    { title: "A Wild Sheep Chase", creator: "Haruki Murakami" },
-                    { title: "갈증", creator: "아멜리 노통" },
-                    { title: "내게 무해한 사람", creator: "최은영" },
-                    { title: "Underground: The Tokyo Gas Attack and the Japanese Psyche", creator: "Haruki Murakami" },
-                    { title: "Heaven*", creator: "Mieko Kawakami" },
-                    { title: "Dance Dance Dance", creator: "Haruku Murakami" },
-                    { title: "Hear the Wind Sing", creator: "Haruki Murakami" },
-                    { title: "트렌드 코리아 2023", creator: "" },
-                    { title: "이어령의 마지막 수업", creator: "김지수" },
-                    { title: "달리기를 말할 때 내가 하고 싶은 이야기", creator: "무라카미 하루키" },
-                    { title: "설탕의 맛", creator: "김사과" },
-                    { title: "Killing Commendatore", creator: "Haruki Murakami" },
-                    { title: "흰 장미의 심연까지", creator: "나카야마 가호" },
-                    { title: "American Psycho", creator: "Brett Easton Ellis" },
-                    { title: "Almost Transparent Blue", creator: "Ryu Murakami" },
-                    { title: "Audition", creator: "Ryu Murakami" },
-                    { title: "화염", creator: "와즈디 무아와드" },
-                    { title: "The Long Goodbye", creator: "Raymond Chandler" },
-                    { title: "Cosmopolis", creator: "Don DeLillo" },
-                    { title: "Fear and Loathing in Las Vegas", creator: "Hunter S. Thompson" },
-                    { title: "The Hours", creator: "Michael Cunningham" },
-                    { title: "The Postman Always Rings Twice", creator: "James M. Cain" },
-                    { title: "도시와 그 불확실한 벽", creator: "무라카미 하루키" },
-                    { title: "Seize the Day", creator: "Saul Bellow" },
-                    { title: "Poor Things", creator: "Alasdair Gray" },
-                    { title: "The English Patient*", creator: "Michael Ondaatje" },
-                    { title: "Minima Moralia", creator: "Theodor Adorno" },
-                    { title: "Enemies of Promise", creator: "Cyril Connolly" },
-                    { title: "Eating the Dinosaur", creator: "Chuck Klosterman" },
-                    { title: "(from Writing) The Death of the Young British Pilot", creator: "Marguerite Duras" },
-                    { title: "(from Personal Essays) Nuptials at Tipasa, The Wind at Djemila, Summer in Algiers, The Desert, Helen's Exile, The Sea Close by", creator: "Albert Camus" },
-                    { title: "Such, Such Were the Joys, Politics and the English Language", creator: "George Orwell" },
-                    { title: "Decline and Fall", creator: "Evelyn Waugh" },
-                    { title: "Touched with Fire", creator: "Kay Redfield Jamison" },
-                    { title: "Birthday Letters", creator: "Ted Hughes" },
-                    { title: "The Unabridged Journals of Sylvia Plath", creator: "Sylvia Plath" },
-                    { title: "Leaving Las Vegas", creator: "John O’Brien" },
-                    { title: "The Conquest of Happiness", creator: "Bertrand Russell" },
-                    { title: "The Elementary Particles", creator: "Michel Houellebecq" }
-                ],
-                footer: "“Quiet,” he said, resting his hand over her mouth. “Try not to be so consumed with the future.”<br>But Sera hadn’t felt the future at all, for it wasn’t until that moment, laden with his words and redolent with his prescience, that she too knew what would come to pass. It all became clear, how much more deliberate his life was than hers, how he knew the one great trick that she couldn’t do, and how she would fall in love with him every minute, every second, over and over again, for the rest of her life. (John O'Brien, Leaving Las Vegas)"
-            },
-            2024: {
-                id: "B-2404",
-                type: "TEXTS",
-                items: [
-                    { title: "A Grief Observed", creator: "C. S. Lewis" },
-                    { title: "Lucky Jim", creator: "Kingsley Amis" },
-                    { title: "Queer", creator: "William S. Burroughs" },
-                    { title: "윤리 21", creator: "가라타니 고진/송태욱 역" },
-                    { title: "스페인 영화", creator: "임호준" },
-                    { title: "The Bridge of San Luis Rey", creator: "Thornton Wilder" },
-                    { title: "Ways of Seeing", creator: "John Berger" },
-                    { title: "The Sun Also Rises", creator: "Ernest Hemingway" },
-                    { title: "Between the World and Me", creator: "Ta-Nehesi Coates" },
-                    { title: "The Invention of Solitude", creator: "Paul Auster" },
-                    { title: "The Plot Against America", creator: "Philip Roth" },
-                    { title: "Short Letter, Long Farewell", creator: "Peter Handke" },
-                    { title: "뭔가 배 속에서 부글거리는 기분", creator: "윤아랑" },
-                    { title: "사양", creator: "다자이 오사무/유숙자 역" },
-                    { title: "아메토라 : 일본은 어떻게 아메리칸 스타일을 구원했는가", creator: "W. 데이비드 막스/박세진 역" },
-                    { title: "천사를 거부하는 우울한 연인에게", creator: "양안다" },
-                    { title: "Exile and Pride: Disability, Queerness, and Liberation", creator: "Eli Clare" },
-                    { title: "시네마토그라프에 대한 노트", creator: "로베르 브레송/이윤영 역" },
-                    { title: "천사들의 엄격함", creator: "윌리엄 에긴턴/김한영 역" },
-                    { title: "The Glass Menagerie", creator: "Tennessee Williams" },
-                    { title: "Shame", creator: "Annie Ernaux" },
-                    { title: "매체의 역사 읽기: 동굴벽화에서 가상현실까지", creator: "안드레아스 뵌, 안드레아스 자이들러/이상훈, 황승환 역" },
-                    { title: "Beautiful World, Where Are You", creator: "Sally Rooney" },
-                    { title: "소설의 이론", creator: "게오르그 루카치" },
-                    { title: "Everyman", creator: "Philip Roth" },
-                    { title: "Indignation", creator: "Philip Roth" },
-                    { title: "The Wild Iris", creator: "Louise Glück" },
-                    { title: "Foreverism", creator: "Grafton Tanner" },
-                    { title: "어쨌거나 밤은 무척 짧을 것이다", creator: "유운성" },
-                    { title: "Penance", creator: "Eliza Clark" },
-                    { title: "Good Morning, Monster", creator: "Catherine Gildiner" },
-                    { title: "에센셜 시네마: 영화 정전을 위하여", creator: "조너선 로젠봄" },
-                    { title: "서푼짜리 오페라", creator: "베르톨트 브레히트" },
-                    { title: "Pale Fire", creator: "Vladimir Nabokov" },
-                    { title: "A Leopard-Skin Hat", creator: "Anne Serre" },
-                    { title: "Martyr!", creator: "Kaveh Akbar" },
-                    { title: "젊은 날의 초상", creator: "이문열" },
-                    { title: "매트릭스로 철학하기", creator: "윌리엄 어윈 엮음/슬라보예 지젝 외" },
-                    { title: "Naked Lunch", creator: "William Burroughs" },
-                    { title: "Lady L.", creator: "Romain Gary" },
-                    { title: "The Netanyahus", creator: "Joshua Cohen" },
-                    { title: "She’s Always Hungry", creator: "Eliza Clark" },
-                    { title: "Where Everything is Music", creator: "Rumi" },
-                    { title: "Baumgartner", creator: "Paul Auster" },
-                    { title: "The Periodic Table", creator: "Primo Levi" },
-                    { title: "Nemesis", creator: "Philip Roth" },
-                    { title: "Melancholy I~II", creator: "Jon Fosse" },
-                    { title: "Kairos", creator: "Jenny Erpenbeck" },
-                    { title: "암호해독사", creator: "잇시키 마코토" },
-                    { title: "Klara and the Sun", creator: "Kazuo Ishiguro" },
-                    { title: "Stories of Your Life and Others", creator: "Ted Chiang" },
-                    { title: "The Real Thing", creator: "Tom Stoppard" },
-                    { title: "Exhalation", creator: "Ted Chiang" },
-                    { title: "Rosencrantz and Guildenstern Are Dead", creator: "Tom Stoppard" },
-                    { title: "The Savage God: A Study of Suicide", creator: "Al Álvarez" },
-                    { title: "My Dark Vanessa", creator: "Kate Elizabeth Russell" },
-                    { title: "Plays 1: ‘Art’ / The Unexpected Man / Conversations After a Burial / Life x 3", creator: "Yasmina Reza" },
-                    { title: "My Year of Rest and Relaxation", creator: "Ottessa Moshfegh" },
-                    { title: "Portnoy’s Complaint", creator: "Philip Roth" },
-                    { title: "England, England", creator: "Julian Barnes" },
-                    { title: "Good Omens", creator: "Terry Prachett, Neil Gaiman" },
-                    { title: "White Noise", creator: "Don DeLillo" },
-                    { title: "Shadow Ticket", creator: "Thomas Pynchon" },
-                    { title: "식물성의 유혹", creator: "유운성" },
-                    { title: "<자본>에 대한 노트", creator: "세르게이 에이젠슈타인, 알렉산더 클루게" },
-                    { title: "물듦 - 상호감염의 미학", creator: "유운성" },
-                    { title: "Libra", creator: "Don DeLillo" },
-                    { title: "Kindred", creator: "Octavia Butler" },
-                    { title: "The God of Small Things", creator: "Arundhati Roy" },
-                    { title: "중력과 은총", creator: "시몬 베유" },
-                    { title: "The 42nd Parallel", creator: "John Dos Passos" },
-                    { title: "The New York Trilogy", creator: "Paul Auster" },
-                    { title: "지옥변", creator: "아쿠타가와 류노스케" },
-                    { title: "오후의 예항 / 짐승들의 유희", creator: "미시마 유키오" },
-                    { title: "Gone Girl", creator: "Gillian Flynn" },
-                    { title: "행복의 기원", creator: "서은국" },
-                    { title: "The Sense of an Ending", creator: "Julian Barnes" },
-                    { title: "The Human Stain", creator: "Philip Roth" },
-                    { title: "Sons and Lovers", creator: "D. H. Lawrence" },
-                    { title: "American Pastoral", creator: "Philip Roth" },
-                    { title: "I Married a Communist", creator: "Philip Roth" },
-                    { title: "Revolutionary Road", creator: "Richard Yates" },
-                    { title: "영화도둑일기", creator: "한민수" },
-                    { title: "4 3 2 1", creator: "Paul Auster" },
-                    { title: "Ethan Frome", creator: "Edith Wharton" },
-                    { title: "The Crying of Lot 49", creator: "Thomas Pynchon" },
-                    { title: "The Armies of the Night", creator: "Norman Mailer" },
-                    { title: "First Love", creator: "Ivan Turgenev" },
-                    { title: "# Accelerate: The Accelerationist Reader (발췌독)", creator: "Robin Mackay, Armen Avanessian" },
-                    { title: "Snuff", creator: "Chuck Palahniuk" },
-                    { title: "The Rules of Attraction", creator: "Bret Easton Ellis" },
-                    { title: "American Psycho", creator: "Bret Easton Ellis" },
-                    { title: "What We Talk About When We Talk About Love", creator: "Raymond Carver" },
-                    { title: "Less Than Zero", creator: "Bret Easton Ellis" },
-                    { title: "The Line of Beauty", creator: "Alan Hollinghurst" },
-                    { title: "The Shards", creator: "Bret Easton Ellis" },
-                    { title: "Rabbit, Run", creator: "John Updike" },
-                    { title: "Play It As It Lays", creator: "Joan Didion" },
-                    { title: "Speak, Memory", creator: "Vladimir Nabokov" },
-                    { title: "Eileen", creator: "Ottessa Moshfegh" },
-                    { title: "Bunny", creator: "Mona Awad" },
-                    { title: "A Sport and a Pastime", creator: "James Salter" },
-                    { title: "Slaughterhouse-Five", creator: "Kurt Vonnegut" },
-                    { title: "Phantom Lady", creator: "Cornell Woolrich" },
-                    { title: "Empire of the Sun", creator: "J. G. Ballard" },
-                    { title: "Intermezzo", creator: "Sally Rooney" },
-                    { title: "Boy Parts", creator: "Eliza Clark" },
-                    { title: "I’m Glad My Mom Died", creator: "Jennette McCurdy" },
-                    { title: "A Little Life", creator: "Hanya Yanagihara" },
-                    { title: "Design as Art", creator: "Bruno Munari" },
-                    { title: "슬픔을 공부하는 슬픔", creator: "신형철" },
-                    { title: "No Man’s Land", creator: "Harold Pinter" },
-                    { title: "Monsters: A Fan’s Dilemma", creator: "Claire Dederer" },
-                    { title: "Outline", creator: "Rachel Cusk" },
-                    { title: "A Moveable Feast", creator: "Ernest Hemingway" },
-                    { title: "Circe", creator: "Madeline Miller" },
-                    { title: "Galatea", creator: "Madeline Miller" },
-                    { title: "The Goalkeeper’s Anxiety at the Penalty Kick", creator: "Peter Handke" },
-                    { title: "Angels in America Part One: Millennium Approaches", creator: "Tony Kushner" },
-                    { title: "Angels in America Part Two: Perestroika", creator: "Tony Kushner" }
-                ],
-                footer: "Only one thing was certain. One by one, the imaginary Fergusons would die, just as Artie Federman had died, but only after he had learned to love them as if they were real, only after the thought of seeing them die had become unbearable to him, and then he would be alone with himself again, the last man standing. Hence the title of the book: 4 3 2 1. (Paul Auster, 4 3 2 1)"
-            },
-            2025: {
-                id: "F-2501",
-                type: "TEXTS",
-                items: [
-                    { title: "A Grief Observed", creator: "C. S. Lewis" },
-                    { title: "Lucky Jim", creator: "Kingsley Amis" },
-                    { title: "Queer", creator: "William S. Burroughs" },
-                    { title: "윤리 21", creator: "가라타니 고진/송태욱 역" },
-                    { title: "스페인 영화", creator: "임호준" },
-                    { title: "The Bridge of San Luis Rey", creator: "Thornton Wilder" },
-                    { title: "Ways of Seeing", creator: "John Berger" },
-                    { title: "The Sun Also Rises", creator: "Ernest Hemingway" },
-                    { title: "Between the World and Me", creator: "Ta-Nehesi Coates" },
-                    { title: "The Invention of Solitude", creator: "Paul Auster" },
-                    { title: "The Plot Against America", creator: "Philip Roth" },
-                    { title: "Short Letter, Long Farewell", creator: "Peter Handke" },
-                    { title: "뭔가 배 속에서 부글거리는 기분", creator: "윤아랑" },
-                    { title: "사양", creator: "다자이 오사무/유숙자 역" },
-                    { title: "아메토라 : 일본은 어떻게 아메리칸 스타일을 구원했는가", creator: "W. 데이비드 막스/박세진 역" },
-                    { title: "천사를 거부하는 우울한 연인에게", creator: "양안다" },
-                    { title: "Exile and Pride: Disability, Queerness, and Liberation", creator: "Eli Clare" },
-                    { title: "시네마토그라프에 대한 노트", creator: "로베르 브레송/이윤영 역" },
-                    { title: "천사들의 엄격함", creator: "윌리엄 에긴턴/김한영 역" },
-                    { title: "The Glass Menagerie", creator: "Tennessee Williams" },
-                    { title: "Shame", creator: "Annie Ernaux" },
-                    { title: "매체의 역사 읽기: 동굴벽화에서 가상현실까지", creator: "안드레아스 뵌, 안드레아스 자이들러/이상훈, 황승환 역" },
-                    { title: "Beautiful World, Where Are You", creator: "Sally Rooney" },
-                    { title: "소설의 이론", creator: "게오르그 루카치" },
-                    { title: "Everyman", creator: "Philip Roth" },
-                    { title: "Indignation", creator: "Philip Roth" },
-                    { title: "The Wild Iris", creator: "Louise Glück" },
-                    { title: "Foreverism", creator: "Grafton Tanner" },
-                    { title: "어쨌거나 밤은 무척 짧을 것이다", creator: "유운성" },
-                    { title: "Penance", creator: "Eliza Clark" },
-                    { title: "Good Morning, Monster", creator: "Catherine Gildiner" },
-                    { title: "에센셜 시네마: 영화 정전을 위하여", creator: "조너선 로젠봄" },
-                    { title: "서푼짜리 오페라", creator: "베르톨트 브레히트" },
-                    { title: "Pale Fire", creator: "Vladimir Nabokov" },
-                    { title: "A Leopard-Skin Hat", creator: "Anne Serre" },
-                    { title: "Martyr!", creator: "Kaveh Akbar" },
-                    { title: "젊은 날의 초상", creator: "이문열" },
-                    { title: "매트릭스로 철학하기", creator: "윌리엄 어윈 엮음/슬라보예 지젝 외" },
-                    { title: "Naked Lunch", creator: "William Burroughs" },
-                    { title: "Lady L.", creator: "Romain Gary" },
-                    { title: "The Netanyahus", creator: "Joshua Cohen" },
-                    { title: "She's Always Hungry", creator: "Eliza Clark" },
-                    { title: "Where Everything is Music", creator: "Rumi" },
-                    { title: "Baumgartner", creator: "Paul Auster" },
-                    { title: "The Periodic Table", creator: "Primo Levi" },
-                    { title: "Nemesis", creator: "Philip Roth" },
-                    { title: "Melancholy I~II", creator: "Jon Fosse" },
-                    { title: "Kairos", creator: "Jenny Erpenbeck" },
-                    { title: "암호해독사", creator: "잇시키 마코토" },
-                    { title: "Klara and the Sun", creator: "Kazuo Ishiguro" },
-                    { title: "Stories of Your Life and Others", creator: "Ted Chiang" },
-                    { title: "The Real Thing", creator: "Tom Stoppard" },
-                    { title: "Exhalation", creator: "Ted Chiang" },
-                    { title: "Rosencrantz and Guildenstern Are Dead", creator: "Tom Stoppard" },
-                    { title: "The Savage God: A Study of Suicide", creator: "Al Álvarez" },
-                    { title: "My Dark Vanessa", creator: "Kate Elizabeth Russell" },
-                    { title: "Plays 1: 'Art' / The Unexpected Man / Conversations After a Burial / Life x 3", creator: "Yasmina Reza" },
-                    { title: "My Year of Rest and Relaxation", creator: "Ottessa Moshfegh" },
-                    { title: "Portnoy's Complaint", creator: "Philip Roth" },
-                    { title: "England, England", creator: "Julian Barnes" },
-                    { title: "Good Omens", creator: "Terry Prachett, Neil Gaiman" },
-                    { title: "White Noise", creator: "Don DeLillo" },
-                    { title: "Shadow Ticket", creator: "Thomas Pynchon" },
-                    { title: "식물성의 유혹", creator: "유운성" },
-                    { title: "<자본>에 대한 노트", creator: "세르게이 에이젠슈타인, 알렉산더 클루게" },
-                    { title: "물듦 - 상호감염의 미학", creator: "유운성" },
-                    { title: "Libra", creator: "Don DeLillo" },
-                    { title: "Kindred", creator: "Octavia Butler" },
-                    { title: "The God of Small Things", creator: "Arundhati Roy" },
-                    { title: "중력과 은총", creator: "시몬 베유" },
-                    { title: "The 42nd Parallel", creator: "John Dos Passos" },
-                    { title: "The New York Trilogy", creator: "Paul Auster" },
-                    { title: "지옥변", creator: "아쿠타가와 류노스케" },
-                    { title: "오후의 예항 / 짐승들의 유희", creator: "미시마 유키오" },
-                    { title: "Gone Girl", creator: "Gillian Flynn" }
-                ],
-                footer: "I am experienced in street agitation. I have a far mean streak of independence brought on by neglect.<br>Aerospace. (Don DeLillo, Libra)"
-            },
-            2026: {
-                id: "M-2606",
-                type: "TEXTS",
-                items: [
-                    { title: "금각사", creator: "미시마 유키오" },
-                    { title: "나의 곰", creator: "메리언 엥겔" },
-                    { title: "Main Street", creator: "Sinclair Lewis" },
-                    { title: "Naked", creator: "David Sedaris" },
-                    { title: "영화의 맨살: 하스미 시게히코 영화비평선", creator: "하스미 시게히코" },
-                    { title: "The Heart’s Invisible Furies", creator: "John Boyne" },
-                    { title: "Vernon God Little", creator: "DBC Pierre" },
-                    { title: "The Go-Between", creator: "L. P. Hartley" },
-                    { title: "The Narrow Road to the Deep North", creator: "Richard Flanagan" },
-                    { title: "Orbital", creator: "Samantha Harvey" },
-                    { title: "The Children Act", creator: "Ian McEwan" },
-                    { title: "Night", creator: "Elie Wiesel" },
-                    { title: "Lincoln in the Bardo", creator: "George Saunders" },
-                    { title: "Memoirs of Hadrian", creator: "Marguerite Yourcenar" },
-                    { title: "Madonna in a Fur Coat", creator: "Sabahattin Ali" },
-                    { title: "Brooklyn", creator: "Colm Tóibín" },
-                    { title: "The Pillowman", creator: "Martin McDonagh" },
-                    { title: "The Banshees of Inisherin", creator: "Martin McDonagh" },
-                    { title: "Água Viva", creator: "Clarice Lispector/tr. Stefan Tobler" },
-                    { title: "The Kites", creator: "Romain Gary" },
-                    { title: "사이클로노피디아: 작자미상의 자료들을 엮음", creator: "레자 네가레스타니/윤원화 역" },
-                    { title: "Drive Your Plow Over the Bones of the Dead", creator: "Olga Tokarezuk/tr. Antonia Lloyd-Jones" },
-                    { title: "Having and Being Had", creator: "Eula Biss" },
-                    { title: "Chess", creator: "Stefan Zweig/tr. Anthea Bell" },
-                    { title: "A Behanding in Spokane", creator: "Martin McDonagh" },
-                    { title: "A Swim in a Pond in the Rain", creator: "George Saunders" },
-                    { title: "Cute Accelerationism", creator: "Amy Ireland, Maya B. Kronic" },
-                    { title: "Flesh", creator: "David Szalay" },
-                    { title: "Capitalist Realism: Is There No Alternative?", creator: "Mark Fisher" },
-                    { title: "Translations", creator: "Brian Friel" },
-                    { title: "21세기 사상의 최전선", creator: "김종갑 외" },
-                    { title: "K-Punk: Music", creator: "Mark Fisher" },
-                    { title: "랭스로 되돌아가다", creator: "디디에 에리봉/이상길 역" },
-                    { title: "룰루", creator: "프랑크 베데킨트/이재진 역" },
-                    { title: "A Good Man Is Hard to Find", creator: "Flannery O’Connor" },
-                    { title: "개인적인 체험", creator: "오에 겐자부로/서은혜 역" },
-                    { title: "눈뜨는 봄", creator: "프랑크 베데킨트/김미란 역" },
-                    { title: "Object-Oriented Ontology: A New Theory of Everything", creator: "Graham Harman" },
-                    { title: "Look Back in Anger", creator: "John Osborne" },
-                    { title: "대머리 여가수 - 수업 - 의자", creator: "외젠 이오네스코/오세곤 역/민음사" },
-                    { title: "어느 아이 이야기", creator: "김안나/최윤영 역" },
-                    { title: "유진 오닐 단막극선", creator: "유진 오닐/이근삼 역" },
-                    { title: "엘리펀트 송", creator: "니컬러스 빌런/주하영 역" },
-                    { title: "A Horse Walks into a Bar", creator: "David Grossman/tr. Jessica Cohen" }
-                ],
-                footer: "On my knees I hoped you’d love me too. I would run till I feel the thrill of long ago. Now my inspiration but it won’t last and we’ll be just a photograph. I’ve forgotten you then? I can’t sleep, Blue Eyes, if I don’t have you. Do I love her? I love you I love you many splendored thing. Can’t even eat. Jelly on my mind back home. ‘Twas good bye deep in the true love. We’ll never meet again, darling, in my fashion. <i>(William Burroughs, The Ticket That Exploded)</i>"
-            }
-        };
-
-        function scatterLinks() {
-    const links = Array.from(document.querySelectorAll('.year-link'));
-    const centerProse = document.getElementById('centerProse');
-    
-    // ==========================================
-    // DYNAMIC MOBILE RANDOM SCATTER (< 768px)
-    // ==========================================
-    if (window.innerWidth <= 768) {
-        const proseRect = centerProse.getBoundingClientRect();
-        const screenW = window.innerWidth;
-        const screenH = window.innerHeight;
-
-        // Define 5 distinct multi-directional bounding zones away from center prose
-        const mobileZones = [
-            // Zone 1: Top Left Quarter
-            { minX: 10, maxX: Math.floor(screenW * 0.4) - 80, minY: 20, maxY: Math.floor(proseRect.top) - 50 },
-            // Zone 2: Top Right Quarter
-            { minX: Math.floor(screenW * 0.5) + 10, maxX: screenW - 130, minY: 40, maxY: Math.floor(proseRect.top) - 30 },
-            // Zone 3: Left Margin Flank
-            { minX: 8, maxX: Math.floor(proseRect.left) - 90, minY: Math.floor(proseRect.top) - 20, maxY: Math.floor(proseRect.bottom) + 20 },
-            // Zone 4: Bottom Left Area
-            { minX: 10, maxX: Math.floor(screenW * 0.45) - 80, minY: Math.floor(proseRect.bottom) + 30, maxY: screenH - 120 },
-            // Zone 5: Bottom Right Area
-            { minX: Math.floor(screenW * 0.5), maxX: screenW - 140, minY: Math.floor(proseRect.bottom) + 40, maxY: screenH - 95 }
-        ];
-
-        links.forEach((link, idx) => {
-            const zone = mobileZones[idx] || mobileZones[0];
-            
-            // Generate fluid, organic offsets within the boundaries of each safe zone
-            const randomX = Math.floor(Math.random() * (zone.maxX - zone.minX + 1)) + zone.minX;
-            const randomY = Math.floor(Math.random() * (zone.maxY - zone.minY + 1)) + zone.minY;
-
-            // Clamp positions to guarantee they stay within viewport bounds
-            const finalX = Math.max(8, Math.min(randomX, screenW - 130));
-            const finalY = Math.max(15, Math.min(randomY, screenH - 85));
-
-            link.style.left = `${finalX}px`;
-            link.style.top = `${finalY}px`;
-        });
-        return;
-    }
-
-    // ==========================================
-    // DESKTOP ALGORITHMIC SCATTER ENGINE
-    // ==========================================
-    const placedElements = [];
-    if (centerProse) {
-        const proseRect = centerProse.getBoundingClientRect();
-        if (proseRect.width > 0 && proseRect.height > 0) {
-            placedElements.push({
-                x: proseRect.left,
-                y: proseRect.top,
-                width: proseRect.width,
-                height: proseRect.height,
-                isProse: true
-            });
-        }
-    }
-
-    links.forEach(link => {
-        let attempts = 0;
-        let validPosition = false;
-        let x, y, width, height;
-
-        width = link.getBoundingClientRect().width || link.offsetWidth || 140;
-        height = link.getBoundingClientRect().height || link.offsetHeight || 40;
-
-        while (!validPosition && attempts < 800) {
-            x = Math.floor(Math.random() * (window.innerWidth - width - 60)) + 30;
-            y = Math.floor(Math.random() * (window.innerHeight - height - 160)) + 60;
-
-            validPosition = true;
-
-            for (let i = 0; i < placedElements.length; i++) {
-                const existing = placedElements[i];
-                const horizontalBuffer = existing.isProse ? 60 : 45;
-                const verticalBuffer = existing.isProse ? 50 : 30;
-
-                if (
-                    x < existing.x + existing.width + horizontalBuffer &&
-                    x + width > existing.x - horizontalBuffer &&
-                    y < existing.y + existing.height + verticalBuffer &&
-                    y + height > existing.y - verticalBuffer
-                ) {
-                    validPosition = false;
-                    break;
-                }
-            }
-            attempts++;
-        }
-
-        placedElements.push({ x, y, width, height });
-        link.style.left = `${x}px`;
-        link.style.top = `${y}px`;
-    });
-}
-        document.querySelectorAll('.year-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const numericYear = this.getAttribute('data-numeric');
-                scatterLinks();
-                setTimeout(() => {
-                    buildAndShowReceipt(numericYear);
-                }, 180);
-            });
-        });
-
-        document.getElementById('receiptOverlay').addEventListener('click', function(e) {
-            const windowEl = document.getElementById('receiptWindow');
-            if (!windowEl.contains(e.target)) {
-                closeReceipt();
-            }
-        });
-
-        function buildAndShowReceipt(year) {
-            const data = archiveData[year];
-            if (!data) return;
-
-            const now = new Date();
-            const timestamp = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-            let itemsHTML = '';
-            data.items.forEach(item => {
-                itemsHTML += `
-                    <div class="receipt-row">
-                        <span class="item-title">> ${item.title}</span>
-                        <span class="item-creator">${item.creator}</span>
-                    </div>
-                `;
-            });
-
-            const htmlContent = `
-                <div class="receipt-header">
-                    <button class="receipt-ui-close" onclick="closeReceipt()">[x]</button>
-                    <h3>// MY YEAR OF REST AND RECEIPTS //</h3>
-                    <p style="font-size: 0.72rem; margin-top: 4px;">REF-ID: ${data.id}</p>
-                    <p style="font-size: 0.72rem;">DATE: ${timestamp}</p>
-                </div>
-                <div style="margin-bottom: 16px; font-weight: bold; text-align: center; letter-spacing: 1px;">
-                    LOG TYPE: ${data.type}
-                </div>
-                <div style="border-bottom: 1px dashed var(--charcoal); padding-bottom: 6px; margin-bottom: 14px;">
-                    ${itemsHTML}
-                </div>
-                <p style="font-size: 0.75rem; text-align: center; font-style: italic; line-height: 1.4; padding: 0 4px;">
-                    "${data.footer}"
-                </p>
-                <div style="text-align: center; margin-top: 24px; font-size: 0.65rem; letter-spacing: 2px; opacity: 0.7;">
-                    --- VERIFICATION COMPLETE ---
-                </div>
-            `;
-
-            document.getElementById('receiptContent').innerHTML = htmlContent;
-            
-            const overlay = document.getElementById('receiptOverlay');
-            const windowEl = document.getElementById('receiptWindow');
-            
-            overlay.style.display = 'flex';
-            document.getElementById('scrollContainer').scrollTop = 0; 
-            windowEl.offsetHeight; 
-            windowEl.classList.add('spill-open');
-        }
-
-        function closeReceipt() {
-            const windowEl = document.getElementById('receiptWindow');
-            const overlay = document.getElementById('receiptOverlay');
-            
-            windowEl.classList.remove('spill-open');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 350);
-        }
-
-        window.onload = function() {
-            scatterLinks();
-        };
-        window.addEventListener('resize', scatterLinks);
-    </script>
-</body>
-</html>
+⠀⠀⠀⠀⠀⠀⠀⠀⠀
