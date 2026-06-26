@@ -12,7 +12,7 @@
             --accent-vivid-1: #ff3b30; /* Vivid Crimson */
             --accent-vivid-2: #007aff; /* Vivid Electric Blue */
             --accent-vivid-3: #34c759; /* Vivid Acid Green */
-            --blur-amount: 2.5px;      /* Reduced blur for subtle mystery */
+            --blur-amount: 2.5px;      
         }
 
         * {
@@ -41,9 +41,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
             transition: opacity 0.6s ease, transform 0.6s ease;
             padding: 20px;
+            opacity: 1; /* Explicitly visible on load */
         }
 
         .landing-container {
@@ -73,6 +74,7 @@
             text-align: center;
             outline: none;
             transition: border-color 0.3s ease;
+            border-radius: 0;
         }
 
         .landing-input:focus {
@@ -85,11 +87,3 @@
             opacity: 0.4;
             letter-spacing: 0.5px;
         }
-
-        /* --- Main Content --- */
-        #main-content {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 2
