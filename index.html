@@ -252,6 +252,24 @@
             border: 0;
         }
 
+        /* --- Popup Body Text Links --- */
+        .modal-body a {
+            color: var(--text-color);       /* Matches your off-black body font */
+            text-decoration: underline;     /* Permanent underline */
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+            padding: 1px 4px;               /* Clean padding around the text for the background box */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            font-weight: bold;
+}
+
+        .modal-body a:hover {
+            background-color: var(--accent-vivid-2); /* Changes background to Vivid Electric Blue */
+            color: #ffffff;                          /* Turns the letters white */
+            text-decoration: none;                   /* Cleans up the underline on hover box */
+}
+
+
         @media (max-width: 600px) {
             .links-container {
                 line-height: 1.6;
@@ -328,9 +346,9 @@
             <button class="modal-close-btn" onclick="document.getElementById('modal-4').classList.remove('active')">&times;</button>
             <h2 class="modal-title" style="color: var(--accent-vivid-1);">Commodore 64</h2>
             <div class="modal-body">
-                <p><b>films</b>foreign language films</p>
-                <p><b>kpop</b>h2h (& SMent) cortis izna etc ...</p>
-                <p><b>2d</b>hunter x hunter / chainsaw man / bang dream!! (ave mujica) etc</p>
+                <p><b>films</b> foreign language films</p>
+                <p><b>kpop</b> h2h (& SMent) cortis izna etc ...</p>
+                <p><b>2d</b> hunter x hunter / chainsaw man / bang dream!! (ave mujica) etc</p>
                 <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:0px;" src="https://embed.music.apple.com/kr/album/seeya-later/274007376?i=274007382"></iframe>
             </div>
         </div>
