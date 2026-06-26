@@ -87,3 +87,327 @@
             opacity: 0.4;
             letter-spacing: 0.5px;
         }
+
+        /* --- Main Content --- */
+        #main-content {
+            display: none; /* Kept hidden entirely until password is correct */
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 24px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        /* Navigation Links Block - Justified Layout */
+        .links-container {
+            width: 100%;
+            max-width: 850px;
+            text-align: justify;
+            text-align-last: justify; 
+            line-height: 1.8;
+        }
+
+        /* Nav Items & Interpuncts */
+        .nav-item {
+            font-size: clamp(1.4rem, 4vw, 2.6rem); 
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-color);
+            cursor: pointer;
+            filter: blur(var(--blur-amount));
+            transition: filter 0.3s ease, color 0.3s ease;
+            display: inline;
+            
+            opacity: 0;
+            position: relative;
+            top: 5px;
+        }
+
+        .nav-item:hover, .nav-item:active {
+            filter: blur(0px);
+        }
+
+        .nav-item.v1:hover { color: var(--accent-vivid-1); }
+        .nav-item.v2:hover { color: var(--accent-vivid-2); }
+        .nav-item.v3:hover { color: var(--accent-vivid-3); }
+
+        .interpunct {
+            font-size: clamp(1.4rem, 4vw, 2.6rem);
+            font-weight: 700;
+            color: var(--text-color);
+            opacity: 0.25;
+            user-select: none;
+            display: inline;
+            
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .reveal {
+            animation: pullUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes pullUp {
+            to {
+                opacity: 1;
+                top: 0;
+            }
+        }
+
+        /* --- Modals / Popups --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 26, 26, 0.12);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-wrapper {
+            background-color: var(--bg-color);
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            width: 100%;
+            max-width: 640px;
+            padding: 40px 32px 32px 32px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            transform: translateY(15px);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .modal-overlay.active .modal-wrapper {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close-btn:hover {
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            text-align: left;
+        }
+
+        .modal-body {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #e5e5e0;
+            margin-top: 16px;
+        }
+
+        .embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        @media (max-width: 600px) {
+            .links-container {
+                line-height: 1.6;
+            }
+            .modal-wrapper {
+                padding: 32px 20px 20px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="landing-screen">
+        <div class="landing-container">
+            <div class="landing-prompt">Type "word" to enter</div>
+            <input type="text" id="entry-input" class="landing-input" autocomplete="off" autofocus>
+            <div class="landing-hint">Press Enter after typing</div>
+        </div>
+    </div>
+
+    <main id="main-content">
+        <nav class="links-container">
+            <a class="nav-item v1" onclick="openModal('modal-1')">with an Apple Macintosh</a>
+            <span class="interpunct">•</span>
+            <a class="nav-item v2" onclick="openModal('modal-2')">you can't run Radio Shack programs</a>
+            <span class="interpunct">•</span>
+            <a class="nav-item v3" onclick="openModal('modal-3')">in its disc drive.</a>
+            <span class="interpunct">•</span>
+            <a class="nav-item v1" onclick="openModal('modal-4')">nor can a Commodore 64</a>
+            <span class="interpunct">•</span>
+            <a class="nav-item v2" onclick="openModal('modal-5')">drive read a file</a>
+            <span class="interpunct">•</span>
+            <a class="nav-item v3" onclick="openModal('modal-6')">you have created on an</a>
+            <span class="interpunct">•</span>
+            <a class="nav-item v1" onclick="openModal('modal-7')">IBM Personal Computer.</a>
+        </nav>
+    </main>
+
+    <div class="modal-overlay" id="modal-1" onclick="closeModal(event, 'modal-1')">
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" onclick="document.getElementById('modal-1').classList.remove('active')">&times;</button>
+            <h2 class="modal-title" style="color: var(--accent-vivid-1);">Apple Macintosh</h2>
+            <div class="modal-body"><p>Exploring the iconic 1984 ecosystem and closed architecture philosophies.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-2" onclick="closeModal(event, 'modal-2')">
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" onclick="document.getElementById('modal-2').classList.remove('active')">&times;</button>
+            <h2 class="modal-title" style="color: var(--accent-vivid-2);">Radio Shack Programs</h2>
+            <div class="modal-body">
+                <p>TRS-80 legacy media formats and tape architectures.</p>
+                <div class="embed-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-3" onclick="closeModal(event, 'modal-3')">
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" onclick="document.getElementById('modal-3').classList.remove('active')">&times;</button>
+            <h2 class="modal-title" style="color: var(--accent-vivid-3);">Disc Drives</h2>
+            <div class="modal-body"><p>The mechanical soundscapes of early magnetic storage reading segments.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-4" onclick="closeModal(event, 'modal-4')">
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" onclick="document.getElementById('modal-4').classList.remove('active')">&times;</button>
+            <h2 class="modal-title" style="color: var(--accent-vivid-1);">Commodore 64</h2>
+            <div class="modal-body">
+                <p>SID chip synth textures and 8-bit computational restrictions.</p>
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:0px;" src="https://embed.music.apple.com/us/album/brian-eno-music-for-airports/1440844781"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-5" onclick="closeModal(event, 'modal-5')">
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" onclick="document.getElementById('modal-5').classList.remove('active')">&times;</button>
+            <h2 class="modal-title" style="color: var(--accent-vivid-2);">File Integrity</h2>
+            <div class="modal-body"><p>The evolution of raw data formats across fragmented early computing systems.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-6" onclick="closeModal(event, 'modal-6')">
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" onclick="document.getElementById('modal-6').classList.remove('active')">&times;</button>
+            <h2 class="modal-title" style="color: var(--accent-vivid-3);">Created Elements</h2>
+            <div class="modal-body"><p>Design artifacts lost to temporal digital formats.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-7" onclick="closeModal(event, 'modal-7')">
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" onclick="document.getElementById('modal-7').classList.remove('active')">&times;</button>
+            <h2 class="modal-title" style="color: var(--accent-vivid-1);">IBM Personal Computer</h2>
+            <div class="modal-body"><p>The standardizer. The heavy beige architecture that shifted industry parameters.</p></div>
+        </div>
+    </div>
+
+    <script>
+        const entryInput = document.getElementById('entry-input');
+        const landingScreen = document.getElementById('landing-screen');
+        const mainContent = document.getElementById('main-content');
+
+        // Always make sure the input field gains focus when loading
+        window.addEventListener('DOMContentLoaded', () => {
+            entryInput.focus();
+        });
+
+        entryInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                if (entryInput.value.trim().toLowerCase() === 'word') {
+                    // Fade out password page
+                    landingScreen.style.opacity = '0';
+                    landingScreen.style.transform = 'scale(0.98)';
+                    
+                    setTimeout(() => {
+                        landingScreen.style.display = 'none';
+                        
+                        // Switch on main view
+                        mainContent.style.display = 'flex';
+                        // Force layout recalculation before fading opacity in
+                        mainContent.offsetHeight; 
+                        mainContent.style.opacity = '1';
+                        
+                        revealLinksOneByOne();
+                    }, 600);
+                } else {
+                    // Error state feedback
+                    entryInput.style.borderBottomColor = 'var(--accent-vivid-1)';
+                    setTimeout(() => { entryInput.style.borderBottomColor = 'var(--text-color)'; }, 500);
+                }
+            }
+        });
+
+        function revealLinksOneByOne() {
+            const elements = document.querySelectorAll('.nav-item, .interpunct');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('reveal');
+                }, index * 180); 
+            });
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(event, id) {
+            if (event.target.classList.contains('modal-overlay')) {
+                document.getElementById(id).classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
