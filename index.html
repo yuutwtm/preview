@@ -12,7 +12,7 @@
             --accent-vivid-1: #ff3b30; /* Vivid Crimson */
             --accent-vivid-2: #007aff; /* Vivid Electric Blue */
             --accent-vivid-3: #34c759; /* Vivid Acid Green */
-            --blur-amount: 2.5px;      
+            --blur-amount: 1.2px;      /* Reduced blur slightly more */
         }
 
         * {
@@ -44,7 +44,7 @@
             z-index: 1000;
             transition: opacity 0.6s ease, transform 0.6s ease;
             padding: 20px;
-            opacity: 1; /* Explicitly visible on load */
+            opacity: 1; 
         }
 
         .landing-container {
@@ -90,7 +90,7 @@
 
         /* --- Main Content --- */
         #main-content {
-            display: none; /* Kept hidden entirely until password is correct */
+            display: none; 
             min-height: 100vh;
             justify-content: center;
             align-items: center;
@@ -135,8 +135,8 @@
         .interpunct {
             font-size: clamp(1.4rem, 4vw, 2.6rem);
             font-weight: 700;
-            color: var(--text-color);
-            opacity: 0.25;
+            color: var(--accent-vivid-1); /* Changed to signature red */
+            opacity: 1; /* Keeping color vibrant instead of highly transparent */
             user-select: none;
             display: inline;
             
@@ -264,6 +264,7 @@
 </head>
 <body>
 
+    <!-- Landing Screen -->
     <div id="landing-screen">
         <div class="landing-container">
             <div class="landing-prompt">Type "word" to enter</div>
@@ -272,6 +273,7 @@
         </div>
     </div>
 
+    <!-- Main Content -->
     <main id="main-content">
         <nav class="links-container">
             <a class="nav-item v1" onclick="openModal('modal-1')">with an Apple Macintosh</a>
@@ -290,6 +292,7 @@
         </nav>
     </main>
 
+    <!-- Modals Stack -->
     <div class="modal-overlay" id="modal-1" onclick="closeModal(event, 'modal-1')">
         <div class="modal-wrapper">
             <button class="modal-close-btn" onclick="document.getElementById('modal-1').classList.remove('active')">&times;</button>
@@ -359,31 +362,36 @@
         const landingScreen = document.getElementById('landing-screen');
         const mainContent = document.getElementById('main-content');
 
-        // Always make sure the input field gains focus when loading
         window.addEventListener('DOMContentLoaded', () => {
-            entryInput.focus();
+            // Check if user already authorized in this tab session
+            if (sessionStorage.getItem('siteAuthorized') === 'true') {
+                landingScreen.style.display = 'none';
+                mainContent.style.display = 'flex';
+                mainContent.offsetHeight; 
+                mainContent.style.opacity = '1';
+                revealLinksOneByOne();
+            } else {
+                entryInput.focus();
+            }
         });
 
         entryInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 if (entryInput.value.trim().toLowerCase() === 'word') {
-                    // Fade out password page
+                    // Save authorization to session storage
+                    sessionStorage.setItem('siteAuthorized', 'true');
+                    
                     landingScreen.style.opacity = '0';
                     landingScreen.style.transform = 'scale(0.98)';
                     
                     setTimeout(() => {
                         landingScreen.style.display = 'none';
-                        
-                        // Switch on main view
                         mainContent.style.display = 'flex';
-                        // Force layout recalculation before fading opacity in
                         mainContent.offsetHeight; 
                         mainContent.style.opacity = '1';
-                        
                         revealLinksOneByOne();
                     }, 600);
                 } else {
-                    // Error state feedback
                     entryInput.style.borderBottomColor = 'var(--accent-vivid-1)';
                     setTimeout(() => { entryInput.style.borderBottomColor = 'var(--text-color)'; }, 500);
                 }
