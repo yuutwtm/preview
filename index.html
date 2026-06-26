@@ -267,7 +267,7 @@
     <!-- Landing Screen -->
     <div id="landing-screen">
         <div class="landing-container">
-            <div class="landing-prompt">Type "word" to enter</div>
+            <div class="landing-prompt">Type "hello world" to enter</div>
             <input type="text" id="entry-input" class="landing-input" autocomplete="off" autofocus>
             <div class="landing-hint">Press Enter after typing</div>
         </div>
@@ -277,18 +277,18 @@
     <main id="main-content">
         <nav class="links-container">
             <a class="nav-item v1" onclick="openModal('modal-1')">with an Apple Macintosh</a>
-            <span class="interpunct">•</span>
+            <span class="interpunct"> · </span>
             <a class="nav-item v2" onclick="openModal('modal-2')">you can't run Radio Shack programs</a>
-            <span class="interpunct">•</span>
+            <span class="interpunct"> · </span>
             <a class="nav-item v3" onclick="openModal('modal-3')">in its disc drive.</a>
-            <span class="interpunct">•</span>
+            <span class="interpunct"> · </span>
             <a class="nav-item v1" onclick="openModal('modal-4')">nor can a Commodore 64</a>
-            <span class="interpunct">•</span>
+            <span class="interpunct"> · </span>
             <a class="nav-item v2" onclick="openModal('modal-5')">drive read a file</a>
-            <span class="interpunct">•</span>
+            <span class="interpunct"> · </span>
             <a class="nav-item v3" onclick="openModal('modal-6')">you have created on an</a>
-            <span class="interpunct">•</span>
-            <a class="nav-item v1" onclick="openModal('modal-7')">IBM Personal Computer.</a>
+            <span class="interpunct"> · </span>
+            <a class="nav-item v1" onclick="openModal('modal-7')">IBM Personal Computer. (Charles Bukowski)</a>
         </nav>
     </main>
 
@@ -377,7 +377,7 @@
 
         entryInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                if (entryInput.value.trim().toLowerCase() === 'word') {
+                if (entryInput.value.trim().toLowerCase() === 'hello world') {
                     // Save authorization to session storage
                     sessionStorage.setItem('siteAuthorized', 'true');
                     
