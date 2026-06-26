@@ -287,7 +287,7 @@
         <div class="landing-container">
             <div class="landing-prompt">Type "hello world" to enter</div>
             <input type="text" id="entry-input" class="landing-input" autocomplete="off" autofocus>
-            <div class="landing-hint">Press <b>Enter</b>> after typing</div>
+            <div class="landing-hint">Press <b>Enter</b> after typing ...</div>
         </div>
     </div>
 
@@ -298,15 +298,7 @@
             <span class="interpunct"> · </span>
             <a class="nav-item v2" onclick="openModal('modal-2')">you can't run Radio Shack programs</a>
             <span class="interpunct"> · </span>
-            <a class="nav-item v3" onclick="openModal('modal-3')">in its disc drive.</a>
-            <span class="interpunct"> · </span>
-            <a class="nav-item v1" onclick="openModal('modal-4')">nor can a Commodore 64</a>
-            <span class="interpunct"> · </span>
-            <a class="nav-item v2" onclick="openModal('modal-5')">drive read a file</a>
-            <span class="interpunct"> · </span>
-            <a class="nav-item v3" onclick="openModal('modal-6')">you have created on an</a>
-            <span class="interpunct"> · </span>
-            <a class="nav-item v1" onclick="openModal('modal-7')">IBM Personal Computer. (Charles Bukowski)</a>
+            <a class="nav-item v3" onclick="openModal('modal-3')">in its disc drive. (Charles Bukowski)</a>
         </nav>
     </main>
 
@@ -315,7 +307,7 @@
         <div class="modal-wrapper">
             <button class="modal-close-btn" onclick="document.getElementById('modal-1').classList.remove('active')">&times;</button>
             <h2 class="modal-title" style="color: var(--accent-vivid-1);">Apple Macintosh</h2>
-            <div class="modal-body"><p>@pitfieldst</p><br><p>수지 키도 케이 外 아시는 닉</p></div>
+            <div class="modal-body"><p>@pitfieldst</p><p>수지 키도 케이 外 아시는 닉</p></div>
         </div>
     </div>
 
@@ -337,15 +329,7 @@
         <div class="modal-wrapper">
             <button class="modal-close-btn" onclick="document.getElementById('modal-3').classList.remove('active')">&times;</button>
             <h2 class="modal-title" style="color: var(--accent-vivid-3);">Disc Drives</h2>
-            <div class="modal-body"><p>The mechanical soundscapes of early magnetic storage reading segments.</p></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-4" onclick="closeModal(event, 'modal-4')">
-        <div class="modal-wrapper">
-            <button class="modal-close-btn" onclick="document.getElementById('modal-4').classList.remove('active')">&times;</button>
-            <h2 class="modal-title" style="color: var(--accent-vivid-1);">Commodore 64</h2>
-            <div class="modal-body">
+            <<div class="modal-body">
                 <p><b>films</b> foreign language films</p>
                 <p><b>kpop</b> h2h (& SMent) cortis izna etc ...</p>
                 <p><b>2d</b> hunter x hunter / chainsaw man / bang dream!! (ave mujica) etc</p>
@@ -354,30 +338,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="modal-5" onclick="closeModal(event, 'modal-5')">
-        <div class="modal-wrapper">
-            <button class="modal-close-btn" onclick="document.getElementById('modal-5').classList.remove('active')">&times;</button>
-            <h2 class="modal-title" style="color: var(--accent-vivid-2);">File Integrity</h2>
-            <div class="modal-body"><p>The evolution of raw data formats across fragmented early computing systems.</p></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-6" onclick="closeModal(event, 'modal-6')">
-        <div class="modal-wrapper">
-            <button class="modal-close-btn" onclick="document.getElementById('modal-6').classList.remove('active')">&times;</button>
-            <h2 class="modal-title" style="color: var(--accent-vivid-3);">Created Elements</h2>
-            <div class="modal-body"><p>Design artifacts lost to temporal digital formats.</p></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-7" onclick="closeModal(event, 'modal-7')">
-        <div class="modal-wrapper">
-            <button class="modal-close-btn" onclick="document.getElementById('modal-7').classList.remove('active')">&times;</button>
-            <h2 class="modal-title" style="color: var(--accent-vivid-1);">IBM Personal Computer</h2>
-            <div class="modal-body"><p>The standardizer. The heavy beige architecture that shifted industry parameters.</p></div>
-        </div>
-    </div>
-
+   
     <script>
         const entryInput = document.getElementById('entry-input');
         const landingScreen = document.getElementById('landing-screen');
