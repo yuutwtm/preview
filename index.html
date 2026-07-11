@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive — Reading Logs</title>
-    <!-- Pretendard for Korean text -->
+    <title>Archive — Logs</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
         :root {
-            /* Soft, rich off-black to prevent eye strain */
-            --bg-color: #121212; 
-            --text-color: #F5F5F7;
+            --bg-color: #161616; /* Deep matte off-black */
+            --text-color: #ECECEC;
             
-            /* MoMA / Mondrian inspired primary palette */
+            /* Mondrian & MoMA Primary Palette */
             --mondrian-red: #E11A22;
             --mondrian-blue: #004FFE;
             --mondrian-yellow: #F9CC00;
-            --mondrian-white: #EAEAEA;
+            --mondrian-white: #F4F4F4;
         }
 
         * {
@@ -28,178 +26,193 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            /* Font stack pairing: Helvetica for alphanumeric/symbols, Pretendard for Korean */
             font-family: 'Helvetica Neue', Helvetica, 'Pretendard', sans-serif;
             min-height: 100vh;
-            padding: 4vw;
-            overflow-y: scroll; /* Intentional vertical scroll */
+            padding: 2vw; /* Reduced padding */
+            overflow-y: scroll;
         }
 
         header {
-            margin-bottom: 8vh;
+            margin-bottom: 4vh;
             border-bottom: 2px solid var(--text-color);
-            padding-bottom: 20px;
+            padding-bottom: 10px;
         }
 
         h1 {
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(1.8rem, 4vw, 3rem);
             font-weight: 900;
-            letter-spacing: -0.04em;
-            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            text-transform: lowercase;
         }
 
-        .subtitle {
-            font-family: 'Pretendard', sans-serif;
-            font-weight: 300;
-            font-size: 1.1rem;
-            color: #8E8E93;
-            margin-top: 10px;
-        }
-
-        /* Grid container holding the interactive year blocks */
-        .archive-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 1200px;
+        /* Asymmetric Mondrian Grid Structure */
+        .grid-matrix {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 12px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Base Block Styling */
-        .year-block {
+        /* Base Block Mechanics */
+        .block {
             position: relative;
-            min-height: 160px;
-            padding: 30px;
+            min-height: 120px;
+            padding: 16px; /* Reduced padding */
             cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
-            border: 2px solid transparent;
         }
 
-        .year-block:hover {
-            filter: brightness(1.1);
-            transform: scale(0.995);
+        .block:hover {
+            filter: saturate(1.2) brightness(1.05);
         }
 
-        /* Varying widths per Mondrian aesthetic */
-        .block-2026 { width: 100%; background-color: var(--mondrian-red); color: #fff; }
-        .block-2025 { width: 85%; background-color: var(--mondrian-blue); color: #fff; }
-        .block-2024 { width: 95%; background-color: var(--mondrian-white); color: #121212; }
-        .block-2023 { width: 75%; background-color: var(--mondrian-yellow); color: #121212; }
-        .block-2022 { width: 90%; background-color: var(--mondrian-white); color: #121212; }
+        /* Highly Varied Widths & Placements via Grid Spans */
+        .b-2026 { grid-column: span 8; background-color: var(--mondrian-red); color: #fff; }
+        .b-space1 { grid-column: span 4; background-color: var(--mondrian-white); color: #121212; } /* Negative space block */
+        
+        .b-2025 { grid-column: span 5; background-color: var(--mondrian-blue); color: #fff; }
+        .b-2024 { grid-column: span 7; background-color: var(--mondrian-white); color: #121212; }
+        
+        .b-space2 { grid-column: span 3; background-color: var(--mondrian-white); color: #121212; } /* Narrow negative space block */
+        .b-2023 { grid-column: span 9; background-color: var(--mondrian-yellow); color: #121212; }
+        
+        .b-2022 { grid-column: span 6; background-color: var(--mondrian-white); color: #121212; }
+        .b-space3 { grid-column: span 6; background-color: var(--mondrian-white); color: #121212; }
 
-        /* Year Text: Bottom left, Helvetica Bold, tight tracking */
-        .year-label {
+        /* Typography: Lowercase, Helvetica Bold, tightly tracked */
+        .label {
             font-family: 'Helvetica Neue', Helvetica, sans-serif;
             font-weight: 900;
-            font-size: clamp(3.5rem, 8vw, 6rem);
-            line-height: 0.8;
-            letter-spacing: -0.07em; /* Reduced letter spacing */
-            margin-top: auto; /* Forces it to the bottom left */
-            pointer-events: none;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            line-height: 0.85;
+            letter-spacing: -0.08em;
+            text-transform: lowercase;
+            margin-top: auto; /* Bottom-left alignment */
             transition: all 0.4s ease;
+            white-space: nowrap;
         }
 
-        /* Book list hidden by default */
-        .book-list-container {
+        /* Hidden Content Containers */
+        .spill-content {
             max-height: 0;
             opacity: 0;
             visibility: hidden;
             transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
 
+        /* Books List Layout */
         .book-list {
             list-style: none;
-            padding-top: 20px;
-            padding-bottom: 40px;
+            padding-top: 15px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .book-item {
-            font-size: 1.15rem;
-            line-height: 1.5;
-            border-bottom: 1px solid rgba(0,0,0,0.15);
-            padding-bottom: 8px;
+            font-size: 1.05rem;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
 
-        /* Adjust borders for dark blocks */
-        .block-2026 .book-item, .block-2025 .book-item {
-            border-bottom: 1px solid rgba(255,255,255,0.25);
+        .b-2026 .book-item, .b-2025 .book-item {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* Text weights balancing */
-        .book-title {
-            font-family: 'Pretendard', 'Helvetica Neue', sans-serif;
-            font-weight: 700; /* Bold for names */
-        }
+        .book-title { font-family: 'Pretendard', sans-serif; font-weight: 700; }
+        .book-author { font-family: 'Pretendard', sans-serif; font-weight: 300; opacity: 0.8; margin-left: 8px; }
 
-        .book-author {
-            font-family: 'Pretendard', 'Helvetica Neue', sans-serif;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-left: 10px;
-        }
-
-        /* Active State when Tapped */
-        .year-block.expanded {
-            width: 100% !important; /* Resizes itself to accommodate content */
-            min-height: 350px;
-            cursor: default;
-        }
-
-        .year-block.expanded .year-label {
-            font-size: clamp(2rem, 4vw, 3rem); /* Year shrinks gracefully to act as header */
-            margin-top: 0;
-            margin-bottom: 15px;
-            border-bottom: 3px solid currentColor;
-            padding-bottom: 10px;
+        /* Embedded Media Container for Negative Space Blocks */
+        .media-embed {
             width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
+            margin-top: 15px;
         }
 
-        .year-block.expanded .book-list-container {
-            max-height: 1000px; /* Big enough to hold lists */
+        .media-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- Expanded Interaction States --- */
+        
+        /* Vertical Expansion for Wide Blocks */
+        .block.expanded-vertical {
+            grid-column: span 12 !important; /* Spans full width to accommodate list */
+            min-height: 300px;
+        }
+
+        /* Horizontal Expansion for Narrow Negative Space Blocks */
+        .block.expanded-horizontal {
+            grid-column: span 8 !important; /* Spills wider horizontally */
+        }
+
+        .block.expanded-vertical .label, .block.expanded-horizontal .label {
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 2px solid currentColor;
+            padding-bottom: 4px;
+            width: max-content;
+        }
+
+        .block.expanded-vertical .spill-content, .block.expanded-horizontal .spill-content {
+            max-height: 800px;
             opacity: 1;
             visibility: visible;
         }
 
-        /* Fun layout quirk: subtle stagger on desktop */
-        @media (min-width: 768px) {
-            .block-2025 { align-self: flex-end; }
-            .block-2023 { align-self: center; }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .grid-matrix { display: flex; flex-direction: column; gap: 10px; }
+            .block { width: 100% !important; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Reading Archive</h1>
-        <div class="subtitle">2022 — 2026 도서 기록 집합</div>
+        <h1>archive / reading logs</h1>
     </header>
 
-    <main class="archive-container">
+    <main class="grid-matrix">
 
         <!-- 2026 Block -->
-        <div class="year-block block-2026" onclick="toggleBlock(this)">
-            <div class="year-label">2026</div>
-            <div class="book-list-container">
+        <div class="block b-2026" onclick="toggleBlock(this, 'vertical')">
+            <div class="label">twenty twenty-six</div>
+            <div class="spill-content">
                 <ul class="book-list">
                     <li class="book-item"><span class="book-title">디자인의 디자인</span><span class="book-author">Hara Kenya</span></li>
                     <li class="book-item"><span class="book-title">The Design of Everyday Things</span><span class="book-author">Don Norman</span></li>
-                    <li class="book-item"><span class="book-title">물고기는 존재하지 않는다</span><span class="book-author">Lulu Miller</span></li>
                 </ul>
             </div>
         </div>
 
+        <!-- White Space Block 1 (YouTube Spill) -->
+        <div class="block b-space1" onclick="toggleBlock(this, 'vertical')">
+            <div class="label">visual noise</div>
+            <div class="spill-content">
+                <div class="media-embed">
+                    <!-- Replace VIDEO_ID with actual YouTube ID -->
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
         <!-- 2025 Block -->
-        <div class="year-block block-2025" onclick="toggleBlock(this)">
-            <div class="year-label">2025</div>
-            <div class="book-list-container">
+        <div class="block b-2025" onclick="toggleBlock(this, 'vertical')">
+            <div class="label">twenty twenty-five</div>
+            <div class="spill-content">
                 <ul class="book-list">
                     <li class="book-item"><span class="book-title">바른 마음</span><span class="book-author">Jonathan Haidt</span></li>
                     <li class="book-item"><span class="book-title">Grid Systems in Graphic Design</span><span class="book-author">Josef Müller-Brockmann</span></li>
@@ -208,54 +221,75 @@
         </div>
 
         <!-- 2024 Block -->
-        <div class="year-block block-2024" onclick="toggleBlock(this)">
-            <div class="year-label">2024</div>
-            <div class="book-list-container">
+        <div class="block b-2024" onclick="toggleBlock(this, 'vertical')">
+            <div class="label">twenty twenty-four</div>
+            <div class="spill-content">
                 <ul class="book-list">
                     <li class="book-item"><span class="book-title">사피엔스</span><span class="book-author">Yuval Noah Harari</span></li>
-                    <li class="book-item"><span class="book-title">No Longer Human</span><span class="book-author">Osamu Dazai</span></li>
                     <li class="book-item"><span class="book-title">도둑맞은 집중력</span><span class="book-author">Johann Hari</span></li>
                 </ul>
             </div>
         </div>
 
+        <!-- White Space Block 2 (Narrow Block - Expands Horizontally) -->
+        <div class="block b-space2" onclick="toggleBlock(this, 'horizontal')">
+            <div class="label">audio</div>
+            <div class="spill-content">
+                <!-- Apple Music Embed Track Example -->
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:4px;" src="https://embed.music.apple.com/us/album/supernatural/1747043133?i=1747043134"></iframe>
+            </div>
+        </div>
+
         <!-- 2023 Block -->
-        <div class="year-block block-2023" onclick="toggleBlock(this)">
-            <div class="year-label">2023</div>
-            <div class="book-list-container">
+        <div class="block b-2023" onclick="toggleBlock(this, 'vertical')">
+            <div class="label">twenty twenty-three</div>
+            <div class="spill-content">
                 <ul class="book-list">
-                    <li class="book-item"><span class="book-title">트렌드 코리아 2023</span><span class="book-author">김난도</span></li>
                     <li class="book-item"><span class="book-title">Norwegian Wood</span><span class="book-author">Haruki Murakami</span></li>
                 </ul>
             </div>
         </div>
 
         <!-- 2022 Block -->
-        <div class="year-block block-2022" onclick="toggleBlock(this)">
-            <div class="year-label">2022</div>
-            <div class="book-list-container">
+        <div class="block b-2022" onclick="toggleBlock(this, 'vertical')">
+            <div class="label">twenty twenty-two</div>
+            <div class="spill-content">
                 <ul class="book-list">
                     <li class="book-item"><span class="book-title">공정하다는 착각</span><span class="book-author">Michael Sandel</span></li>
-                    <li class="book-item"><span class="book-title">Thinking, Fast and Slow</span><span class="book-author">Daniel Kahneman</span></li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- White Space Block 3 -->
+        <div class="block b-space3" onclick="toggleBlock(this, 'vertical')">
+            <div class="label">curated space</div>
+            <div class="spill-content">
+                <div class="book-list">
+                    <div class="book-item" style="font-family:'Pretendard'; font-weight:300;">여백의 미와 시각적 기록.</div>
+                </div>
             </div>
         </div>
 
     </main>
 
     <script>
-        function toggleBlock(element) {
-            // Toggle the clicked block
-            element.classList.toggle('expanded');
+        function toggleBlock(element, mode) {
+            const isExpanded = element.classList.contains('expanded-vertical') || element.classList.contains('expanded-horizontal');
             
-            // Optional: Close other blocks when one opens to keep the layout tight
-            document.querySelectorAll('.year-block').forEach(block => {
-                if (block !== element) {
-                    block.classList.remove('expanded');
-                }
+            // Clear all expanded states to reset grid rhythm
+            document.querySelectorAll('.block').forEach(b => {
+                b.classList.remove('expanded-vertical', 'expanded-horizontal');
             });
+
+            // If it wasn't expanded, open it based on its specific spill direction mode
+            if (!isExpanded) {
+                if (mode === 'horizontal') {
+                    element.classList.add('expanded-horizontal');
+                } else {
+                    element.classList.add('expanded-vertical');
+                }
+            }
         }
     </script>
 </body>
 </html>
-
