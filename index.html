@@ -7,14 +7,13 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
         :root {
-            --bg-color: #161616; /* Deep matte off-black */
-            --text-color: #ECECEC;
+            --bg-color: #141414; 
+            --text-color: #EDEDED;
             
-            /* Mondrian & MoMA Primary Palette */
             --mondrian-red: #E11A22;
             --mondrian-blue: #004FFE;
             --mondrian-yellow: #F9CC00;
-            --mondrian-white: #F4F4F4;
+            --mondrian-white: #F5F5F5;
         }
 
         * {
@@ -28,112 +27,123 @@
             color: var(--text-color);
             font-family: 'Helvetica Neue', Helvetica, 'Pretendard', sans-serif;
             min-height: 100vh;
-            padding: 2vw; /* Reduced padding */
+            padding: 2vw;
             overflow-y: scroll;
         }
 
         header {
-            margin-bottom: 4vh;
+            margin-bottom: 3vh;
             border-bottom: 2px solid var(--text-color);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         h1 {
-            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
             font-weight: 900;
             letter-spacing: -0.05em;
             text-transform: lowercase;
         }
 
-        /* Asymmetric Mondrian Grid Structure */
+        /* Responsive Grid Matrix: 2-3 cols on mobile, up to 5 on web */
         .grid-matrix {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 12px;
-            max-width: 1400px;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns minimum on small mobile */
+            gap: 10px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
-        /* Base Block Mechanics */
+        @media (min-width: 480px) {
+            .grid-matrix { grid-template-columns: repeat(3, 1fr); } /* Max 3 on mobile layout */
+        }
+
+        @media (min-width: 992px) {
+            .grid-matrix { grid-template-columns: repeat(5, 1fr); } /* Max 5 on web screens */
+        }
+
+        /* Base Block Architecture */
         .block {
             position: relative;
-            min-height: 120px;
-            padding: 16px; /* Reduced padding */
+            min-height: 130px;
+            padding: 12px; 
             cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
 
         .block:hover {
-            filter: saturate(1.2) brightness(1.05);
+            filter: saturate(1.15) brightness(1.03);
         }
 
-        /* Highly Varied Widths & Placements via Grid Spans */
-        .b-2026 { grid-column: span 8; background-color: var(--mondrian-red); color: #fff; }
-        .b-space1 { grid-column: span 4; background-color: var(--mondrian-white); color: #121212; } /* Negative space block */
-        
-        .b-2025 { grid-column: span 5; background-color: var(--mondrian-blue); color: #fff; }
-        .b-2024 { grid-column: span 7; background-color: var(--mondrian-white); color: #121212; }
-        
-        .b-space2 { grid-column: span 3; background-color: var(--mondrian-white); color: #121212; } /* Narrow negative space block */
-        .b-2023 { grid-column: span 9; background-color: var(--mondrian-yellow); color: #121212; }
-        
-        .b-2022 { grid-column: span 6; background-color: var(--mondrian-white); color: #121212; }
-        .b-space3 { grid-column: span 6; background-color: var(--mondrian-white); color: #121212; }
+        /* Purely Intentional Random-Feeling Width Variations via Spans */
+        .w-span-1 { grid-column: span 1; }
+        .w-span-2 { grid-column: span 2; }
+        .w-span-3 { grid-column: span 3; }
 
-        /* Typography: Lowercase, Helvetica Bold, tightly tracked */
+        /* Structural Color Profiles */
+        .b-2026 { background-color: var(--mondrian-red); color: #fff; }
+        .b-space1 { background-color: var(--mondrian-white); }
+        .b-2025 { background-color: var(--mondrian-blue); color: #fff; }
+        .b-2024 { background-color: var(--mondrian-white); color: #121212; }
+        .b-space2 { background-color: var(--mondrian-white); }
+        .b-2023 { background-color: var(--mondrian-yellow); color: #121212; }
+        .b-2022 { background-color: var(--mondrian-white); color: #121212; }
+        .b-space3 { background-color: var(--mondrian-white); }
+
+        /* Label Typography: lowercase, bold, tight tracking */
         .label {
             font-family: 'Helvetica Neue', Helvetica, sans-serif;
             font-weight: 900;
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-size: clamp(1.3rem, 2.5vw, 2.2rem);
             line-height: 0.85;
-            letter-spacing: -0.08em;
+            letter-spacing: -0.07em;
             text-transform: lowercase;
-            margin-top: auto; /* Bottom-left alignment */
-            transition: all 0.4s ease;
+            margin-top: auto; 
+            transition: all 0.3s ease;
             white-space: nowrap;
         }
 
-        /* Hidden Content Containers */
+        /* Inside Content Container */
         .spill-content {
             max-height: 0;
             opacity: 0;
             visibility: hidden;
-            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
         }
 
-        /* Books List Layout */
+        /* Adjusted padding layout upon spilling */
         .book-list {
             list-style: none;
-            padding-top: 15px;
+            padding-top: 4px; /* Reduced top padding on spill */
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .book-item {
-            font-size: 1.05rem;
-            padding-bottom: 6px;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            letter-spacing: 0.03em; /* Slightly increased tracking for internal strings */
         }
 
         .b-2026 .book-item, .b-2025 .book-item {
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.18);
         }
 
         .book-title { font-family: 'Pretendard', sans-serif; font-weight: 700; }
-        .book-author { font-family: 'Pretendard', sans-serif; font-weight: 300; opacity: 0.8; margin-left: 8px; }
+        .book-author { font-family: 'Pretendard', sans-serif; font-weight: 400; opacity: 0.75; margin-left: 6px; }
 
-        /* Embedded Media Container for Negative Space Blocks */
+        /* Media Embeds spanning cleanly inside blocks */
         .media-embed {
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%;
             position: relative;
-            margin-top: 15px;
+            margin-top: 6px; /* Kept tight */
         }
 
         .media-embed iframe {
@@ -145,50 +155,46 @@
             border: none;
         }
 
-        /* --- Expanded Interaction States --- */
-        
-        /* Vertical Expansion for Wide Blocks */
+        /* --- Active Spilling Interactivity States --- */
+
+        /* Vertical Expansion Dynamic Spanning rules */
         .block.expanded-vertical {
-            grid-column: span 12 !important; /* Spans full width to accommodate list */
-            min-height: 300px;
+            grid-column: 1 / -1 !important; /* Full row sweep across any device layout */
+            min-height: 260px;
         }
 
-        /* Horizontal Expansion for Narrow Negative Space Blocks */
+        /* Horizontal Spill Dynamic rules for narrow block profiles */
         .block.expanded-horizontal {
-            grid-column: span 8 !important; /* Spills wider horizontally */
+            grid-column: span 2 !important; 
+        }
+        @media (min-width: 992px) {
+            .block.expanded-horizontal { grid-column: span 3 !important; }
         }
 
         .block.expanded-vertical .label, .block.expanded-horizontal .label {
             margin-top: 0;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             border-bottom: 2px solid currentColor;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
             width: max-content;
         }
 
         .block.expanded-vertical .spill-content, .block.expanded-horizontal .spill-content {
-            max-height: 800px;
+            max-height: 700px;
             opacity: 1;
             visibility: visible;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .grid-matrix { display: flex; flex-direction: column; gap: 10px; }
-            .block { width: 100% !important; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>archive / reading logs</h1>
+        <h1>archive / dynamic logs</h1>
     </header>
 
     <main class="grid-matrix">
 
-        <!-- 2026 Block -->
-        <div class="block b-2026" onclick="toggleBlock(this, 'vertical')">
+        <div class="block b-2026 w-span-2" onclick="toggleBlock(this, 'vertical')">
             <div class="label">twenty twenty-six</div>
             <div class="spill-content">
                 <ul class="book-list">
@@ -198,19 +204,15 @@
             </div>
         </div>
 
-        <!-- White Space Block 1 (YouTube Spill) -->
-        <div class="block b-space1" onclick="toggleBlock(this, 'vertical')">
-            <div class="label">visual noise</div>
+        <div class="block b-space1 w-span-1" onclick="toggleBlock(this, 'vertical')">
             <div class="spill-content">
                 <div class="media-embed">
-                    <!-- Replace VIDEO_ID with actual YouTube ID -->
                     <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
 
-        <!-- 2025 Block -->
-        <div class="block b-2025" onclick="toggleBlock(this, 'vertical')">
+        <div class="block b-2025 w-span-1" onclick="toggleBlock(this, 'vertical')">
             <div class="label">twenty twenty-five</div>
             <div class="spill-content">
                 <ul class="book-list">
@@ -220,8 +222,7 @@
             </div>
         </div>
 
-        <!-- 2024 Block -->
-        <div class="block b-2024" onclick="toggleBlock(this, 'vertical')">
+        <div class="block b-2024 w-span-2" onclick="toggleBlock(this, 'vertical')">
             <div class="label">twenty twenty-four</div>
             <div class="spill-content">
                 <ul class="book-list">
@@ -231,17 +232,13 @@
             </div>
         </div>
 
-        <!-- White Space Block 2 (Narrow Block - Expands Horizontally) -->
-        <div class="block b-space2" onclick="toggleBlock(this, 'horizontal')">
-            <div class="label">audio</div>
+        <div class="block b-space2 w-span-1" onclick="toggleBlock(this, 'horizontal')">
             <div class="spill-content">
-                <!-- Apple Music Embed Track Example -->
-                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:4px;" src="https://embed.music.apple.com/us/album/supernatural/1747043133?i=1747043134"></iframe>
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:4px;margin-top:4px;" src="https://embed.music.apple.com/us/album/supernatural/1747043133?i=1747043134"></iframe>
             </div>
         </div>
 
-        <!-- 2023 Block -->
-        <div class="block b-2023" onclick="toggleBlock(this, 'vertical')">
+        <div class="block b-2023 w-span-2" onclick="toggleBlock(this, 'vertical')">
             <div class="label">twenty twenty-three</div>
             <div class="spill-content">
                 <ul class="book-list">
@@ -250,23 +247,22 @@
             </div>
         </div>
 
-        <!-- 2022 Block -->
-        <div class="block b-2022" onclick="toggleBlock(this, 'vertical')">
+        <div class="block b-space3 w-span-1" onclick="toggleBlock(this, 'vertical')">
+            <div class="spill-content">
+                <div class="book-list">
+                    <div class="book-item" style="font-family:'Pretendard'; font-weight:300; border:none; letter-spacing:0.02em; color:#121212;">
+                        여백 레이아웃 인터랙션 소스.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="block b-2022 w-span-2" onclick="toggleBlock(this, 'vertical')">
             <div class="label">twenty twenty-two</div>
             <div class="spill-content">
                 <ul class="book-list">
                     <li class="book-item"><span class="book-title">공정하다는 착각</span><span class="book-author">Michael Sandel</span></li>
                 </ul>
-            </div>
-        </div>
-
-        <!-- White Space Block 3 -->
-        <div class="block b-space3" onclick="toggleBlock(this, 'vertical')">
-            <div class="label">curated space</div>
-            <div class="spill-content">
-                <div class="book-list">
-                    <div class="book-item" style="font-family:'Pretendard'; font-weight:300;">여백의 미와 시각적 기록.</div>
-                </div>
             </div>
         </div>
 
@@ -276,12 +272,11 @@
         function toggleBlock(element, mode) {
             const isExpanded = element.classList.contains('expanded-vertical') || element.classList.contains('expanded-horizontal');
             
-            // Clear all expanded states to reset grid rhythm
+            // Clean dynamic row configurations
             document.querySelectorAll('.block').forEach(b => {
                 b.classList.remove('expanded-vertical', 'expanded-horizontal');
             });
 
-            // If it wasn't expanded, open it based on its specific spill direction mode
             if (!isExpanded) {
                 if (mode === 'horizontal') {
                     element.classList.add('expanded-horizontal');
