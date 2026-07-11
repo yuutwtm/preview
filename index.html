@@ -1,1 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive — Reading Logs</title>
+    <!-- Pretendard for Korean text -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            /* Soft, rich off-black to prevent eye strain */
+            --bg-color: #121212; 
+            --text-color: #F5F5F7;
+            
+            /* MoMA / Mondrian inspired primary palette */
+            --mondrian-red: #E11A22;
+            --mondrian-blue: #004FFE;
+            --mondrian-yellow: #F9CC00;
+            --mondrian-white: #EAEAEA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            /* Font stack pairing: Helvetica for alphanumeric/symbols, Pretendard for Korean */
+            font-family: 'Helvetica Neue', Helvetica, 'Pretendard', sans-serif;
+            min-height: 100vh;
+            padding: 4vw;
+            overflow-y: scroll; /* Intentional vertical scroll */
+        }
+
+        header {
+            margin-bottom: 8vh;
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: #8E8E93;
+            margin-top: 10px;
+        }
+
+        /* Grid container holding the interactive year blocks */
+        .archive-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Base Block Styling */
+        .year-block {
+            position: relative;
+            min-height: 160px;
+            padding: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .year-block:hover {
+            filter: brightness(1.1);
+            transform: scale(0.995);
+        }
+
+        /* Varying widths per Mondrian aesthetic */
+        .block-2026 { width: 100%; background-color: var(--mondrian-red); color: #fff; }
+        .block-2025 { width: 85%; background-color: var(--mondrian-blue); color: #fff; }
+        .block-2024 { width: 95%; background-color: var(--mondrian-white); color: #121212; }
+        .block-2023 { width: 75%; background-color: var(--mondrian-yellow); color: #121212; }
+        .block-2022 { width: 90%; background-color: var(--mondrian-white); color: #121212; }
+
+        /* Year Text: Bottom left, Helvetica Bold, tight tracking */
+        .year-label {
+            font-family: 'Helvetica Neue', Helvetica, sans-serif;
+            font-weight: 900;
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            line-height: 0.8;
+            letter-spacing: -0.07em; /* Reduced letter spacing */
+            margin-top: auto; /* Forces it to the bottom left */
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        /* Book list hidden by default */
+        .book-list-container {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+
+        .book-list {
+            list-style: none;
+            padding-top: 20px;
+            padding-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .book-item {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            border-bottom: 1px solid rgba(0,0,0,0.15);
+            padding-bottom: 8px;
+        }
+
+        /* Adjust borders for dark blocks */
+        .block-2026 .book-item, .block-2025 .book-item {
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+        }
+
+        /* Text weights balancing */
+        .book-title {
+            font-family: 'Pretendard', 'Helvetica Neue', sans-serif;
+            font-weight: 700; /* Bold for names */
+        }
+
+        .book-author {
+            font-family: 'Pretendard', 'Helvetica Neue', sans-serif;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-left: 10px;
+        }
+
+        /* Active State when Tapped */
+        .year-block.expanded {
+            width: 100% !important; /* Resizes itself to accommodate content */
+            min-height: 350px;
+            cursor: default;
+        }
+
+        .year-block.expanded .year-label {
+            font-size: clamp(2rem, 4vw, 3rem); /* Year shrinks gracefully to act as header */
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 3px solid currentColor;
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        .year-block.expanded .book-list-container {
+            max-height: 1000px; /* Big enough to hold lists */
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Fun layout quirk: subtle stagger on desktop */
+        @media (min-width: 768px) {
+            .block-2025 { align-self: flex-end; }
+            .block-2023 { align-self: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Reading Archive</h1>
+        <div class="subtitle">2022 — 2026 도서 기록 집합</div>
+    </header>
+
+    <main class="archive-container">
+
+        <!-- 2026 Block -->
+        <div class="year-block block-2026" onclick="toggleBlock(this)">
+            <div class="year-label">2026</div>
+            <div class="book-list-container">
+                <ul class="book-list">
+                    <li class="book-item"><span class="book-title">디자인의 디자인</span><span class="book-author">Hara Kenya</span></li>
+                    <li class="book-item"><span class="book-title">The Design of Everyday Things</span><span class="book-author">Don Norman</span></li>
+                    <li class="book-item"><span class="book-title">물고기는 존재하지 않는다</span><span class="book-author">Lulu Miller</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2025 Block -->
+        <div class="year-block block-2025" onclick="toggleBlock(this)">
+            <div class="year-label">2025</div>
+            <div class="book-list-container">
+                <ul class="book-list">
+                    <li class="book-item"><span class="book-title">바른 마음</span><span class="book-author">Jonathan Haidt</span></li>
+                    <li class="book-item"><span class="book-title">Grid Systems in Graphic Design</span><span class="book-author">Josef Müller-Brockmann</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2024 Block -->
+        <div class="year-block block-2024" onclick="toggleBlock(this)">
+            <div class="year-label">2024</div>
+            <div class="book-list-container">
+                <ul class="book-list">
+                    <li class="book-item"><span class="book-title">사피엔스</span><span class="book-author">Yuval Noah Harari</span></li>
+                    <li class="book-item"><span class="book-title">No Longer Human</span><span class="book-author">Osamu Dazai</span></li>
+                    <li class="book-item"><span class="book-title">도둑맞은 집중력</span><span class="book-author">Johann Hari</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2023 Block -->
+        <div class="year-block block-2023" onclick="toggleBlock(this)">
+            <div class="year-label">2023</div>
+            <div class="book-list-container">
+                <ul class="book-list">
+                    <li class="book-item"><span class="book-title">트렌드 코리아 2023</span><span class="book-author">김난도</span></li>
+                    <li class="book-item"><span class="book-title">Norwegian Wood</span><span class="book-author">Haruki Murakami</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2022 Block -->
+        <div class="year-block block-2022" onclick="toggleBlock(this)">
+            <div class="year-label">2022</div>
+            <div class="book-list-container">
+                <ul class="book-list">
+                    <li class="book-item"><span class="book-title">공정하다는 착각</span><span class="book-author">Michael Sandel</span></li>
+                    <li class="book-item"><span class="book-title">Thinking, Fast and Slow</span><span class="book-author">Daniel Kahneman</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function toggleBlock(element) {
+            // Toggle the clicked block
+            element.classList.toggle('expanded');
+            
+            // Optional: Close other blocks when one opens to keep the layout tight
+            document.querySelectorAll('.year-block').forEach(block => {
+                if (block !== element) {
+                    block.classList.remove('expanded');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
 
