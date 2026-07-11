@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive — Dynamic Matrix</title>
+    <title>Archive — Balanced Matrix</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
         :root {
@@ -27,8 +27,22 @@
             color: var(--text-color);
             font-family: 'Helvetica Neue', Helvetica, 'Pretendard', sans-serif;
             min-height: 100vh;
-            padding: 12px;
+            padding: 16px 0;
             overflow-y: scroll;
+        }
+
+        /* Responsive Wrapper Constraints: 70% of screen width on desktop screens */
+        .page-wrapper {
+            width: 100%;
+            padding: 0 16px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 992px) {
+            .page-wrapper {
+                width: 70vw; /* Web layout strictly uses 70% of the vertical width */
+                padding: 0;
+            }
         }
 
         header {
@@ -38,41 +52,39 @@
         }
 
         h1 {
-            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
             font-weight: 900;
             letter-spacing: -0.05em;
             text-transform: lowercase;
         }
 
-        /* Fluid Flex Container Acting as Dynamic Row Generator */
+        /* Matrix Container layout rules with uniform padding rhythm */
         .matrix-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            max-width: 1600px;
-            margin: 0 auto;
+            gap: 12px;
+            width: 100%;
         }
 
-        /* Structural Core Block Architecture */
+        /* Uniform Base Architecture for Blocks */
         .block {
             position: relative;
-            min-height: 140px;
-            padding: 12px;
+            min-height: 130px;
+            padding: 14px; /* Perfectly uniform fallback web / mobile padding */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             overflow: hidden;
-            transition: flex-basis 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        width 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        background-color 0.4s ease;
+            transition: flex-basis 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        width 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Year Block Typography Profile */
+        /* Lowercase Bold Helvetica Typography */
         .label {
             font-family: 'Helvetica Neue', Helvetica, sans-serif;
             font-weight: 900;
-            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            font-size: clamp(1.1rem, 2vw, 1.8rem);
             line-height: 0.85;
             letter-spacing: -0.07em;
             text-transform: lowercase;
@@ -81,7 +93,7 @@
             pointer-events: none;
         }
 
-        /* Color Layout Assignments */
+        /* Design Language Palette Settings */
         .b-2026 { background-color: var(--mondrian-red); color: #fff; }
         .b-2025 { background-color: var(--mondrian-blue); color: #fff; }
         .b-2024 { background-color: var(--mondrian-white); color: #121212; }
@@ -89,29 +101,32 @@
         .b-2022 { background-color: var(--mondrian-white); color: #121212; }
         .b-media { background-color: var(--mondrian-white); cursor: pointer; }
 
-        /* Hidden Spill Mechanics */
+        /* Spill Container Layout Mechanics */
         .spill-content {
             max-height: 0;
             opacity: 0;
             visibility: hidden;
-            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
             width: 100%;
         }
 
-        /* Book Lists layout (Vertical Expand Only) */
+        /* Vertical Spill Lists: Cap heights to 3 rows max with internal block scrolling */
         .book-list {
             list-style: none;
             padding-top: 4px;
             display: flex;
             flex-direction: column;
             gap: 6px;
+            max-height: 110px; /* Constrained height equivalent to ~3 rows */
+            overflow-y: auto;
+            padding-right: 4px;
         }
 
         .book-item {
             font-size: 0.95rem;
             padding-bottom: 4px;
             border-bottom: 1px solid rgba(0,0,0,0.08);
-            letter-spacing: 0.04em; /* Tracking added for content internal links/strings */
+            letter-spacing: 0.04em;
         }
 
         .b-2026 .book-item, .b-2025 .book-item {
@@ -121,32 +136,33 @@
         .book-title { font-family: 'Pretendard', sans-serif; font-weight: 700; }
         .book-author { font-family: 'Pretendard', sans-serif; font-weight: 400; opacity: 0.75; margin-left: 6px; }
 
-        /* Media Frame layout (Horizontal Fluidity Setup) */
+        /* Horizontal Spill Embedded Media Architecture */
         .media-track-wrapper {
             width: 100%;
-            overflow-x: auto;
             padding-top: 4px;
             display: flex;
-            gap: 10px;
+            justify-content: flex-start;
         }
 
+        /* Locked profile frames ensuring no nested scrolling collapses structure */
         .media-embed {
-            flex: 0 0 280px; /* Forces continuous horizontal trail */
-            height: 80px;
+            width: 100%;
+            height: 80px; /* Precise height constraint for single rows without trailing text */
             border-radius: 2px;
             border: none;
+            overflow: hidden;
         }
 
-        /* --- Global Structural Rules Applied via JS Toggles --- */
+        /* --- Dynamic Active State Triggers --- */
         
-        /* Rule: Year lists spill vertically, forcing row domination if narrower than 1/2 */
+        /* Lists expansion expands to maximum vertical space layout */
         .block.expand-list {
             flex-basis: 100% !important;
             max-width: 100% !important;
             cursor: default;
         }
 
-        /* Rule: Media blocks spill outwards horizontally along the row */
+        /* Media expansion pushes outwards horizontally */
         .block.expand-media {
             flex-basis: 80% !important;
             max-width: 80% !important;
@@ -161,12 +177,12 @@
         }
 
         .block.expand-list .spill-content, .block.expand-media .spill-content {
-            max-height: 500px;
+            max-height: 400px;
             opacity: 1;
             visibility: visible;
         }
 
-        /* Soft hide associated pair block if row collapses completely */
+        /* Complete layout extraction mechanism */
         .hide-pair {
             flex-basis: 0% !important;
             max-width: 0% !important;
@@ -177,55 +193,52 @@
 </head>
 <body>
 
-    <header>
-        <h1>archive / structural matrix</h1>
-    </header>
+    <div class="page-wrapper">
+        <header>
+            <h1>archive / structured matrix</h1>
+        </header>
 
-    <main class="matrix-container" id="matrixContainer"></main>
+        <main class="matrix-container" id="matrixContainer"></main>
+    </div>
 
     <script>
-        // Source Data Matrix
         const archiveData = [
-            { year: "twenty twenty-six", class: "b-2026", type: "list", data: [["디자인의 디자인", "Hara Kenya"], ["The Design of Everyday Things", "Don Norman"]] },
-            { year: "twenty twenty-five", class: "b-2025", type: "list", data: [["바른 마음", "Jonathan Haidt"], ["Grid Systems", "Müller-Brockmann"]] },
-            { year: "twenty twenty-four", class: "b-2024", type: "list", data: [["사피엔스", "Yuval Noah Harari"], ["도둑맞은 집중력", "Johann Hari"]] },
-            { year: "twenty twenty-three", class: "b-2023", type: "list", data: [["Norwegian Wood", "Haruki Murakami"]] },
-            { year: "twenty twenty-two", class: "b-2022", type: "list", data: [["공정하다는 착각", "Michael Sandel"]] }
+            { year: "twenty twenty-six", class: "b-2026", data: [["디자인의 디자인", "Hara Kenya"], ["The Design of Everyday Things", "Don Norman"], ["물고기는 존재하지 않는다", "Lulu Miller"], ["사피엔스", "Yuval Noah"]] },
+            { year: "twenty twenty-five", class: "b-2025", data: [["바른 마음", "Jonathan Haidt"], ["Grid Systems", "Müller-Brockmann"]] },
+            { year: "twenty twenty-four", class: "b-2024", data: [["도둑맞은 집중력", "Johann Hari"], ["No Longer Human", "Osamu Dazai"]] },
+            { year: "twenty twenty-three", class: "b-2023", data: [["Norwegian Wood", "Haruki Murakami"]] },
+            { year: "twenty twenty-two", class: "b-2022", data: [["공정하다는 착각", "Michael Sandel"]] }
         ];
 
-        // Media Embed Bank
         const mediaEmbeds = [
             `<iframe class="media-embed" src="https://embed.music.apple.com/us/album/supernatural/1747043133?i=1747043134"></iframe>`,
             `<iframe class="media-embed" src="https://embed.music.apple.com/us/album/hype-boy/1635217435?i=1635217436"></iframe>`
         ];
 
         const container = document.getElementById('matrixContainer');
-        const isMobile = window.innerWidth < 768;
 
-        // Mathematical Grid Fractional Slices
         const mobileFractions = [1/2, 1/3, 2/3];
         const webFractions = [1/2, 1/3, 2/3, 1/4, 3/4, 2/5, 3/5];
 
         function generateMatrix() {
             container.innerHTML = "";
+            const isMobile = window.innerWidth < 768;
             const fractions = isMobile ? mobileFractions : webFractions;
 
             archiveData.forEach((item, index) => {
-                // Generate primary random fraction slice
                 const randomFraction = fractions[Math.floor(Math.random() * fractions.length)];
                 
-                // Deduce perfect complementary mathematical negative space profile
                 const primaryPercent = (randomFraction * 100);
                 const complementPercent = (100 - primaryPercent);
 
-                // Gap calculation correction rules
-                const stylePrimary = `flex: 0 0 calc(${primaryPercent}% - 5px); max-width: calc(${primaryPercent}% - 5px);`;
-                const styleComplement = `flex: 0 0 calc(${complementPercent}% - 5px); max-width: calc(${complementPercent}% - 5px);`;
+                // Grid padding safety gap compensation rules
+                const stylePrimary = `flex: 0 0 calc(${primaryPercent}% - 6px); max-width: calc(${primaryPercent}% - 6px);`;
+                const styleComplement = `flex: 0 0 calc(${complementPercent}% - 6px); max-width: calc(${complementPercent}% - 6px);`;
 
-                // Build Primary Year Block Structure
                 const yearId = `block-year-${index}`;
                 const mediaId = `block-media-${index}`;
 
+                // Render Lists
                 const yearBlock = document.createElement('div');
                 yearBlock.className = `block ${item.class}`;
                 yearBlock.id = yearId;
@@ -239,24 +252,21 @@
                 listHtml += `</ul></div>`;
                 yearBlock.innerHTML = listHtml;
 
-                // Build Complementary Unlabeled White Box Negative Space Block
+                // Render Media
                 const mediaBlock = document.createElement('div');
                 mediaBlock.className = `block b-media`;
                 mediaBlock.id = mediaId;
                 mediaBlock.style.cssText = styleComplement;
                 mediaBlock.setAttribute('onclick', `toggleMedia('${mediaId}', '${yearId}', ${primaryPercent})`);
                 
-                // Distribute running horizontal frames inside media block spill spaces
                 const randomMedia = mediaEmbeds[index % mediaEmbeds.length];
-                mediaBlock.innerHTML = `<div class="spill-content"><div class="media-track-wrapper">${randomMedia}${randomMedia}</div></div>`;
+                mediaBlock.innerHTML = `<div class="spill-content"><div class="media-track-wrapper">${randomMedia}</div></div>`;
 
-                // Render matching block configurations sequentially into DOM structure row
                 container.appendChild(yearBlock);
                 container.appendChild(mediaBlock);
             });
         }
 
-        // Action Rules: Lists spill vertically, never narrower than 50% (snap full width if needed)
         function toggleList(yearId, mediaId) {
             const yearEl = document.getElementById(yearId);
             const mediaEl = document.getElementById(mediaId);
@@ -270,7 +280,6 @@
             }
         }
 
-        // Action Rules: Media blocks spill horizontally along their paired space line
         function toggleMedia(mediaId, yearId, primaryWidth) {
             const mediaEl = document.getElementById(mediaId);
             const yearEl = document.getElementById(yearId);
@@ -281,7 +290,6 @@
             if (!active) {
                 mediaEl.classList.add('expand-media');
                 
-                // If native remaining space drops behind 50%, safety lock structural layout bounds
                 if (primaryWidth < 50) {
                     yearEl.classList.add('hide-pair');
                     mediaEl.style.flexBasis = "100%";
@@ -301,8 +309,9 @@
             });
         }
 
-        // Init System Matrix on fresh session load
+        // Automatic structural reconfiguration tracker loops
         window.onload = generateMatrix;
+        window.onresize = generateMatrix;
     </script>
 </body>
 </html>
