@@ -1,59 +1,80 @@
-function toggleList(yearId, mediaId) {
-    const yearEl = document.getElementById(yearId);
-    const mediaEl = document.getElementById(mediaId);
-    const active = yearEl.classList.contains('expand-list');
-
-    resetAll();
-
-    if (!active) {
-        yearEl.classList.add('expand-list');
-        mediaEl.classList.add('hide-pair');
-        
-        // Dynamic Line Break injection for Mobile
-        if (window.innerWidth < 768) {
-            const breaker = document.createElement('div');
-            breaker.className = 'row-breaker';
-            breaker.style.cssText = 'flex-basis: 100%; height: 0; margin: 0; padding: 0;';
-            mediaEl.parentNode.insertBefore(breaker, mediaEl.nextSibling);
-        }
-    }
-}
-
-function toggleMedia(mediaId, yearId, primaryWidth) {
-    const mediaEl = document.getElementById(mediaId);
-    const yearEl = document.getElementById(yearId);
-    const active = mediaEl.classList.contains('expand-media');
-    const isMobile = window.innerWidth < 768;
-
-    resetAll();
-
-    if (!active) {
-        mediaEl.classList.add('expand-media');
-        
-        if (isMobile) {
-            yearEl.classList.add('hide-pair');
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive — Balanced Matrix</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --bg-color: #141414; 
+            --text-color: #EDEDED;
             
-            // Dynamic Line Break injection for Mobile
-            const breaker = document.createElement('div');
-            breaker.className = 'row-breaker';
-            breaker.style.cssText = 'flex-basis: 100%; height: 0; margin: 0; padding: 0;';
-            mediaEl.parentNode.insertBefore(breaker, mediaEl.nextSibling);
-        } else if (primaryWidth < 50) {
-            yearEl.classList.add('hide-pair');
-        } else {
-            yearEl.style.flexBasis = "20%";
-            yearEl.style.maxWidth = "20%";
+            --mondrian-red: #E11A22;
+            --mondrian-blue: #004FFE;
+            --mondrian-yellow: #F9CC00;
+            --mondrian-white: #F5F5F5;
         }
-    }
-}
 
-function resetAll() {
-    // Clear out any old breakdown walls
-    document.querySelectorAll('.row-breaker').forEach(el => el.remove());
-    
-    document.querySelectorAll('.block').forEach(b => {
-        b.classList.remove('expand-list', 'expand-media', 'hide-pair');
-        b.style.flexBasis = "";
-        b.style.maxWidth = "";
-    });
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Helvetica Neue', Helvetica, 'Pretendard', sans-serif;
+            min-height: 100vh;
+            padding: 16px 0;
+            overflow-y: scroll;
+        }
+
+        /* Responsive Wrapper Constraints: 70% of screen width on desktop screens */
+        .page-wrapper {
+            width: 100%;
+            padding: 0 16px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 992px) {
+            .page-wrapper {
+                width: 70vw; 
+                padding: 0;
+            }
+        }
+
+        header {
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: 8px;
+        }
+
+        h1 {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-transform: lowercase;
+        }
+
+        /* Matrix Container layout rules with uniform padding rhythm */
+        .matrix-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* Uniform Base Architecture for Blocks */
+        .block {
+            position: relative;
+            min-height: 130px;
+            padding: 14px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            transition: flex-basis 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        width 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        max-width 0.5s cubic-bezier(0
