@@ -71,13 +71,14 @@
         .misset {
             font-family: "Times New Roman", Times, serif;
             font-style: italic;
+            font-weight: 400;
         }
 
-        /* Site Navigation — light, lowercase, small */
+        /* Site Navigation — lowercase, small */
         .site-nav {
             display: flex;
             gap: 18px;
-            font-weight: 300;
+            font-weight: 400;
             font-size: 1rem;
             text-transform: lowercase;
         }
@@ -91,7 +92,7 @@
         .nav-toggle {
             display: none;
             font-family: inherit;
-            font-weight: 300;
+            font-weight: 400;
             font-size: 1rem;
             text-transform: lowercase;
             background: none;
@@ -139,7 +140,7 @@
             margin-top: 40px;
             padding-bottom: 8px;
             text-align: center;
-            font-weight: 300;
+            font-weight: 400;
             font-size: 0.85rem;
             text-transform: lowercase;
             opacity: 0.6;
@@ -171,13 +172,26 @@
             flex-direction: column;
             justify-content: space-between;
             overflow: hidden;
-            transition: flex-basis 0.6s var(--ease), max-width 0.6s var(--ease);
+            transition: flex-basis 0.6s var(--ease), max-width 0.6s var(--ease),
+                        transform 0.25s var(--ease);
+            /* Composed so the broken block and hover nudges coexist */
+            transform: translate(var(--nudge-x, 0px), var(--broken-y, 0px)) rotate(var(--broken-rot, 0deg));
+        }
+
+        /* One block per load is deliberately, barely wrong */
+        .broken-rot { --broken-rot: 0.4deg; }
+        .broken-off { --broken-y: 3px; }
+
+        /* The negative space physically resists you */
+        @media (hover: hover) {
+            .block:hover + .block { --nudge-x: 4px; }
+            .block:has(+ .block:hover) { --nudge-x: -4px; }
         }
 
         /* Year Block Typography Profile */
         .label {
             font-weight: 900;
-            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            font-size: clamp(1.15rem, 2.4vw, 1.9rem);
             line-height: 0.85;
             letter-spacing: -0.03em;
             text-transform: lowercase;
@@ -299,7 +313,7 @@
         /* Mobile Typography Scale: short ’YY labels get significantly more presence */
         @media (max-width: 767px) {
             .label {
-                font-size: 2rem;
+                font-size: 1.9rem;
             }
         }
 
@@ -751,6 +765,11 @@
             const soldDot = document.createElement('span');
             soldDot.className = 'sold-dot';
             document.getElementById(`block-year-${soldIndex}`).appendChild(soldDot);
+
+            // One block per load is deliberately, barely wrong
+            const blocks = container.querySelectorAll('.block');
+            const broken = blocks[Math.floor(Math.random() * blocks.length)];
+            broken.classList.add(Math.random() < 0.5 ? 'broken-rot' : 'broken-off');
 
             fitLabels();
         }
