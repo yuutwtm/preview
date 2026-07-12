@@ -189,7 +189,8 @@
         }
 
         /* One block per load is deliberately, barely wrong */
-        .broken { --broken-y: 5px; }
+        .broken-down { --broken-y: 5px; }
+        .broken-up { --broken-y: -5px; }
 
         /* The negative space physically resists you */
         @media (hover: hover) {
@@ -879,7 +880,7 @@
                 if (b >= a) b++;
                 return [a, b];
             };
-            pickTwo(blocks.length).forEach(i => blocks[i].classList.add('broken'));
+            pickTwo(blocks.length).forEach(i => blocks[i].classList.add(Math.random() < 0.5 ? 'broken-down' : 'broken-up'));
             pickTwo(blocks.length).forEach(i => blocks[i].classList.add('taped'));
 
             fitLabels();
