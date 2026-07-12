@@ -152,7 +152,13 @@
         .block.expand-list {
             flex-basis: 100% !important;
             max-width: 100% !important;
+            /* Cap at two rows' height (2 x 120px + 8px gap); the list scrolls inside */
+            max-height: 248px;
             cursor: default;
+        }
+
+        .block.expand-list .label {
+            flex-shrink: 0; /* the label never gives up space to the scrolling list */
         }
 
         /* Rule: Media blocks spill outwards horizontally along the row */
@@ -192,9 +198,11 @@
         }
 
         .block.expand-list .spill-content, .block.expand-media .spill-content {
-            max-height: 5000px;
+            max-height: 250px;
             opacity: 1;
             visibility: visible;
+            overflow-y: auto;
+            scrollbar-width: thin;
             /* Slight delay lets the block reach most of its width before the
                content spills, so list rows don't wrap-and-unwrap mid-animation */
             transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, opacity 0.3s ease 0.15s;
