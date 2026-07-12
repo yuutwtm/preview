@@ -224,12 +224,12 @@
             vertical-align: 0.4em;
         }
 
-        /* Quote spill: body-text size, centered, case kept as written */
+        /* Quote spill: body-text size and color, left-aligned, case kept as written */
         .media-quote {
             font-size: 0.85rem;
-            text-align: center;
+            text-align: left;
             text-transform: none;
-            padding: 4px 16px 0;
+            padding: 4px 16px 0 0;
         }
 
         .quote-attr { font-style: italic; }
@@ -278,8 +278,8 @@
         .b-2026, .b-2024, .b-2022 { background-color: var(--mondrian-white); color: #121212; }
         .b-2025 { background-color: var(--mondrian-blue); color: #fff; }
         .b-2023 { background-color: var(--mondrian-yellow); color: #121212; }
-        .b-media { background-color: var(--mondrian-white); }
-        .b-media.m-red { background-color: var(--mondrian-red); }
+        .b-media { background-color: var(--mondrian-white); color: #121212; }
+        .b-media.m-red { background-color: var(--mondrian-red); color: var(--text-color); }
 
         /* After hours (2-6am local): the palette inverts. Never announced. */
         body.after-hours {
