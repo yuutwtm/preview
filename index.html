@@ -183,11 +183,21 @@
             }
         }
 
+        /* Web Spacing: give the label's dividing line more room around it */
+        @media (min-width: 768px) {
+            .block.expand-list .label {
+                padding-bottom: 6px;
+                margin-bottom: 10px;
+            }
+        }
+
         .block.expand-list .spill-content, .block.expand-media .spill-content {
             max-height: 500px;
             opacity: 1;
             visibility: visible;
-            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            /* Slight delay lets the block reach most of its width before the
+               content spills, so list rows don't wrap-and-unwrap mid-animation */
+            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, opacity 0.3s ease 0.15s;
         }
 
         /* Remove associated pair block entirely so it can't occupy a phantom row */
@@ -358,9 +368,12 @@
             if (!active) {
                 yearEl.classList.add('expand-list');
                 mediaEl.classList.add('hide-pair');
+                // Opening: keep the current (short) label until the block reaches
+                // full width — transitionend runs fitLabels. Swapping to the full
+                // name while still narrow forces mid-word breaks and a height bounce.
+            } else {
+                fitLabels();
             }
-
-            fitLabels();
         }
 
         // Action Rules: Media blocks spill horizontally along their paired space line
