@@ -107,7 +107,12 @@
 
         /* Mobile: toggle in the header row; menu list spills open from the left */
         @media (max-width: 767px) {
-            .nav-toggle { display: block; }
+            .nav-toggle {
+                display: block;
+                font-size: 0.85rem; /* match the credit */
+            }
+
+            .site-nav { font-size: 0.85rem; }
 
             .site-nav {
                 flex-basis: 100%;
