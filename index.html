@@ -45,13 +45,21 @@
             text-transform: lowercase;
         }
 
-        /* Fluid Flex Container Acting as Dynamic Row Generator */
+        /* Vertical Stack of Isolated Row Containers */
         .matrix-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 10px;
             max-width: 1600px;
             margin: 0 auto;
+        }
+
+        /* Each pair lives in its own row: blocks can never drift between rows,
+           even mid-transition when a pair is hidden or resizing */
+        .matrix-row {
+            display: flex;
+            gap: 10px;
+            overflow: hidden;
         }
 
         /* Structural Core Block Architecture */
@@ -263,9 +271,12 @@
                 const randomMedia = mediaEmbeds[index % mediaEmbeds.length];
                 mediaBlock.innerHTML = `<div class="spill-content"><div class="media-track-wrapper">${randomMedia}</div></div>`;
 
-                // Render matching block configurations sequentially into DOM structure row
-                container.appendChild(yearBlock);
-                container.appendChild(mediaBlock);
+                // Render each pair inside its own isolated row container
+                const rowEl = document.createElement('div');
+                rowEl.className = 'matrix-row';
+                rowEl.appendChild(yearBlock);
+                rowEl.appendChild(mediaBlock);
+                container.appendChild(rowEl);
             });
 
             fitLabels();
