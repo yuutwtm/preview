@@ -36,6 +36,7 @@
             color: var(--text-color);
             font-family: "helvetica-neue-lt-pro", Helvetica, Arial, "Pretendard", sans-serif;
             line-height: 1.6;
+            text-transform: lowercase; /* every latin glyph on the page is lowercase */
             min-height: 100vh;
             padding: 12px;
             overflow-y: scroll;
@@ -307,7 +308,7 @@
         }
 
         .book-title { font-weight: 700; overflow-wrap: break-word; }
-        .book-author { font-weight: 400; opacity: 0.75; margin-left: 6px; overflow-wrap: break-word; }
+        .book-author { font-weight: 400; opacity: 0.75; margin-left: 6px; letter-spacing: 0.05em; overflow-wrap: break-word; }
 
         /* Media Frame layout (Horizontal Fluidity Setup) */
         .media-track-wrapper {
