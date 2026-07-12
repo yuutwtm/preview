@@ -566,7 +566,7 @@
                 ["단지 세상의 끝", "장뤼크 라가르스/임혜경 역"],
                 ["140 ARTISTS’ IDEAS FOR PLANET EARTH", "EDITED BY HANS ULRICH OBRIST & KOSTAS STASINOPOULOS"]
             ] },
-            { year: "twenty twenty-five", short: "’25", class: "b-2025", mediaQuote: {
+            { year: "twenty twenty-five", short: "’25", class: "b-2025", flip: true, mediaQuote: {
                 speaker: "KATURIAN.",
                 text: "The story was going to finish in fashionably downbeat mode, …… A fact which would have ruined the writer’s fashionably downbeat ending, but was somehow ... somehow ... more in keeping with the spirit of the thing.",
                 attribution: "(Martin McDonagh, The Pillowman)"
@@ -647,7 +647,7 @@
                 ["오후의 예항 / 짐승들의 유희", "미시마 유키오"],
                 ["GONE GIRL", "GILLIAN FLYNN"]
             ] },
-            { year: "twenty twenty-four", short: "’24", class: "b-2024", mediaSrc: "https://embed.music.apple.com/kr/song/music-and-me/1817373541", data: [
+            { year: "twenty twenty-four", short: "’24", class: "b-2024", flip: true, mediaSrc: "https://embed.music.apple.com/kr/song/music-and-me/1817373541", data: [
                 ["행복의 기원", "서은국"],
                 ["THE SENSE OF AN ENDING", "JULIAN BARNES"],
                 ["THE HUMAN STAIN", "PHILIP ROTH"],
@@ -870,11 +870,17 @@
                 }
                 mediaBlock.innerHTML = `${mediaLabel}<div class="spill-content">${spillInner}</div>`;
 
-                // Render each pair inside its own isolated row container
+                // Render each pair inside its own isolated row container;
+                // flipped rows put the year block on the right
                 const rowEl = document.createElement('div');
                 rowEl.className = 'matrix-row';
-                rowEl.appendChild(yearBlock);
-                rowEl.appendChild(mediaBlock);
+                if (item.flip) {
+                    rowEl.appendChild(mediaBlock);
+                    rowEl.appendChild(yearBlock);
+                } else {
+                    rowEl.appendChild(yearBlock);
+                    rowEl.appendChild(mediaBlock);
+                }
                 container.appendChild(rowEl);
             });
 
