@@ -77,8 +77,8 @@
             line-height: 0.85;
             letter-spacing: -0.03em;
             text-transform: lowercase;
-            margin-top: auto; 
-            white-space: nowrap;
+            margin-top: auto;
+            overflow-wrap: break-word;
             pointer-events: none;
         }
 
@@ -149,8 +149,14 @@
 
         /* Rule: Media blocks spill outwards horizontally along the row */
         .block.expand-media {
-            flex-basis: 80% !important;
-            max-width: 80% !important;
+            flex-basis: calc(80% - 5px) !important;
+            max-width: calc(80% - 5px) !important;
+        }
+
+        /* Rule: Media block takes the full row when its pair is hidden */
+        .block.expand-media.expand-full {
+            flex-basis: 100% !important;
+            max-width: 100% !important;
         }
 
         .block.expand-list .label {
@@ -167,12 +173,9 @@
             visibility: visible;
         }
 
-        /* Soft hide associated pair block if row collapses completely */
+        /* Remove associated pair block entirely so it can't occupy a phantom row */
         .hide-pair {
-            flex-basis: 0% !important;
-            max-width: 0% !important;
-            padding: 0 !important;
-            opacity: 0;
+            display: none !important;
         }
 
         /* Desktop Constraint: entire matrix stays within 70% of the viewport width */
@@ -290,22 +293,21 @@
 
             if (!active) {
                 mediaEl.classList.add('expand-media');
-                
+
                 // If native remaining space drops behind 50%, safety lock structural layout bounds
                 if (primaryWidth < 50) {
                     yearEl.classList.add('hide-pair');
-                    mediaEl.style.flexBasis = "100%";
-                    mediaEl.style.maxWidth = "100%";
+                    mediaEl.classList.add('expand-full');
                 } else {
-                    yearEl.style.flexBasis = "20%";
-                    yearEl.style.maxWidth = "20%";
+                    yearEl.style.flexBasis = "calc(20% - 5px)";
+                    yearEl.style.maxWidth = "calc(20% - 5px)";
                 }
             }
         }
 
         function resetAll() {
             document.querySelectorAll('.block').forEach(b => {
-                b.classList.remove('expand-list', 'expand-media', 'hide-pair');
+                b.classList.remove('expand-list', 'expand-media', 'expand-full', 'hide-pair');
                 b.style.cssText = b.dataset.baseStyle || "";
             });
         }
