@@ -511,7 +511,7 @@
     <script>
         // Source Data Matrix
         const archiveData = [
-            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", mediaTitle: "close the door, not all the way…", data: [
+            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", mediaTitle: "close the door, not all the way…", mediaSrc: "https://embed.music.apple.com/kr/song/call-it-fate-call-it-karma/601140646", data: [
                 ["금각사", "미시마 유키오"],
                 ["나의 곰", "메리언 엥겔"],
                 ["MAIN STREET", "SINCLAIR LEWIS"],
@@ -782,10 +782,12 @@
         ];
 
         // Media Embed Bank
-        const mediaEmbeds = [
-            `<iframe class="media-embed" src="https://embed.music.apple.com/us/album/supernatural/1747043133?i=1747043134"></iframe>`,
-            `<iframe class="media-embed" src="https://embed.music.apple.com/us/album/hype-boy/1635217435?i=1635217436"></iframe>`
+        const mediaSrcs = [
+            "https://embed.music.apple.com/us/album/supernatural/1747043133?i=1747043134",
+            "https://embed.music.apple.com/us/album/hype-boy/1635217435?i=1635217436"
         ];
+
+        const buildEmbed = src => `<iframe class="media-embed" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="${src}"></iframe>`;
 
         const container = document.getElementById('matrixContainer');
         const isMobile = window.innerWidth < 768;
@@ -849,7 +851,7 @@
                     const q = item.mediaQuote;
                     spillInner = `<blockquote class="media-quote"><strong>${q.speaker}</strong> ${q.text}<br><em class="quote-attr">${q.attribution}</em></blockquote>`;
                 } else {
-                    spillInner = `<div class="media-track-wrapper">${mediaEmbeds[index % mediaEmbeds.length]}</div>`;
+                    spillInner = `<div class="media-track-wrapper">${buildEmbed(item.mediaSrc || mediaSrcs[index % mediaSrcs.length])}</div>`;
                 }
                 mediaBlock.innerHTML = `${mediaLabel}<div class="spill-content">${spillInner}</div>`;
 
