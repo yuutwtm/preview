@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive — Dynamic Matrix</title>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://use.typekit.net/mrb3sjs.css">
     <style>
         :root {
-            --bg-color: #141414; 
+            --bg-color: #141414;
             --text-color: #EDEDED;
-            
+
             --mondrian-red: #E11A22;
             --mondrian-blue: #004FFE;
             --mondrian-yellow: #F9CC00;
             --mondrian-white: #F5F5F5;
+
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -64,8 +66,6 @@
             opacity: 0.85;
         }
 
-        .site-nav a:hover { text-decoration: underline; }
-
         .nav-toggle {
             display: none;
             font-family: inherit;
@@ -80,7 +80,7 @@
             padding: 0;
         }
 
-        .nav-toggle:hover { text-decoration: underline; }
+        .site-nav a:hover, .nav-toggle:hover { text-decoration: underline; }
 
         /* Mobile: toggle in the header row; menu list spills open from the left */
         @media (max-width: 767px) {
@@ -92,7 +92,7 @@
                 gap: 10px;
                 max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+                transition: max-height 0.45s var(--ease);
             }
 
             header.nav-open .site-nav {
@@ -103,7 +103,7 @@
             .site-nav a {
                 transform: translateX(-16px);
                 opacity: 0;
-                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+                transition: transform 0.4s var(--ease), opacity 0.3s ease;
             }
 
             header.nav-open .site-nav a {
@@ -128,7 +128,6 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -142,22 +141,17 @@
 
         /* Structural Core Block Architecture */
         .block {
-            position: relative;
             min-height: 120px;
             padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             overflow: hidden;
-            transition: flex-basis 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        width 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        background-color 0.4s ease;
+            transition: flex-basis 0.6s var(--ease), max-width 0.6s var(--ease);
         }
 
         /* Year Block Typography Profile */
         .label {
-            font-family: "helvetica-neue-lt-pro", Helvetica, Arial, "Pretendard", sans-serif;
             font-weight: 900;
             font-size: clamp(1.2rem, 2.5vw, 2rem);
             line-height: 0.85;
@@ -169,11 +163,9 @@
         }
 
         /* Color Layout Assignments */
-        .b-2026 { background-color: var(--mondrian-white); color: #121212; }
+        .b-2026, .b-2024, .b-2022 { background-color: var(--mondrian-white); color: #121212; }
         .b-2025 { background-color: var(--mondrian-blue); color: #fff; }
-        .b-2024 { background-color: var(--mondrian-white); color: #121212; }
         .b-2023 { background-color: var(--mondrian-yellow); color: #121212; }
-        .b-2022 { background-color: var(--mondrian-white); color: #121212; }
         .b-media { background-color: var(--mondrian-white); cursor: pointer; }
         .b-media.m-red { background-color: var(--mondrian-red); }
 
@@ -183,13 +175,11 @@
             max-height: 0;
             opacity: 0;
             visibility: hidden;
-            width: 100%;
         }
 
         /* Book Lists layout (Vertical Expand Only) */
         .book-list {
             list-style: none;
-            padding-top: 0;
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -211,11 +201,9 @@
 
         /* Media Frame layout (Horizontal Fluidity Setup) */
         .media-track-wrapper {
-            width: 100%;
             overflow-x: auto;
             padding-top: 4px;
             display: flex;
-            gap: 10px;
         }
 
         .media-embed {
@@ -227,7 +215,7 @@
         }
 
         /* --- Global Structural Rules Applied via JS Toggles --- */
-        
+
         /* Rule: Year lists spill vertically, forcing row domination if narrower than 1/2 */
         .block.expand-list {
             flex-basis: 100% !important;
@@ -235,10 +223,6 @@
             /* Cap at two rows' height (2 x 120px + 8px gap); the list scrolls inside */
             max-height: 248px;
             cursor: default;
-        }
-
-        .block.expand-list .label {
-            flex-shrink: 0; /* the label never gives up space to the scrolling list */
         }
 
         /* Rule: Media blocks spill outwards horizontally along the row,
@@ -258,6 +242,7 @@
         }
 
         .block.expand-list .label {
+            flex-shrink: 0; /* the label never gives up space to the scrolling list */
             margin-top: 0;
             margin-bottom: 10px;
             border-bottom: 2px solid currentColor;
@@ -289,7 +274,7 @@
             scrollbar-width: thin;
             /* Slight delay lets the block reach most of its width before the
                content spills, so list rows don't wrap-and-unwrap mid-animation */
-            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, opacity 0.3s ease 0.15s;
+            transition: max-height 0.45s var(--ease) 0.15s, opacity 0.3s ease 0.15s;
         }
 
         /* Remove associated pair block entirely so it can't occupy a phantom row */
@@ -310,7 +295,7 @@
     <header id="siteHeader">
         <h1>archive / structural matrix</h1>
         <button class="nav-toggle" id="navToggle" onclick="toggleNav()">more.</button>
-        <nav class="site-nav" id="siteNav">
+        <nav class="site-nav">
             <a href="https://boxd.it/8tQ0j" target="_blank" rel="noopener">letterboxd.</a>
             <a href="https://goodreads.com/yuutalkwaytoomuch" target="_blank" rel="noopener">goodreads.</a>
             <a href="https://youtu.be/BxCIo_kb4AY" target="_blank" rel="noopener">27a pitfield st.</a>
@@ -324,7 +309,7 @@
     <script>
         // Source Data Matrix
         const archiveData = [
-            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", type: "list", data: [
+            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", data: [
                 ["금각사", "미시마 유키오"],
                 ["나의 곰", "메리언 엥겔"],
                 ["MAIN STREET", "SINCLAIR LEWIS"],
@@ -378,7 +363,7 @@
                 ["단지 세상의 끝", "장뤼크 라가르스/임혜경 역"],
                 ["140 ARTISTS’ IDEAS FOR PLANET EARTH", "EDITED BY HANS ULRICH OBRIST & KOSTAS STASINOPOULOS"]
             ] },
-            { year: "twenty twenty-five", short: "’25", class: "b-2025", type: "list", data: [
+            { year: "twenty twenty-five", short: "’25", class: "b-2025", data: [
                 ["A GRIEF OBSERVED", "C. S. LEWIS"],
                 ["LUCKY JIM", "KINGSLEY AMIS"],
                 ["QUEER", "WILLIAM S. BURROUGHS"],
@@ -455,7 +440,7 @@
                 ["오후의 예항 / 짐승들의 유희", "미시마 유키오"],
                 ["GONE GIRL", "GILLIAN FLYNN"]
             ] },
-            { year: "twenty twenty-four", short: "’24", class: "b-2024", type: "list", data: [
+            { year: "twenty twenty-four", short: "’24", class: "b-2024", data: [
                 ["행복의 기원", "서은국"],
                 ["THE SENSE OF AN ENDING", "JULIAN BARNES"],
                 ["THE HUMAN STAIN", "PHILIP ROTH"],
@@ -502,7 +487,7 @@
                 ["ANGELS IN AMERICA PART ONE: MILLENNIUM APPROACHES", "TONY KUSHNER"],
                 ["ANGELS IN AMERICA PART TWO: PERESTROIKA", "TONY KUSHNER"]
             ] },
-            { year: "twenty twenty-three", short: "’23", class: "b-2023", type: "list", data: [
+            { year: "twenty twenty-three", short: "’23", class: "b-2023", data: [
                 ["THE ANTHROPOCENE REVIEWED", "JOHN GREEN"],
                 ["SOUTH OF THE BORDER, WEST OF THE SUN", "HARUKI MURAKAMI"],
                 ["COLORLESS TAZAKI TSUKURU AND HIS YEAR OF PILGRIMAGE", "HARUKI MURAKAMI"],
@@ -548,7 +533,7 @@
                 ["THE CONQUEST OF HAPPINESS", "BERTRAND RUSSELL"],
                 ["THE ELEMENTARY PARTICLES", "MICHEL HOUELLEBECQ"]
             ] },
-            { year: "twenty twenty-two", short: "’22", class: "b-2022", type: "list", data: [
+            { year: "twenty twenty-two", short: "’22", class: "b-2022", data: [
                 ["혁명의 시대", "에릭 홉스봄"],
                 ["1Q84", "HARUKI MURAKAMI"],
                 ["자유로부터의 도피", "에리히 프롬"],
@@ -614,7 +599,7 @@
             archiveData.forEach((item, index) => {
                 // Generate primary random fraction slice
                 const randomFraction = fractions[Math.floor(Math.random() * fractions.length)];
-                
+
                 // Deduce perfect complementary mathematical negative space profile
                 const primaryPercent = (randomFraction * 100);
                 const complementPercent = (100 - primaryPercent);
@@ -633,7 +618,7 @@
                 yearBlock.style.cssText = stylePrimary;
                 yearBlock.dataset.baseStyle = stylePrimary;
                 yearBlock.setAttribute('onclick', `toggleList('${yearId}', '${mediaId}')`);
-                
+
                 let listHtml = `<div class="label" data-full="${item.year}" data-short="${item.short}">${item.year}</div><div class="spill-content"><ul class="book-list">`;
                 item.data.forEach(book => {
                     const authorHtml = book[1] ? `<span class="book-author">${escapeHtml(book[1])}</span>` : '';
@@ -649,7 +634,7 @@
                 mediaBlock.style.cssText = styleComplement;
                 mediaBlock.dataset.baseStyle = styleComplement;
                 mediaBlock.setAttribute('onclick', `toggleMedia('${mediaId}', '${yearId}', ${primaryPercent})`);
-                
+
                 // Distribute a single running media frame inside media block spill space
                 const randomMedia = mediaEmbeds[index % mediaEmbeds.length];
                 mediaBlock.innerHTML = `<div class="spill-content"><div class="media-track-wrapper">${randomMedia}</div></div>`;
