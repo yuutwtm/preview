@@ -225,6 +225,16 @@
             vertical-align: 0.4em;
         }
 
+        /* Quote spill: body-text size, centered, case kept as written */
+        .media-quote {
+            font-size: 0.85rem;
+            text-align: center;
+            text-transform: none;
+            padding: 4px 16px 0;
+        }
+
+        .quote-attr { font-style: italic; }
+
         /* Old-website link on the red box: Times, upright, underlined */
         .media-label {
             font-family: "Times New Roman", Times, serif;
@@ -555,7 +565,11 @@
                 ["단지 세상의 끝", "장뤼크 라가르스/임혜경 역"],
                 ["140 ARTISTS’ IDEAS FOR PLANET EARTH", "EDITED BY HANS ULRICH OBRIST & KOSTAS STASINOPOULOS"]
             ] },
-            { year: "twenty twenty-five", short: "’25", class: "b-2025", data: [
+            { year: "twenty twenty-five", short: "’25", class: "b-2025", mediaQuote: {
+                speaker: "KATURIAN.",
+                text: "The story was going to finish in fashionably downbeat mode, …… A fact which would have ruined the writer’s fashionably downbeat ending, but was somehow ... somehow ... more in keeping with the spirit of the thing.",
+                attribution: "(Martin McDonagh, The Pillowman)"
+            }, data: [
                 ["A GRIEF OBSERVED", "C. S. LEWIS"],
                 ["LUCKY JIM", "KINGSLEY AMIS"],
                 ["QUEER", "WILLIAM S. BURROUGHS"],
@@ -827,10 +841,17 @@
                 mediaBlock.dataset.baseStyle = styleComplement;
                 mediaBlock.setAttribute('onclick', `toggleMedia('${mediaId}', '${yearId}', ${primaryPercent})`);
 
-                // Distribute a single running media frame inside media block spill space
-                const randomMedia = mediaEmbeds[index % mediaEmbeds.length];
+                // Spill space carries a quote when the data provides one,
+                // otherwise a single running media frame
                 const mediaLabel = item.mediaTitle ? `<div class="media-label">${item.mediaTitle}</div>` : '';
-                mediaBlock.innerHTML = `${mediaLabel}<div class="spill-content"><div class="media-track-wrapper">${randomMedia}</div></div>`;
+                let spillInner;
+                if (item.mediaQuote) {
+                    const q = item.mediaQuote;
+                    spillInner = `<blockquote class="media-quote"><strong>${q.speaker}</strong> ${q.text}<br><em class="quote-attr">${q.attribution}</em></blockquote>`;
+                } else {
+                    spillInner = `<div class="media-track-wrapper">${mediaEmbeds[index % mediaEmbeds.length]}</div>`;
+                }
+                mediaBlock.innerHTML = `${mediaLabel}<div class="spill-content">${spillInner}</div>`;
 
                 // Render each pair inside its own isolated row container
                 const rowEl = document.createElement('div');
