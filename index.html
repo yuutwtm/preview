@@ -221,6 +221,19 @@
             vertical-align: 0.4em;
         }
 
+        /* Masking tape: one block per load is taped to the grid */
+        .taped::before, .taped::after {
+            content: "";
+            position: absolute;
+            width: 74px;
+            height: 22px;
+            background: rgba(222, 214, 186, 0.55);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+        }
+
+        .taped::before { top: -7px; left: -20px; transform: rotate(-40deg); }
+        .taped::after { bottom: -7px; right: -20px; transform: rotate(-43deg); }
+
         /* Gallery sticker: one random year is sold. No explanation. */
         .sold-dot {
             position: absolute;
@@ -239,6 +252,30 @@
         .b-2023 { background-color: var(--mondrian-yellow); color: #121212; }
         .b-media { background-color: var(--mondrian-white); }
         .b-media.m-red { background-color: var(--mondrian-red); }
+
+        /* After hours (2-6am local): the palette inverts. Never announced. */
+        body.after-hours {
+            --bg-color: #EDEDE9;
+            --text-color: #141414;
+            --mondrian-white: #1B1B1B;
+        }
+
+        body.after-hours .b-2026,
+        body.after-hours .b-2024,
+        body.after-hours .b-2022,
+        body.after-hours .b-media { color: #EDEDED; }
+
+        body.after-hours .b-media.m-red { color: #fff; }
+
+        body.after-hours .book-item {
+            border-bottom-color: rgba(255, 255, 255, 0.15);
+        }
+
+        body.after-hours .b-2026.expand-list .label,
+        body.after-hours .b-2024.expand-list .label,
+        body.after-hours .b-2022.expand-list .label {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23ffffff" stroke-width="1.7"/></svg>');
+        }
 
         /* Hidden Spill Mechanics — no transition here, so closing collapses
            instantly instead of bouncing the row while the block narrows */
@@ -315,10 +352,19 @@
             flex-shrink: 0; /* the label never gives up space to the scrolling list */
             margin-top: 0;
             margin-bottom: 10px;
-            border-bottom: 2px solid currentColor;
-            padding-bottom: 4px;
+            padding-bottom: 6px;
             width: max-content;
             max-width: 100%;
+            /* Hand-ruled underline: drawn with a pencil, not a machine */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23121212" stroke-width="1.7"/></svg>');
+            background-repeat: repeat-x;
+            background-position: 0 100%;
+            background-size: 160px 4px;
+        }
+
+        /* The blue block rules its line in white */
+        .b-2025.expand-list .label {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23ffffff" stroke-width="1.7"/></svg>');
         }
 
         /* Mobile Typography Scale: short ’YY labels get significantly more presence */
@@ -331,7 +377,7 @@
         /* Web Spacing: give the label's dividing line more room around it */
         @media (min-width: 768px) {
             .block.expand-list .label {
-                padding-bottom: 6px;
+                padding-bottom: 8px;
                 margin-bottom: 16px;
             }
         }
@@ -373,6 +419,8 @@
             body::after, .site-nav, .nav-toggle, .b-media, .sold-dot, .label-count {
                 display: none !important;
             }
+
+            .taped::before, .taped::after { display: none; }
 
             header { border-color: #000; display: block; }
 
@@ -782,6 +830,9 @@
             const broken = blocks[Math.floor(Math.random() * blocks.length)];
             broken.classList.add(Math.random() < 0.5 ? 'broken-rot' : 'broken-off');
 
+            // One block per load is taped to the grid
+            blocks[Math.floor(Math.random() * blocks.length)].classList.add('taped');
+
             fitLabels();
         }
 
@@ -914,6 +965,10 @@
                 credit.textContent = credit.textContent.replace('all rights', 'some rights');
             }
         }
+
+        // After hours the palette inverts. Never announced.
+        const hour = new Date().getHours();
+        if (hour >= 2 && hour < 6) document.body.classList.add('after-hours');
 
         // The tab waits for you
         const siteTitle = document.title;
