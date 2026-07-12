@@ -115,7 +115,7 @@
             padding-bottom: 8px;
             text-align: center;
             font-weight: 300;
-            font-size: 0.72rem;
+            font-size: 0.85rem;
             text-transform: lowercase;
             opacity: 0.6;
         }
@@ -216,7 +216,8 @@
         }
 
         .media-embed {
-            flex: 0 0 280px; /* Forces continuous horizontal trail */
+            flex: 1 1 auto;
+            width: 100%; /* fill the block — a fixed width clipped the player's right side */
             height: 175px; /* Apple Music compact player's native height — anything less clips it */
             border-radius: 2px;
             border: none;
@@ -237,10 +238,14 @@
             flex-shrink: 0; /* the label never gives up space to the scrolling list */
         }
 
-        /* Rule: Media blocks spill outwards horizontally along the row */
+        /* Rule: Media blocks spill outwards horizontally along the row,
+           matching the expanded list blocks' two-row height */
         .block.expand-media {
             flex-basis: calc(80% - 4px) !important;
             max-width: calc(80% - 4px) !important;
+            min-height: 248px;
+            max-height: 248px;
+            justify-content: center; /* embed sits centered in the matched height */
         }
 
         /* Rule: Media block takes the full row when its pair is hidden */
@@ -301,7 +306,7 @@
 
     <header id="siteHeader">
         <h1>archive / structural matrix</h1>
-        <button class="nav-toggle" id="navToggle" onclick="toggleNav()">more</button>
+        <button class="nav-toggle" id="navToggle" onclick="toggleNav()">more.</button>
         <nav class="site-nav" id="siteNav">
             <a href="https://boxd.it/8tQ0j" target="_blank" rel="noopener">letterboxd.</a>
             <a href="https://goodreads.com/yuutalkwaytoomuch" target="_blank" rel="noopener">goodreads.</a>
@@ -760,7 +765,7 @@
         function toggleNav() {
             const header = document.getElementById('siteHeader');
             const open = header.classList.toggle('nav-open');
-            document.getElementById('navToggle').textContent = open ? 'close' : 'more';
+            document.getElementById('navToggle').textContent = open ? 'close.' : 'more.';
         }
 
         // Init System Matrix on fresh session load
