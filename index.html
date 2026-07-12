@@ -98,12 +98,12 @@
         .b-2022 { background-color: var(--mondrian-white); color: #121212; }
         .b-media { background-color: var(--mondrian-white); cursor: pointer; }
 
-        /* Hidden Spill Mechanics */
+        /* Hidden Spill Mechanics — no transition here, so closing collapses
+           instantly instead of bouncing the row while the block narrows */
         .spill-content {
             max-height: 0;
             opacity: 0;
             visibility: hidden;
-            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
             width: 100%;
         }
 
@@ -179,6 +179,7 @@
             max-height: 500px;
             opacity: 1;
             visibility: visible;
+            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
 
         /* Remove associated pair block entirely so it can't occupy a phantom row */
@@ -287,24 +288,37 @@
         const measureCtx = document.createElement('canvas').getContext('2d');
 
         function fitLabels() {
+            const mobileView = window.innerWidth < 768;
+
             document.querySelectorAll('.label').forEach(label => {
                 const full = label.dataset.full;
                 if (!full) return;
 
                 const block = label.closest('.block');
-                const avail = block.clientWidth - 24; // block padding: 12px per side
-                if (avail <= 0) return; // hidden pair, leave as is
+                let next;
 
-                const cs = getComputedStyle(label);
-                measureCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-                const tracking = parseFloat(cs.letterSpacing) || 0;
+                if (block.classList.contains('expand-list')) {
+                    // An opened block always carries its full name
+                    next = full;
+                } else if (mobileView) {
+                    // On mobile, closed blocks default to the short ’YY form
+                    next = label.dataset.short;
+                } else {
+                    const avail = block.clientWidth - 24; // block padding: 12px per side
+                    if (avail <= 0) return; // hidden pair, leave as is
 
-                const longestWord = full.split(/\s+/).reduce((max, word) => {
-                    const w = measureCtx.measureText(word).width + tracking * word.length;
-                    return Math.max(max, w);
-                }, 0);
+                    const cs = getComputedStyle(label);
+                    measureCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+                    const tracking = parseFloat(cs.letterSpacing) || 0;
 
-                const next = longestWord > avail ? label.dataset.short : full;
+                    const longestWord = full.split(/\s+/).reduce((max, word) => {
+                        const w = measureCtx.measureText(word).width + tracking * word.length;
+                        return Math.max(max, w);
+                    }, 0);
+
+                    next = longestWord > avail ? label.dataset.short : full;
+                }
+
                 if (label.textContent !== next) label.textContent = next;
             });
         }
@@ -337,6 +351,8 @@
                 yearEl.classList.add('expand-list');
                 mediaEl.classList.add('hide-pair');
             }
+
+            fitLabels();
         }
 
         // Action Rules: Media blocks spill horizontally along their paired space line
@@ -359,6 +375,8 @@
                     yearEl.style.maxWidth = "calc(20% - 5px)";
                 }
             }
+
+            fitLabels();
         }
 
         // Init System Matrix on fresh session load
