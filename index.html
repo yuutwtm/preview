@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive — Dynamic Matrix</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/mrb3sjs.css">
     <style>
         :root {
             --bg-color: #141414; 
@@ -25,7 +26,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Helvetica Neue', Helvetica, 'Pretendard', sans-serif;
+            font-family: "helvetica-neue-lt-pro", Helvetica, Arial, sans-serif;
             min-height: 100vh;
             padding: 12px;
             overflow-y: scroll;
@@ -70,7 +71,7 @@
 
         /* Year Block Typography Profile */
         .label {
-            font-family: 'Helvetica Neue', Helvetica, sans-serif;
+            font-family: "helvetica-neue-lt-pro", Helvetica, Arial, sans-serif;
             font-weight: 900;
             font-size: clamp(1.2rem, 2.5vw, 2rem);
             line-height: 0.85;
@@ -101,7 +102,7 @@
         /* Book Lists layout (Vertical Expand Only) */
         .book-list {
             list-style: none;
-            padding-top: 4px;
+            padding-top: 0;
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -154,7 +155,7 @@
 
         .block.expand-list .label {
             margin-top: 0;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
             border-bottom: 2px solid currentColor;
             padding-bottom: 2px;
             width: max-content;
@@ -172,6 +173,15 @@
             max-width: 0% !important;
             padding: 0 !important;
             opacity: 0;
+        }
+
+        /* Desktop Constraint: no block may exceed 70% of the viewport width */
+        @media (min-width: 768px) {
+            .block,
+            .block.expand-list,
+            .block.expand-media {
+                max-width: 70vw !important;
+            }
         }
     </style>
 </head>
