@@ -872,10 +872,8 @@
                     next = longestWord > avail ? label.dataset.short : full;
                 }
 
-                // Closed blocks whisper their totals; opened blocks drop the count
-                const html = block.classList.contains('expand-list')
-                    ? next
-                    : `${next} <span class="label-count">(${label.dataset.count})</span>`;
+                // Every block whispers its total, open or closed
+                const html = `${next} <span class="label-count">(${label.dataset.count})</span>`;
                 if (label.dataset.rendered !== html) {
                     label.innerHTML = html;
                     label.dataset.rendered = html;
