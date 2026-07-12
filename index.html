@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive — Dynamic Matrix</title>
+    <title>archive / textual matrix.</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='5' fill='%23E11A22'/></svg>">
     <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://use.typekit.net/mrb3sjs.css">
@@ -222,6 +222,20 @@
             margin-left: 6px;
             opacity: 0.55;
             vertical-align: 0.4em;
+        }
+
+        /* Old-website link on the red box: Times, upright, underlined */
+        .media-label {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 0.95rem;
+            text-decoration: underline;
+            margin-top: auto;
+            pointer-events: none;
+        }
+
+        .block.expand-media .media-label {
+            margin-top: 0;
+            margin-bottom: 6px;
         }
 
         /* Masking tape: one block per load is taped to the grid */
@@ -468,7 +482,7 @@
 <body>
 
     <header id="siteHeader">
-        <h1>archive / structural matrix</h1>
+        <h1>archive / textual matrix.</h1>
         <button class="nav-toggle" id="navToggle" onclick="toggleNav()">more.</button>
         <nav class="site-nav">
             <a href="https://boxd.it/8tQ0j" target="_blank" rel="noopener">letterboxd.</a>
@@ -485,7 +499,7 @@
     <script>
         // Source Data Matrix
         const archiveData = [
-            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", data: [
+            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", mediaTitle: "close the door, not all the way…", data: [
                 ["금각사", "미시마 유키오"],
                 ["나의 곰", "메리언 엥겔"],
                 ["MAIN STREET", "SINCLAIR LEWIS"],
@@ -813,7 +827,8 @@
 
                 // Distribute a single running media frame inside media block spill space
                 const randomMedia = mediaEmbeds[index % mediaEmbeds.length];
-                mediaBlock.innerHTML = `<div class="spill-content"><div class="media-track-wrapper">${randomMedia}</div></div>`;
+                const mediaLabel = item.mediaTitle ? `<div class="media-label">${item.mediaTitle}</div>` : '';
+                mediaBlock.innerHTML = `${mediaLabel}<div class="spill-content"><div class="media-track-wrapper">${randomMedia}</div></div>`;
 
                 // Render each pair inside its own isolated row container
                 const rowEl = document.createElement('div');
