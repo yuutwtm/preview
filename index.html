@@ -173,6 +173,14 @@
             border-bottom: 2px solid currentColor;
             padding-bottom: 2px;
             width: max-content;
+            max-width: 100%;
+        }
+
+        /* Mobile Typography Scale: short ’YY labels get significantly more presence */
+        @media (max-width: 767px) {
+            .label {
+                font-size: 2rem;
+            }
         }
 
         .block.expand-list .spill-content, .block.expand-media .spill-content {
