@@ -49,7 +49,7 @@
         .matrix-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             max-width: 1600px;
             margin: 0 auto;
         }
@@ -58,14 +58,14 @@
            even mid-transition when a pair is hidden or resizing */
         .matrix-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow: hidden;
         }
 
         /* Structural Core Block Architecture */
         .block {
             position: relative;
-            min-height: 140px;
+            min-height: 120px;
             padding: 12px;
             display: flex;
             flex-direction: column;
@@ -157,8 +157,8 @@
 
         /* Rule: Media blocks spill outwards horizontally along the row */
         .block.expand-media {
-            flex-basis: calc(80% - 5px) !important;
-            max-width: calc(80% - 5px) !important;
+            flex-basis: calc(80% - 4px) !important;
+            max-width: calc(80% - 4px) !important;
         }
 
         /* Rule: Media block takes the full row when its pair is hidden */
@@ -239,8 +239,8 @@
                 const complementPercent = (100 - primaryPercent);
 
                 // Gap calculation correction rules
-                const stylePrimary = `flex: 0 0 calc(${primaryPercent}% - 5px); max-width: calc(${primaryPercent}% - 5px);`;
-                const styleComplement = `flex: 0 0 calc(${complementPercent}% - 5px); max-width: calc(${complementPercent}% - 5px);`;
+                const stylePrimary = `flex: 0 0 calc(${primaryPercent}% - 4px); max-width: calc(${primaryPercent}% - 4px);`;
+                const styleComplement = `flex: 0 0 calc(${complementPercent}% - 4px); max-width: calc(${complementPercent}% - 4px);`;
 
                 // Build Primary Year Block Structure
                 const yearId = `block-year-${index}`;
@@ -371,8 +371,8 @@
                     yearEl.classList.add('hide-pair');
                     mediaEl.classList.add('expand-full');
                 } else {
-                    yearEl.style.flexBasis = "calc(20% - 5px)";
-                    yearEl.style.maxWidth = "calc(20% - 5px)";
+                    yearEl.style.flexBasis = "calc(20% - 4px)";
+                    yearEl.style.maxWidth = "calc(20% - 4px)";
                 }
             }
 
