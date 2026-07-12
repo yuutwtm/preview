@@ -25,6 +25,11 @@
             padding: 0;
         }
 
+        ::selection {
+            background: var(--mondrian-yellow);
+            color: #121212;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -32,6 +37,17 @@
             min-height: 100vh;
             padding: 12px;
             overflow-y: scroll;
+        }
+
+        /* Grain: faint riso-paper noise over everything, never intercepts input */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.06;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/></filter><rect width="240" height="240" filter="url(%23n)"/></svg>');
         }
 
         header {
@@ -49,6 +65,12 @@
             font-weight: 900;
             letter-spacing: -0.02em;
             text-transform: lowercase;
+        }
+
+        /* One word of the title is misset per load — italic serif, deliberately */
+        .misset {
+            font-family: "Times New Roman", Times, serif;
+            font-style: italic;
         }
 
         /* Site Navigation — light, lowercase, small */
@@ -129,6 +151,7 @@
             flex-direction: column;
             gap: 8px;
             margin: 0 auto;
+            cursor: crosshair; /* browsing as surveying */
         }
 
         /* Each pair lives in its own row: blocks can never drift between rows,
@@ -141,6 +164,7 @@
 
         /* Structural Core Block Architecture */
         .block {
+            position: relative; /* anchors the sold dot */
             min-height: 120px;
             padding: 12px;
             display: flex;
@@ -162,11 +186,33 @@
             pointer-events: none;
         }
 
+        /* Whispered totals on closed blocks — data as decoration */
+        .label-count {
+            font-size: 0.45em;
+            font-weight: 400;
+            letter-spacing: 0;
+            margin-left: 6px;
+            opacity: 0.55;
+            vertical-align: 0.4em;
+        }
+
+        /* Gallery sticker: one random year is sold. No explanation. */
+        .sold-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--mondrian-red);
+            pointer-events: none;
+        }
+
         /* Color Layout Assignments */
         .b-2026, .b-2024, .b-2022 { background-color: var(--mondrian-white); color: #121212; }
         .b-2025 { background-color: var(--mondrian-blue); color: #fff; }
         .b-2023 { background-color: var(--mondrian-yellow); color: #121212; }
-        .b-media { background-color: var(--mondrian-white); cursor: pointer; }
+        .b-media { background-color: var(--mondrian-white); }
         .b-media.m-red { background-color: var(--mondrian-red); }
 
         /* Hidden Spill Mechanics — no transition here, so closing collapses
@@ -222,7 +268,6 @@
             max-width: 100% !important;
             /* Cap at two rows' height (2 x 120px + 8px gap); the list scrolls inside */
             max-height: 248px;
-            cursor: default;
         }
 
         /* Rule: Media blocks spill outwards horizontally along the row,
@@ -287,6 +332,59 @@
             .matrix-container {
                 max-width: 70vw;
             }
+        }
+
+        /* The anti-website: print (Cmd/Ctrl+P) renders the whole archive as a
+           plain typewritten list — black on white, everything expanded */
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+                padding: 0;
+                overflow: visible;
+                font-family: "Courier New", Courier, monospace;
+            }
+
+            body::after, .site-nav, .nav-toggle, .b-media, .sold-dot, .label-count {
+                display: none !important;
+            }
+
+            header { border-color: #000; display: block; }
+
+            h1 { font-family: inherit; font-size: 14pt; letter-spacing: 0; }
+            h1 .misset { font-family: inherit; font-style: normal; }
+
+            .matrix-container, .matrix-row {
+                display: block;
+                max-width: none;
+                overflow: visible;
+            }
+
+            .block {
+                display: block;
+                min-height: 0;
+                max-height: none !important;
+                max-width: 100% !important;
+                padding: 12pt 0;
+                background: none !important;
+                color: #000 !important;
+                overflow: visible;
+                transition: none;
+            }
+
+            .label { font-size: 12pt; letter-spacing: 0; margin: 0 0 6pt; }
+
+            .spill-content {
+                max-height: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                overflow: visible !important;
+            }
+
+            .book-item { border: none; font-size: 9pt; letter-spacing: 0; padding: 0; }
+            .book-author { opacity: 1; }
+
+            .credit { font-family: inherit; opacity: 1; }
         }
     </style>
 </head>
@@ -619,7 +717,7 @@
                 yearBlock.dataset.baseStyle = stylePrimary;
                 yearBlock.setAttribute('onclick', `toggleList('${yearId}', '${mediaId}')`);
 
-                let listHtml = `<div class="label" data-full="${item.year}" data-short="${item.short}">${item.year}</div><div class="spill-content"><ul class="book-list">`;
+                let listHtml = `<div class="label" data-full="${item.year}" data-short="${item.short}" data-count="${item.data.length}">${item.year}</div><div class="spill-content"><ul class="book-list">`;
                 item.data.forEach(book => {
                     const authorHtml = book[1] ? `<span class="book-author">${escapeHtml(book[1])}</span>` : '';
                     listHtml += `<li class="book-item"><span class="book-title">${escapeHtml(book[0])}</span>${authorHtml}</li>`;
@@ -646,6 +744,12 @@
                 rowEl.appendChild(mediaBlock);
                 container.appendChild(rowEl);
             });
+
+            // One random year is sold. No explanation.
+            const soldIndex = Math.floor(Math.random() * archiveData.length);
+            const soldDot = document.createElement('span');
+            soldDot.className = 'sold-dot';
+            document.getElementById(`block-year-${soldIndex}`).appendChild(soldDot);
 
             fitLabels();
         }
@@ -686,7 +790,14 @@
                     next = longestWord > avail ? label.dataset.short : full;
                 }
 
-                if (label.textContent !== next) label.textContent = next;
+                // Closed blocks whisper their totals; opened blocks drop the count
+                const html = block.classList.contains('expand-list')
+                    ? next
+                    : `${next} <span class="label-count">(${label.dataset.count})</span>`;
+                if (label.dataset.rendered !== html) {
+                    label.innerHTML = html;
+                    label.dataset.rendered = html;
+                }
             });
         }
 
@@ -756,8 +867,29 @@
             document.getElementById('navToggle').textContent = open ? 'close.' : 'more.';
         }
 
+        // One word of the title is misset per load — italic serif, deliberately
+        function missetTitle() {
+            const h1 = document.querySelector('h1');
+            const words = h1.textContent.split(' ');
+            const candidates = words.map((w, i) => w !== '/' ? i : -1).filter(i => i >= 0);
+            const pick = candidates[Math.floor(Math.random() * candidates.length)];
+            h1.innerHTML = words.map((w, i) => i === pick ? `<span class="misset">${w}</span>` : w).join(' ');
+        }
+
+        // On a few loads, the credit quietly lies
+        function equivocateCredit() {
+            if (Math.random() < 0.05) {
+                const credit = document.querySelector('.credit');
+                credit.textContent = credit.textContent.replace('all rights', 'some rights');
+            }
+        }
+
         // Init System Matrix on fresh session load
-        window.onload = generateMatrix;
+        window.onload = () => {
+            generateMatrix();
+            missetTitle();
+            equivocateCredit();
+        };
     </script>
 </body>
 </html>
