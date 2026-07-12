@@ -18,6 +18,10 @@
             --mondrian-white: #F2EFE9; /* paper, not monitor */
 
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+            /* Hand-ruled underline, in ink and in paper-white */
+            --rule-ink: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23121212" stroke-width="1.7"/></svg>');
+            --rule-paper: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23ffffff" stroke-width="1.7"/></svg>');
         }
 
         * {
@@ -116,9 +120,8 @@
                 font-size: 0.85rem; /* match the credit */
             }
 
-            .site-nav { font-size: 0.85rem; }
-
             .site-nav {
+                font-size: 0.85rem;
                 flex-basis: 100%;
                 flex-direction: column;
                 gap: 10px;
@@ -155,6 +158,19 @@
             text-transform: lowercase;
             opacity: 0.6;
         }
+
+        .palette-x {
+            font-family: inherit;
+            font-size: 0.8em;
+            background: none;
+            border: none;
+            padding: 0;
+            margin-left: 4px;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .palette-x:hover { text-decoration: underline; }
 
         /* Vertical Stack of Isolated Row Containers */
         .matrix-container {
@@ -235,6 +251,8 @@
 
         .quote-attr { font-style: italic; }
 
+        .quote-serif { font-family: "Times New Roman", Times, serif; }
+
         /* Old-website link on the red box: Times, upright, underlined */
         .media-label {
             font-family: "Times New Roman", Times, serif;
@@ -303,7 +321,7 @@
         body.after-hours .b-2026.expand-list .label,
         body.after-hours .b-2024.expand-list .label,
         body.after-hours .b-2022.expand-list .label {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23ffffff" stroke-width="1.7"/></svg>');
+            background-image: var(--rule-paper);
         }
 
         /* Hidden Spill Mechanics — no transition here, so closing collapses
@@ -386,7 +404,7 @@
             width: max-content;
             max-width: 100%;
             /* Hand-ruled underline: drawn with a pencil, not a machine */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23121212" stroke-width="1.7"/></svg>');
+            background-image: var(--rule-ink);
             background-repeat: repeat-x;
             background-position: 0 100%;
             background-size: 160px 4px;
@@ -394,7 +412,7 @@
 
         /* The blue block rules its line in white */
         .b-2025.expand-list .label {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23ffffff" stroke-width="1.7"/></svg>');
+            background-image: var(--rule-paper);
         }
 
         /* Mobile Typography Scale: short ’YY labels get significantly more presence */
@@ -446,7 +464,7 @@
                 font-family: "Courier New", Courier, monospace;
             }
 
-            body::after, .site-nav, .nav-toggle, .b-media, .sold-dot, .label-count {
+            body::after, .site-nav, .nav-toggle, .b-media, .sold-dot, .label-count, .palette-x {
                 display: none !important;
             }
 
@@ -507,7 +525,7 @@
 
     <main class="matrix-container" id="matrixContainer"></main>
 
-    <footer class="credit">© pitfieldstreet.web.app. all rights reserved.</footer>
+    <footer class="credit"><span id="creditText">© pitfieldstreet.web.app. all rights reserved.</span> <button class="palette-x" onclick="togglePalette()">x.</button></footer>
 
     <script>
         // Source Data Matrix
@@ -564,7 +582,9 @@
                 ["A MAN’S PLACE", "ANNIE ERNAUX"],
                 ["무대", "필립 라쿠-라바르트, 장-뤽 낭시/조만수 역"],
                 ["단지 세상의 끝", "장뤼크 라가르스/임혜경 역"],
-                ["140 ARTISTS’ IDEAS FOR PLANET EARTH", "EDITED BY HANS ULRICH OBRIST & KOSTAS STASINOPOULOS"]
+                ["140 ARTISTS’ IDEAS FOR PLANET EARTH", "EDITED BY HANS ULRICH OBRIST & KOSTAS STASINOPOULOS"],
+                ["Between Riverside and Crazy", "Stephen Adly Guirgis"],
+                ["Ways of Curating", "Hans Ulrich Obrist"]
             ] },
             { year: "twenty twenty-five", short: "’25", class: "b-2025", flip: true, mediaQuote: {
                 speaker: "KATURIAN.",
@@ -695,12 +715,13 @@
                 ["ANGELS IN AMERICA PART TWO: PERESTROIKA", "TONY KUSHNER"]
             ] },
             { year: "twenty twenty-three", short: "’23", class: "b-2023", mediaQuote: {
+                serif: true,
                 text: [
                     "I AM EXPERIENCED IN STREET AGITATION. I HAVE A FAR MEAN STREAK OF INDEPENDENCE BROUGHT ON BY NEGLECT.",
                     "AEROSPACE.",
                     ""
                 ],
-                attribution: "(DON DELILLO, LIBRA)"
+                attribution: "DON DELILLO, LIBRA"
             }, data: [
                 ["THE ANTHROPOCENE REVIEWED", "JOHN GREEN"],
                 ["SOUTH OF THE BORDER, WEST OF THE SUN", "HARUKI MURAKAMI"],
@@ -864,7 +885,7 @@
                     const q = item.mediaQuote;
                     const speaker = q.speaker ? `<strong>${q.speaker}</strong> ` : '';
                     const body = Array.isArray(q.text) ? q.text.join('<br>') : q.text;
-                    spillInner = `<blockquote class="media-quote">${speaker}${body}<br><em class="quote-attr">${q.attribution}</em></blockquote>`;
+                    spillInner = `<blockquote class="media-quote${q.serif ? ' quote-serif' : ''}">${speaker}${body}<br><em class="quote-attr">${q.attribution}</em></blockquote>`;
                 } else {
                     spillInner = `<div class="media-track-wrapper">${buildEmbed(item.mediaSrc || mediaSrcs[index % mediaSrcs.length])}</div>`;
                 }
@@ -894,11 +915,15 @@
             // are taped to the grid — picked independently, so a block can be
             // broken, taped, or both
             const blocks = container.querySelectorAll('.block');
+            // Two distinct blocks from two different rows, so a single row can
+            // never carry both treatments' offsets at once
             const pickTwo = n => {
-                const a = Math.floor(Math.random() * n);
-                let b = Math.floor(Math.random() * (n - 1));
-                if (b >= a) b++;
-                return [a, b];
+                const rows = n / 2;
+                const r1 = Math.floor(Math.random() * rows);
+                let r2 = Math.floor(Math.random() * (rows - 1));
+                if (r2 >= r1) r2++;
+                const side = () => (Math.random() < 0.5 ? 0 : 1);
+                return [r1 * 2 + side(), r2 * 2 + side()];
             };
             pickTwo(blocks.length).forEach(i => blocks[i].classList.add(Math.random() < 0.5 ? 'broken-down' : 'broken-up'));
             pickTwo(blocks.length).forEach(i => blocks[i].classList.add('taped'));
@@ -1029,9 +1054,14 @@
         // On a few loads, the credit quietly lies
         function equivocateCredit() {
             if (Math.random() < 0.05) {
-                const credit = document.querySelector('.credit');
+                const credit = document.getElementById('creditText');
                 credit.textContent = credit.textContent.replace('all rights', 'some rights');
             }
+        }
+
+        // The tiny x: flips the palette into (and out of) the 2-6am variant
+        function togglePalette() {
+            document.body.classList.toggle('after-hours');
         }
 
         // After hours the palette inverts. Never announced.
