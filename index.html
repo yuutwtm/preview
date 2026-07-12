@@ -185,12 +185,11 @@
             transition: flex-basis 0.6s var(--ease), max-width 0.6s var(--ease),
                         transform 0.25s var(--ease);
             /* Composed so the broken block and hover nudges coexist */
-            transform: translate(var(--nudge-x, 0px), var(--broken-y, 0px)) rotate(var(--broken-rot, 0deg));
+            transform: translate(var(--nudge-x, 0px), var(--broken-y, 0px));
         }
 
         /* One block per load is deliberately, barely wrong */
-        .broken-rot { --broken-rot: 0.9deg; }
-        .broken-off { --broken-y: 7px; }
+        .broken { --broken-y: 5px; }
 
         /* The negative space physically resists you */
         @media (hover: hover) {
@@ -473,6 +472,7 @@
                 color: #000 !important;
                 overflow: visible;
                 transition: none;
+                transform: none;
             }
 
             .label { font-size: 12pt; letter-spacing: 0; margin: 0 0 6pt; }
@@ -867,13 +867,18 @@
             soldDot.className = 'sold-dot';
             document.getElementById(`block-year-${soldIndex}`).appendChild(soldDot);
 
-            // One block per load is deliberately, barely wrong
+            // Two blocks per load are deliberately, consistently wrong, and two
+            // are taped to the grid — picked independently, so a block can be
+            // broken, taped, or both
             const blocks = container.querySelectorAll('.block');
-            const broken = blocks[Math.floor(Math.random() * blocks.length)];
-            broken.classList.add(Math.random() < 0.5 ? 'broken-rot' : 'broken-off');
-
-            // One block per load is taped to the grid
-            blocks[Math.floor(Math.random() * blocks.length)].classList.add('taped');
+            const pickTwo = n => {
+                const a = Math.floor(Math.random() * n);
+                let b = Math.floor(Math.random() * (n - 1));
+                if (b >= a) b++;
+                return [a, b];
+            };
+            pickTwo(blocks.length).forEach(i => blocks[i].classList.add('broken'));
+            pickTwo(blocks.length).forEach(i => blocks[i].classList.add('taped'));
 
             fitLabels();
         }
