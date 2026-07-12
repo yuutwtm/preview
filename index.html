@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive — Dynamic Matrix</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='5' fill='%23E11A22'/></svg>">
     <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://use.typekit.net/mrb3sjs.css">
     <style>
@@ -191,6 +192,11 @@
         @media (hover: hover) {
             .block:hover + .block { --nudge-x: 4px; }
             .block:has(+ .block:hover) { --nudge-x: -4px; }
+
+            /* Riso misregistration: the plates slip while you hover */
+            .block:hover .label {
+                text-shadow: 1px 0 var(--mondrian-red), -1px 0 var(--mondrian-blue);
+            }
         }
 
         /* Year Block Typography Profile */
@@ -908,6 +914,32 @@
                 credit.textContent = credit.textContent.replace('all rights', 'some rights');
             }
         }
+
+        // The tab waits for you
+        const siteTitle = document.title;
+        document.addEventListener('visibilitychange', () => {
+            document.title = document.hidden ? 'waiting here…' : siteTitle;
+        });
+
+        // For the five people who open the console
+        console.log(String.raw`
+
+      b a s s v i c t i m
+
+      ___________________________
+     |  _______________________  |
+     | |  ___   ___   ___   __ | |
+     | | |   | |   | |   | |  || |
+     | | |___| |___| |___| |__|| |
+     | |_______________________| |
+     |   ___   ___    _______    |
+     |  |   | |   |  | 2 7 a |   |
+     |  |   | |   |  |   o   |   |
+     |__|___|_|___|__|_______|___|
+
+      2 7 a   p i t f i e l d   s t .
+
+`);
 
         // Init System Matrix on fresh session load
         window.onload = () => {
