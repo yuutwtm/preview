@@ -805,9 +805,14 @@
             container.innerHTML = "";
             const fractions = isMobile ? mobileFractions : webFractions;
 
+            let prevFraction = null;
+
             archiveData.forEach((item, index) => {
-                // Generate primary random fraction slice
-                const randomFraction = fractions[Math.floor(Math.random() * fractions.length)];
+                // Generate primary random fraction slice — never the same split
+                // as the row directly above, so no two adjacent rows align
+                const pool = fractions.filter(f => f !== prevFraction);
+                const randomFraction = pool[Math.floor(Math.random() * pool.length)];
+                prevFraction = randomFraction;
 
                 // Deduce perfect complementary mathematical negative space profile
                 const primaryPercent = (randomFraction * 100);
