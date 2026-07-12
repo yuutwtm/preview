@@ -647,7 +647,7 @@
                 ["오후의 예항 / 짐승들의 유희", "미시마 유키오"],
                 ["GONE GIRL", "GILLIAN FLYNN"]
             ] },
-            { year: "twenty twenty-four", short: "’24", class: "b-2024", data: [
+            { year: "twenty twenty-four", short: "’24", class: "b-2024", mediaSrc: "https://embed.music.apple.com/kr/song/music-and-me/1817373541", data: [
                 ["행복의 기원", "서은국"],
                 ["THE SENSE OF AN ENDING", "JULIAN BARNES"],
                 ["THE HUMAN STAIN", "PHILIP ROTH"],
@@ -694,7 +694,14 @@
                 ["ANGELS IN AMERICA PART ONE: MILLENNIUM APPROACHES", "TONY KUSHNER"],
                 ["ANGELS IN AMERICA PART TWO: PERESTROIKA", "TONY KUSHNER"]
             ] },
-            { year: "twenty twenty-three", short: "’23", class: "b-2023", data: [
+            { year: "twenty twenty-three", short: "’23", class: "b-2023", mediaQuote: {
+                text: [
+                    "I AM EXPERIENCED IN STREET AGITATION. I HAVE A FAR MEAN STREAK OF INDEPENDENCE BROUGHT ON BY NEGLECT.",
+                    "AEROSPACE.",
+                    ""
+                ],
+                attribution: "(DON DELILLO, LIBRA)"
+            }, data: [
                 ["THE ANTHROPOCENE REVIEWED", "JOHN GREEN"],
                 ["SOUTH OF THE BORDER, WEST OF THE SUN", "HARUKI MURAKAMI"],
                 ["COLORLESS TAZAKI TSUKURU AND HIS YEAR OF PILGRIMAGE", "HARUKI MURAKAMI"],
@@ -740,7 +747,7 @@
                 ["THE CONQUEST OF HAPPINESS", "BERTRAND RUSSELL"],
                 ["THE ELEMENTARY PARTICLES", "MICHEL HOUELLEBECQ"]
             ] },
-            { year: "twenty twenty-two", short: "’22", class: "b-2022", data: [
+            { year: "twenty twenty-two", short: "’22", class: "b-2022", mediaSrc: "https://embed.music.apple.com/kr/song/%E5%86%B7%E3%81%9F%E3%81%84%E3%82%AE%E3%83%95%E3%83%88/1404166608", data: [
                 ["혁명의 시대", "에릭 홉스봄"],
                 ["1Q84", "HARUKI MURAKAMI"],
                 ["자유로부터의 도피", "에리히 프롬"],
@@ -855,7 +862,9 @@
                 let spillInner;
                 if (item.mediaQuote) {
                     const q = item.mediaQuote;
-                    spillInner = `<blockquote class="media-quote"><strong>${q.speaker}</strong> ${q.text}<br><em class="quote-attr">${q.attribution}</em></blockquote>`;
+                    const speaker = q.speaker ? `<strong>${q.speaker}</strong> ` : '';
+                    const body = Array.isArray(q.text) ? q.text.join('<br>') : q.text;
+                    spillInner = `<blockquote class="media-quote">${speaker}${body}<br><em class="quote-attr">${q.attribution}</em></blockquote>`;
                 } else {
                     spillInner = `<div class="media-track-wrapper">${buildEmbed(item.mediaSrc || mediaSrcs[index % mediaSrcs.length])}</div>`;
                 }
