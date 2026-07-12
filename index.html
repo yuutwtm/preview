@@ -36,6 +36,10 @@
             margin-bottom: 24px;
             border-bottom: 2px solid var(--text-color);
             padding-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         h1 {
@@ -43,6 +47,77 @@
             font-weight: 900;
             letter-spacing: -0.02em;
             text-transform: lowercase;
+        }
+
+        /* Site Navigation — light, lowercase, small */
+        .site-nav {
+            display: flex;
+            gap: 18px;
+            font-weight: 300;
+            font-size: 0.8rem;
+            text-transform: lowercase;
+        }
+
+        .site-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            opacity: 0.85;
+        }
+
+        .site-nav a:hover { text-decoration: underline; }
+
+        .nav-toggle {
+            display: none;
+            font-family: inherit;
+            font-weight: 300;
+            font-size: 0.8rem;
+            text-transform: lowercase;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        /* Mobile: toggle in the header row; menu list spills open from the left */
+        @media (max-width: 767px) {
+            .nav-toggle { display: block; }
+
+            .site-nav {
+                flex-basis: 100%;
+                flex-direction: column;
+                gap: 10px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            header.nav-open .site-nav {
+                max-height: 160px;
+                padding-top: 14px;
+            }
+
+            .site-nav a {
+                transform: translateX(-16px);
+                opacity: 0;
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            }
+
+            header.nav-open .site-nav a {
+                transform: translateX(0);
+                opacity: 0.85;
+            }
+        }
+
+        /* Page Credit */
+        .credit {
+            margin-top: 40px;
+            padding-bottom: 8px;
+            text-align: center;
+            font-weight: 300;
+            font-size: 0.72rem;
+            text-transform: lowercase;
+            opacity: 0.6;
         }
 
         /* Vertical Stack of Isolated Row Containers */
@@ -224,11 +299,19 @@
 </head>
 <body>
 
-    <header>
+    <header id="siteHeader">
         <h1>archive / structural matrix</h1>
+        <button class="nav-toggle" id="navToggle" onclick="toggleNav()">menu</button>
+        <nav class="site-nav" id="siteNav">
+            <a href="https://letterboxd.com" target="_blank" rel="noopener">letterboxd.</a>
+            <a href="https://www.goodreads.com" target="_blank" rel="noopener">goodreads.</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=27a+Pitfield+Street+London" target="_blank" rel="noopener">27a pitfield st.</a>
+        </nav>
     </header>
 
     <main class="matrix-container" id="matrixContainer"></main>
+
+    <footer class="credit">© 2026 haemil</footer>
 
     <script>
         // Source Data Matrix
@@ -364,9 +447,139 @@
                 ["오후의 예항 / 짐승들의 유희", "미시마 유키오"],
                 ["GONE GIRL", "GILLIAN FLYNN"]
             ] },
-            { year: "twenty twenty-four", short: "’24", class: "b-2024", type: "list", data: [["사피엔스", "Yuval Noah Harari"], ["도둑맞은 집중력", "Johann Hari"]] },
-            { year: "twenty twenty-three", short: "’23", class: "b-2023", type: "list", data: [["Norwegian Wood", "Haruki Murakami"]] },
-            { year: "twenty twenty-two", short: "’22", class: "b-2022", type: "list", data: [["공정하다는 착각", "Michael Sandel"]] }
+            { year: "twenty twenty-four", short: "’24", class: "b-2024", type: "list", data: [
+                ["행복의 기원", "서은국"],
+                ["THE SENSE OF AN ENDING", "JULIAN BARNES"],
+                ["THE HUMAN STAIN", "PHILIP ROTH"],
+                ["SONS AND LOVERS", "D. H. LAWRENCE"],
+                ["AMERICAN PASTORAL", "PHILIP ROTH"],
+                ["I MARRIED A COMMUNIST", "PHILIP ROTH"],
+                ["REVOLUTIONARY ROAD", "RICHARD YATES"],
+                ["영화도둑일기", "한민수"],
+                ["4 3 2 1", "PAUL AUSTER"],
+                ["ETHAN FROME", "EDITH WHARTON"],
+                ["THE CRYING OF LOT 49", "THOMAS PYNCHON"],
+                ["THE ARMIES OF THE NIGHT", "NORMAN MAILER"],
+                ["FIRST LOVE", "IVAN TURGENEV"],
+                ["ACCELERATE: THE ACCELERATIONIST READER", "ROBIN MACKAY, ARMEN AVANESSIAN"],
+                ["SNUFF", "CHUCK PALAHNIUK"],
+                ["THE RULES OF ATTRACTION", "BRET EASTON ELLIS"],
+                ["AMERICAN PSYCHO", "BRET EASTON ELLIS"],
+                ["WHAT WE TALK ABOUT WHEN WE TALK ABOUT LOVE", "RAYMOND CARVER"],
+                ["LESS THAN ZERO", "BRET EASTON ELLIS"],
+                ["THE LINE OF BEAUTY", "ALAN HOLLINGHURST"],
+                ["THE SHARDS", "BRET EASTON ELLIS"],
+                ["RABBIT, RUN", "JOHN UPDIKE"],
+                ["PLAY IT AS IT LAYS", "JOAN DIDION"],
+                ["SPEAK, MEMORY", "VLADIMIR NABOKOV"],
+                ["EILEEN", "OTTESSA MOSHFEGH"],
+                ["BUNNY", "MONA AWAD"],
+                ["A SPORT AND A PASTIME", "JAMES SALTER"],
+                ["SLAUGHTERHOUSE-FIVE", "KURT VONNEGUT"],
+                ["PHANTOM LADY", "CORNELL WOOLRICH"],
+                ["EMPIRE OF THE SUN", "J. G. BALLARD"],
+                ["INTERMEZZO", "SALLY ROONEY"],
+                ["BOY PARTS", "ELIZA CLARK"],
+                ["I'M GLAD MY MOM DIED", "JENNETTE MCCURDY"],
+                ["A LITTLE LIFE", "HANYA YANAGIHARA"],
+                ["DESIGN AS ART", "BRUNO MUNARI"],
+                ["슬픔을 공부하는 슬픔", "신형철"],
+                ["NO MAN'S LAND", "HAROLD PINTER"],
+                ["MONSTERS: A FAN'S DILEMMA", "CLAIRE DEDERER"],
+                ["OUTLINE", "RACHEL CUSK"],
+                ["A MOVEABLE FEAST", "ERNEST HEMINGWAY"],
+                ["CIRCE", "MADELINE MILLER"],
+                ["GALATEA", "MADELINE MILLER"],
+                ["THE GOALKEEPER'S ANXIETY AT THE PENALTY KICK", "PETER HANDKE"],
+                ["ANGELS IN AMERICA PART ONE: MILLENNIUM APPROACHES", "TONY KUSHNER"],
+                ["ANGELS IN AMERICA PART TWO: PERESTROIKA", "TONY KUSHNER"]
+            ] },
+            { year: "twenty twenty-three", short: "’23", class: "b-2023", type: "list", data: [
+                ["THE ANTHROPOCENE REVIEWED", "JOHN GREEN"],
+                ["SOUTH OF THE BORDER, WEST OF THE SUN", "HARUKI MURAKAMI"],
+                ["COLORLESS TAZAKI TSUKURU AND HIS YEAR OF PILGRIMAGE", "HARUKI MURAKAMI"],
+                ["악어 노트", "구묘진"],
+                ["SPUTNIK SWEETHEART", "HARUKI MURAKAMI"],
+                ["A WILD SHEEP CHASE", "HARUKI MURAKAMI"],
+                ["갈증", "아멜리 노통"],
+                ["내게 무해한 사람", "최은영"],
+                ["UNDERGROUND: THE TOKYO GAS ATTACK AND THE JAPANESE PSYCHE", "HARUKI MURAKAMI"],
+                ["HEAVEN", "MIEKO KAWAKAMI"],
+                ["DANCE DANCE DANCE", "HARUKI MURAKAMI"],
+                ["HEAR THE WIND SING", "HARUKI MURAKAMI"],
+                ["트렌드 코리아 2023", ""],
+                ["이어령의 마지막 수업", "김지수"],
+                ["달리기를 말할 때 내가 하고 싶은 이야기", "무라카미 하루키"],
+                ["설탕의 맛", "김사과"],
+                ["KILLING COMMENDATORE", "HARUKI MURAKAMI"],
+                ["흰 장미의 심연까지", "나카야마 가호"],
+                ["AMERICAN PSYCHO", "BRET EASTON ELLIS"],
+                ["ALMOST TRANSPARENT BLUE", "RYU MURAKAMI"],
+                ["AUDITION", "RYU MURAKAMI"],
+                ["화염", "와즈디 무아와드"],
+                ["THE LONG GOODBYE", "RAYMOND CHANDLER"],
+                ["COSMOPOLIS", "DON DELILLO"],
+                ["FEAR AND LOATHING IN LAS VEGAS", "HUNTER S. THOMPSON"],
+                ["THE HOURS", "MICHAEL CUNNINGHAM"],
+                ["THE POSTMAN ALWAYS RINGS TWICE", "JAMES M. CAIN"],
+                ["도시와 그 불확실한 벽", "무라카미 하루키"],
+                ["SEIZE THE DAY", "SAUL BELLOW"],
+                ["POOR THINGS", "ALASDAIR GRAY"],
+                ["THE ENGLISH PATIENT", "MICHAEL ONDAATJE"],
+                ["MINIMA MORALIA", "THEODOR ADORNO"],
+                ["ENEMIES OF PROMISE", "CYRIL CONNOLLY"],
+                ["EATING THE DINOSAUR", "CHUCK KLOSTERMAN"],
+                ["THE DEATH OF THE YOUNG BRITISH PILOT", "MARGUERITE DURAS"],
+                ["NUPTIALS AT TIPASA - THE WIND AT DJEMILA - SUMMER IN ALGIERS - THE DESERT - HELEN'S EXILE - THE SEA CLOSE BY", "ALBERT CAMUS"],
+                ["SUCH, SUCH WERE THE JOYS - POLITICS AND THE ENGLISH LANGUAGE", "GEORGE ORWELL"],
+                ["DECLINE AND FALL", "EVELYN WAUGH"],
+                ["TOUCHED WITH FIRE", "KAY REDFIELD JAMISON"],
+                ["BIRTHDAY LETTERS", "TED HUGHES"],
+                ["THE UNABRIDGED JOURNALS OF SYLVIA PLATH", "SYLVIA PLATH"],
+                ["LEAVING LAS VEGAS", "JOHN O'BRIEN"],
+                ["THE CONQUEST OF HAPPINESS", "BERTRAND RUSSELL"],
+                ["THE ELEMENTARY PARTICLES", "MICHEL HOUELLEBECQ"]
+            ] },
+            { year: "twenty twenty-two", short: "’22", class: "b-2022", type: "list", data: [
+                ["혁명의 시대", "에릭 홉스봄"],
+                ["1Q84", "HARUKI MURAKAMI"],
+                ["자유로부터의 도피", "에리히 프롬"],
+                ["인간실격", "다자이 오사무"],
+                ["애프터 다크", "무라카미 하루키"],
+                ["일기에도 거짓말을 쓰는 사람", "차도하"],
+                ["I KISSED SHARA WHEELER", "CASEY MCQUISTON"],
+                ["LITTLE STARS", "JACQUELINE WILSON"],
+                ["ROSE RIVERS", "JACQUELINE WILSON"],
+                ["THE YEAR OF MAGICAL THINKING", "JOAN DIDION"],
+                ["WHY FISH DON'T EXIST", "LULU MILLER"],
+                ["일인칭 단수", "무라카미 하루키"],
+                ["나는 나를 파괴할 권리가 있다", "김영하"],
+                ["THE SEA, THE SEA!", "IRIS MURDOCH"],
+                ["여름의 빌라", "백수린"],
+                ["사랑을 위한 되풀이", "황인찬"],
+                ["나의 이브 생 로랑에게", "피에르 베르쥬"],
+                ["수전 손택의 말", "수전 손택, 조너선 콧"],
+                ["재와 물거품", "김청귤"],
+                ["파과", "구병모"],
+                ["CRYING IN H MART", "MICHELLE ZAUNER"],
+                ["모순", "양귀자"],
+                ["나는 소망한다 내게 금지된 것을", "양귀자"],
+                ["미워하는 미워하는 미워하는 마음 없이", "유지혜"],
+                ["철학, 장애를 논하다", "크리스티야나 크리스티안센 외"],
+                ["BITTERSWEET: HOW SORROW AND LONGING MAKE US WHOLE", "SUSAN CAIN"],
+                ["NORMAL PEOPLE", "SALLY ROONEY"],
+                ["아몬드", "손원평"],
+                ["지구에서 한아뿐", "정세랑"],
+                ["아가미", "구병모"],
+                ["얼음나무 숲", "하지은"],
+                ["연의 편지", "조현아"],
+                ["I FEAR MY PAIN INTERESTS YOU", "STEPHANIE LACAVA"],
+                ["THE SUPERRATIONALS", "STEPHANIE LACAVA"],
+                ["내 생애 마지막 다이어트", "권여름"],
+                ["집착", "아니 에르노"],
+                ["개인주의자 선언", "문유석"],
+                ["KAFKA ON THE SHORE", "HARUKI MURAKAMI"]
+            ] }
         ];
 
         // Media Embed Bank
@@ -415,7 +628,8 @@
                 
                 let listHtml = `<div class="label" data-full="${item.year}" data-short="${item.short}">${item.year}</div><div class="spill-content"><ul class="book-list">`;
                 item.data.forEach(book => {
-                    listHtml += `<li class="book-item"><span class="book-title">${escapeHtml(book[0])}</span><span class="book-author">${escapeHtml(book[1])}</span></li>`;
+                    const authorHtml = book[1] ? `<span class="book-author">${escapeHtml(book[1])}</span>` : '';
+                    listHtml += `<li class="book-item"><span class="book-title">${escapeHtml(book[0])}</span>${authorHtml}</li>`;
                 });
                 listHtml += `</ul></div>`;
                 yearBlock.innerHTML = listHtml;
@@ -540,6 +754,13 @@
             }
 
             fitLabels();
+        }
+
+        // Mobile navigation spill toggle
+        function toggleNav() {
+            const header = document.getElementById('siteHeader');
+            const open = header.classList.toggle('nav-open');
+            document.getElementById('navToggle').textContent = open ? 'close' : 'menu';
         }
 
         // Init System Matrix on fresh session load
