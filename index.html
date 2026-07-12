@@ -91,12 +91,13 @@
         }
 
         /* Color Layout Assignments */
-        .b-2026 { background-color: var(--mondrian-red); color: #fff; }
+        .b-2026 { background-color: var(--mondrian-white); color: #121212; }
         .b-2025 { background-color: var(--mondrian-blue); color: #fff; }
         .b-2024 { background-color: var(--mondrian-white); color: #121212; }
         .b-2023 { background-color: var(--mondrian-yellow); color: #121212; }
         .b-2022 { background-color: var(--mondrian-white); color: #121212; }
         .b-media { background-color: var(--mondrian-white); cursor: pointer; }
+        .b-media.m-red { background-color: var(--mondrian-red); }
 
         /* Hidden Spill Mechanics — no transition here, so closing collapses
            instantly instead of bouncing the row while the block narrows */
@@ -123,7 +124,7 @@
             letter-spacing: 0.02em; /* Tracking added for content internal links/strings */
         }
 
-        .b-2026 .book-item, .b-2025 .book-item {
+        .b-2025 .book-item {
             border-bottom: 1px solid rgba(255,255,255,0.18);
         }
 
@@ -232,7 +233,7 @@
     <script>
         // Source Data Matrix
         const archiveData = [
-            { year: "twenty twenty-six", short: "’26", class: "b-2026", type: "list", data: [
+            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", type: "list", data: [
                 ["금각사", "미시마 유키오"],
                 ["나의 곰", "메리언 엥겔"],
                 ["MAIN STREET", "SINCLAIR LEWIS"],
@@ -286,7 +287,83 @@
                 ["단지 세상의 끝", "장뤼크 라가르스/임혜경 역"],
                 ["140 ARTISTS’ IDEAS FOR PLANET EARTH", "EDITED BY HANS ULRICH OBRIST & KOSTAS STASINOPOULOS"]
             ] },
-            { year: "twenty twenty-five", short: "’25", class: "b-2025", type: "list", data: [["바른 마음", "Jonathan Haidt"], ["Grid Systems", "Müller-Brockmann"]] },
+            { year: "twenty twenty-five", short: "’25", class: "b-2025", type: "list", data: [
+                ["A GRIEF OBSERVED", "C. S. LEWIS"],
+                ["LUCKY JIM", "KINGSLEY AMIS"],
+                ["QUEER", "WILLIAM S. BURROUGHS"],
+                ["윤리 21", "가라타니 고진"],
+                ["스페인 영화", "임호준"],
+                ["THE BRIDGE OF SAN LUIS REY", "THORNTON WILDER"],
+                ["WAYS OF SEEING", "JOHN BERGER"],
+                ["THE SUN ALSO RISES", "ERNEST HEMINGWAY"],
+                ["BETWEEN THE WORLD AND ME", "TA-NEHISI COATES"],
+                ["THE INVENTION OF SOLITUDE", "PAUL AUSTER"],
+                ["THE PLOT AGAINST AMERICA", "PHILIP ROTH"],
+                ["SHORT LETTER, LONG FAREWELL", "PETER HANDKE"],
+                ["뭔가 배 속에서 부글거리는 기분", "윤아랑"],
+                ["사양", "다자이 오사무"],
+                ["아메토라: 일본은 어떻게 아메리칸 스타일을 구원했는가", "W. 데이비드 막스"],
+                ["천사를 거부하는 우울한 연인에게", "양안다"],
+                ["EXILE AND PRIDE: DISABILITY, QUEERNESS, AND LIBERATION", "ELI CLARE"],
+                ["시네마토그라프에 대한 노트", "로베르 브레송"],
+                ["천사들의 엄격함", "윌리엄 에긴턴"],
+                ["THE GLASS MENAGERIE", "TENNESSEE WILLIAMS"],
+                ["SHAME", "ANNIE ERNAUX"],
+                ["매체의 역사 읽기: 동굴벽화에서 가상현실까지", "안드레아스 뵌, 안드레아스 자이들러"],
+                ["BEAUTIFUL WORLD, WHERE ARE YOU", "SALLY ROONEY"],
+                ["소설의 이론", "게오르그 루카치"],
+                ["EVERYMAN", "PHILIP ROTH"],
+                ["INDIGNATION", "PHILIP ROTH"],
+                ["THE WILD IRIS", "LOUISE GLÜCK"],
+                ["FOREVERISM", "GRAFTON TANNER"],
+                ["어쨌거나 밤은 무척 짧을 것이다", "유운성"],
+                ["PENANCE", "ELIZA CLARK"],
+                ["GOOD MORNING, MONSTER", "CATHERINE GILDINER"],
+                ["에센셜 시네마: 영화 정전을 위하여", "조너선 로젠봄"],
+                ["서푼짜리 오페라", "베르톨트 브레히트"],
+                ["PALE FIRE", "VLADIMIR NABOKOV"],
+                ["A LEOPARD-SKIN HAT", "ANNE SERRE"],
+                ["MARTYR!", "KAVEH AKBAR"],
+                ["젊은 날의 초상", "이문열"],
+                ["매트릭스로 철학하기", "윌리엄 어윈 외"],
+                ["NAKED LUNCH", "WILLIAM BURROUGHS"],
+                ["LADY L.", "ROMAIN GARY"],
+                ["THE NETANYAHUS", "JOSHUA COHEN"],
+                ["SHE'S ALWAYS HUNGRY", "ELIZA CLARK"],
+                ["WHERE EVERYTHING IS MUSIC", "RUMI"],
+                ["BAUMGARTNER", "PAUL AUSTER"],
+                ["THE PERIODIC TABLE", "PRIMO LEVI"],
+                ["NEMESIS", "PHILIP ROTH"],
+                ["MELANCHOLY I~II", "JON FOSSE"],
+                ["KAIROS", "JENNY ERPENBECK"],
+                ["암호해독사", "잇시키 마코토"],
+                ["KLARA AND THE SUN", "KAZUO ISHIGURO"],
+                ["STORIES OF YOUR LIFE AND OTHERS", "TED CHIANG"],
+                ["THE REAL THING", "TOM STOPPARD"],
+                ["EXHALATION", "TED CHIANG"],
+                ["ROSENCRANTZ AND GUILDENSTERN ARE DEAD", "TOM STOPPARD"],
+                ["THE SAVAGE GOD: A STUDY OF SUICIDE", "AL ÁLVAREZ"],
+                ["MY DARK VANESSA", "KATE ELIZABETH RUSSELL"],
+                ["PLAYS 1: 'ART' - THE UNEXPECTED MAN - CONVERSATIONS AFTER A BURIAL - LIFE X 3", "YASMINA REZA"],
+                ["MY YEAR OF REST AND RELAXATION", "OTTESSA MOSHFEGH"],
+                ["PORTNOY'S COMPLAINT", "PHILIP ROTH"],
+                ["ENGLAND, ENGLAND", "JULIAN BARNES"],
+                ["GOOD OMENS", "TERRY PRATCHETT, NEIL GAIMAN"],
+                ["WHITE NOISE", "DON DELILLO"],
+                ["SHADOW TICKET", "THOMAS PYNCHON"],
+                ["식물성의 유혹", "유운성"],
+                ["<자본>에 대한 노트", "세르게이 에이젠슈타인, 알렉산더 클루게"],
+                ["물듦 - 상호감염의 미학", "유운성"],
+                ["LIBRA", "DON DELILLO"],
+                ["KINDRED", "OCTAVIA BUTLER"],
+                ["THE GOD OF SMALL THINGS", "ARUNDHATI ROY"],
+                ["중력과 은총", "시몬 베유"],
+                ["THE 42ND PARALLEL", "JOHN DOS PASSOS"],
+                ["THE NEW YORK TRILOGY", "PAUL AUSTER"],
+                ["지옥변", "아쿠타가와 류노스케"],
+                ["오후의 예항 / 짐승들의 유희", "미시마 유키오"],
+                ["GONE GIRL", "GILLIAN FLYNN"]
+            ] },
             { year: "twenty twenty-four", short: "’24", class: "b-2024", type: "list", data: [["사피엔스", "Yuval Noah Harari"], ["도둑맞은 집중력", "Johann Hari"]] },
             { year: "twenty twenty-three", short: "’23", class: "b-2023", type: "list", data: [["Norwegian Wood", "Haruki Murakami"]] },
             { year: "twenty twenty-two", short: "’22", class: "b-2022", type: "list", data: [["공정하다는 착각", "Michael Sandel"]] }
@@ -300,6 +377,10 @@
 
         const container = document.getElementById('matrixContainer');
         const isMobile = window.innerWidth < 768;
+
+        // Titles/authors are injected via innerHTML; escape markup characters
+        // so entries like "<자본>에 대한 노트" render literally
+        const escapeHtml = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
         // Mathematical Grid Fractional Slices
         const mobileFractions = [1/2, 1/3, 2/3];
@@ -334,14 +415,14 @@
                 
                 let listHtml = `<div class="label" data-full="${item.year}" data-short="${item.short}">${item.year}</div><div class="spill-content"><ul class="book-list">`;
                 item.data.forEach(book => {
-                    listHtml += `<li class="book-item"><span class="book-title">${book[0]}</span><span class="book-author">${book[1]}</span></li>`;
+                    listHtml += `<li class="book-item"><span class="book-title">${escapeHtml(book[0])}</span><span class="book-author">${escapeHtml(book[1])}</span></li>`;
                 });
                 listHtml += `</ul></div>`;
                 yearBlock.innerHTML = listHtml;
 
                 // Build Complementary Unlabeled White Box Negative Space Block
                 const mediaBlock = document.createElement('div');
-                mediaBlock.className = `block b-media`;
+                mediaBlock.className = `block b-media${item.mediaClass ? ' ' + item.mediaClass : ''}`;
                 mediaBlock.id = mediaId;
                 mediaBlock.style.cssText = styleComplement;
                 mediaBlock.dataset.baseStyle = styleComplement;
