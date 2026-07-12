@@ -41,7 +41,7 @@
         h1 {
             font-size: clamp(1.4rem, 3vw, 2.2rem);
             font-weight: 900;
-            letter-spacing: -0.05em;
+            letter-spacing: -0.02em;
             text-transform: lowercase;
         }
 
@@ -75,7 +75,7 @@
             font-weight: 900;
             font-size: clamp(1.2rem, 2.5vw, 2rem);
             line-height: 0.85;
-            letter-spacing: -0.07em;
+            letter-spacing: -0.03em;
             text-transform: lowercase;
             margin-top: auto; 
             white-space: nowrap;
@@ -112,15 +112,15 @@
             font-size: 0.95rem;
             padding-bottom: 4px;
             border-bottom: 1px solid rgba(0,0,0,0.08);
-            letter-spacing: 0.04em; /* Tracking added for content internal links/strings */
+            letter-spacing: 0.06em; /* Tracking added for content internal links/strings */
         }
 
         .b-2026 .book-item, .b-2025 .book-item {
             border-bottom: 1px solid rgba(255,255,255,0.18);
         }
 
-        .book-title { font-family: 'Pretendard', sans-serif; font-weight: 700; }
-        .book-author { font-family: 'Pretendard', sans-serif; font-weight: 400; opacity: 0.75; margin-left: 6px; }
+        .book-title { font-family: 'Pretendard', sans-serif; font-weight: 700; overflow-wrap: break-word; }
+        .book-author { font-family: 'Pretendard', sans-serif; font-weight: 400; opacity: 0.75; margin-left: 6px; overflow-wrap: break-word; }
 
         /* Media Frame layout (Horizontal Fluidity Setup) */
         .media-track-wrapper {
@@ -175,12 +175,10 @@
             opacity: 0;
         }
 
-        /* Desktop Constraint: no block may exceed 70% of the viewport width */
+        /* Desktop Constraint: entire matrix stays within 70% of the viewport width */
         @media (min-width: 768px) {
-            .block,
-            .block.expand-list,
-            .block.expand-media {
-                max-width: 70vw !important;
+            .matrix-container {
+                max-width: 70vw;
             }
         }
     </style>
@@ -240,6 +238,7 @@
                 yearBlock.className = `block ${item.class}`;
                 yearBlock.id = yearId;
                 yearBlock.style.cssText = stylePrimary;
+                yearBlock.dataset.baseStyle = stylePrimary;
                 yearBlock.setAttribute('onclick', `toggleList('${yearId}', '${mediaId}')`);
                 
                 let listHtml = `<div class="label">${item.year}</div><div class="spill-content"><ul class="book-list">`;
@@ -254,11 +253,12 @@
                 mediaBlock.className = `block b-media`;
                 mediaBlock.id = mediaId;
                 mediaBlock.style.cssText = styleComplement;
+                mediaBlock.dataset.baseStyle = styleComplement;
                 mediaBlock.setAttribute('onclick', `toggleMedia('${mediaId}', '${yearId}', ${primaryPercent})`);
                 
-                // Distribute running horizontal frames inside media block spill spaces
+                // Distribute a single running media frame inside media block spill space
                 const randomMedia = mediaEmbeds[index % mediaEmbeds.length];
-                mediaBlock.innerHTML = `<div class="spill-content"><div class="media-track-wrapper">${randomMedia}${randomMedia}</div></div>`;
+                mediaBlock.innerHTML = `<div class="spill-content"><div class="media-track-wrapper">${randomMedia}</div></div>`;
 
                 // Render matching block configurations sequentially into DOM structure row
                 container.appendChild(yearBlock);
@@ -306,8 +306,7 @@
         function resetAll() {
             document.querySelectorAll('.block').forEach(b => {
                 b.classList.remove('expand-list', 'expand-media', 'hide-pair');
-                b.style.flexBasis = "";
-                b.style.maxWidth = "";
+                b.style.cssText = b.dataset.baseStyle || "";
             });
         }
 
