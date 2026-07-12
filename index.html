@@ -269,13 +269,22 @@
             });
         }
 
+        // Restore a single pair to its generated baseline; other rows are never touched,
+        // so previously opened blocks keep their state until the user acts on them directly
+        function resetPair(yearEl, mediaEl) {
+            [yearEl, mediaEl].forEach(b => {
+                b.classList.remove('expand-list', 'expand-media', 'expand-full', 'hide-pair');
+                b.style.cssText = b.dataset.baseStyle || "";
+            });
+        }
+
         // Action Rules: Lists spill vertically, never narrower than 50% (snap full width if needed)
         function toggleList(yearId, mediaId) {
             const yearEl = document.getElementById(yearId);
             const mediaEl = document.getElementById(mediaId);
             const active = yearEl.classList.contains('expand-list');
 
-            resetAll();
+            resetPair(yearEl, mediaEl);
 
             if (!active) {
                 yearEl.classList.add('expand-list');
@@ -289,7 +298,7 @@
             const yearEl = document.getElementById(yearId);
             const active = mediaEl.classList.contains('expand-media');
 
-            resetAll();
+            resetPair(yearEl, mediaEl);
 
             if (!active) {
                 mediaEl.classList.add('expand-media');
@@ -303,13 +312,6 @@
                     yearEl.style.maxWidth = "calc(20% - 5px)";
                 }
             }
-        }
-
-        function resetAll() {
-            document.querySelectorAll('.block').forEach(b => {
-                b.classList.remove('expand-list', 'expand-media', 'expand-full', 'hide-pair');
-                b.style.cssText = b.dataset.baseStyle || "";
-            });
         }
 
         // Init System Matrix on fresh session load
