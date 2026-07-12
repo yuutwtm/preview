@@ -54,7 +54,7 @@
             display: flex;
             gap: 18px;
             font-weight: 300;
-            font-size: 0.8rem;
+            font-size: 1rem;
             text-transform: lowercase;
         }
 
@@ -70,7 +70,7 @@
             display: none;
             font-family: inherit;
             font-weight: 300;
-            font-size: 0.8rem;
+            font-size: 1rem;
             text-transform: lowercase;
             background: none;
             border: none;
@@ -301,17 +301,17 @@
 
     <header id="siteHeader">
         <h1>archive / structural matrix</h1>
-        <button class="nav-toggle" id="navToggle" onclick="toggleNav()">menu</button>
+        <button class="nav-toggle" id="navToggle" onclick="toggleNav()">more</button>
         <nav class="site-nav" id="siteNav">
-            <a href="https://letterboxd.com" target="_blank" rel="noopener">letterboxd.</a>
-            <a href="https://www.goodreads.com" target="_blank" rel="noopener">goodreads.</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=27a+Pitfield+Street+London" target="_blank" rel="noopener">27a pitfield st.</a>
+            <a href="https://boxd.it/8tQ0j" target="_blank" rel="noopener">letterboxd.</a>
+            <a href="https://goodreads.com/yuutalkwaytoomuch" target="_blank" rel="noopener">goodreads.</a>
+            <a href="https://youtu.be/BxCIo_kb4AY" target="_blank" rel="noopener">27a pitfield st.</a>
         </nav>
     </header>
 
     <main class="matrix-container" id="matrixContainer"></main>
 
-    <footer class="credit">© 2026 haemil</footer>
+    <footer class="credit">© pitfieldstreet.web.app. all rights reserved.</footer>
 
     <script>
         // Source Data Matrix
@@ -760,7 +760,7 @@
         function toggleNav() {
             const header = document.getElementById('siteHeader');
             const open = header.classList.toggle('nav-open');
-            document.getElementById('navToggle').textContent = open ? 'close' : 'menu';
+            document.getElementById('navToggle').textContent = open ? 'close' : 'more';
         }
 
         // Init System Matrix on fresh session load
