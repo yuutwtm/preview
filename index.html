@@ -197,11 +197,11 @@
     <script>
         // Source Data Matrix
         const archiveData = [
-            { year: "twenty twenty-six", class: "b-2026", type: "list", data: [["디자인의 디자인", "Hara Kenya"], ["The Design of Everyday Things", "Don Norman"]] },
-            { year: "twenty twenty-five", class: "b-2025", type: "list", data: [["바른 마음", "Jonathan Haidt"], ["Grid Systems", "Müller-Brockmann"]] },
-            { year: "twenty twenty-four", class: "b-2024", type: "list", data: [["사피엔스", "Yuval Noah Harari"], ["도둑맞은 집중력", "Johann Hari"]] },
-            { year: "twenty twenty-three", class: "b-2023", type: "list", data: [["Norwegian Wood", "Haruki Murakami"]] },
-            { year: "twenty twenty-two", class: "b-2022", type: "list", data: [["공정하다는 착각", "Michael Sandel"]] }
+            { year: "twenty twenty-six", short: "’26", class: "b-2026", type: "list", data: [["디자인의 디자인", "Hara Kenya"], ["The Design of Everyday Things", "Don Norman"]] },
+            { year: "twenty twenty-five", short: "’25", class: "b-2025", type: "list", data: [["바른 마음", "Jonathan Haidt"], ["Grid Systems", "Müller-Brockmann"]] },
+            { year: "twenty twenty-four", short: "’24", class: "b-2024", type: "list", data: [["사피엔스", "Yuval Noah Harari"], ["도둑맞은 집중력", "Johann Hari"]] },
+            { year: "twenty twenty-three", short: "’23", class: "b-2023", type: "list", data: [["Norwegian Wood", "Haruki Murakami"]] },
+            { year: "twenty twenty-two", short: "’22", class: "b-2022", type: "list", data: [["공정하다는 착각", "Michael Sandel"]] }
         ];
 
         // Media Embed Bank
@@ -244,7 +244,7 @@
                 yearBlock.dataset.baseStyle = stylePrimary;
                 yearBlock.setAttribute('onclick', `toggleList('${yearId}', '${mediaId}')`);
                 
-                let listHtml = `<div class="label">${item.year}</div><div class="spill-content"><ul class="book-list">`;
+                let listHtml = `<div class="label" data-full="${item.year}" data-short="${item.short}">${item.year}</div><div class="spill-content"><ul class="book-list">`;
                 item.data.forEach(book => {
                     listHtml += `<li class="book-item"><span class="book-title">${book[0]}</span><span class="book-author">${book[1]}</span></li>`;
                 });
@@ -267,7 +267,43 @@
                 container.appendChild(yearBlock);
                 container.appendChild(mediaBlock);
             });
+
+            fitLabels();
         }
+
+        // Label fitting: if a block is so narrow that the label's longest word
+        // would have to break mid-word, switch to the short ’YY form instead
+        const measureCtx = document.createElement('canvas').getContext('2d');
+
+        function fitLabels() {
+            document.querySelectorAll('.label').forEach(label => {
+                const full = label.dataset.full;
+                if (!full) return;
+
+                const block = label.closest('.block');
+                const avail = block.clientWidth - 24; // block padding: 12px per side
+                if (avail <= 0) return; // hidden pair, leave as is
+
+                const cs = getComputedStyle(label);
+                measureCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+                const tracking = parseFloat(cs.letterSpacing) || 0;
+
+                const longestWord = full.split(/\s+/).reduce((max, word) => {
+                    const w = measureCtx.measureText(word).width + tracking * word.length;
+                    return Math.max(max, w);
+                }, 0);
+
+                const next = longestWord > avail ? label.dataset.short : full;
+                if (label.textContent !== next) label.textContent = next;
+            });
+        }
+
+        // Re-fit whenever a block finishes resizing, and on viewport changes
+        container.addEventListener('transitionend', e => {
+            if (e.propertyName === 'flex-basis' || e.propertyName === 'max-width') fitLabels();
+        });
+        window.addEventListener('resize', fitLabels);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabels);
 
         // Restore a single pair to its generated baseline; other rows are never touched,
         // so previously opened blocks keep their state until the user acts on them directly
