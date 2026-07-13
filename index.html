@@ -32,9 +32,17 @@
             padding: 0;
         }
 
+        /* Selection: page-background highlight with paper text.
+           (Explicit values in the after-hours rule: highlight pseudo-elements
+           resolve CSS variables from the root, not from body.after-hours.) */
         ::selection {
-            background: var(--mondrian-yellow);
-            color: #121212;
+            background: var(--bg-color);
+            color: var(--mondrian-white);
+        }
+
+        body.after-hours ::selection {
+            background: #EDEDE9;
+            color: #1B1B1B;
         }
 
         body {
