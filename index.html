@@ -10,7 +10,7 @@
         (function() {
             const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="46" fill="none" stroke="#1C1B1A" stroke-width="4"/>
-                <text x="50%" y="55%" dominant-baseline="central" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Pretendard, sans-serif" font-size="52" font-weight="600" fill="#1C1B1A">¶</text>
+                <text x="50%" y="52%" dominant-baseline="central" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Pretendard, sans-serif" font-size="68" font-weight="600" fill="#1C1B1A">¶</text>
             </svg>`;
             const link = document.createElement('link');
             link.rel = 'icon';
@@ -70,7 +70,7 @@
             line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            padding: 40px 40px 100px 40px;
+            padding: 0 40px 100px 40px;
             max-width: 1000px;
             margin: 0 auto;
 
@@ -93,9 +93,17 @@
             color: var(--text-main);
         }
 
-        /* Site Logo */
-        .site-logo-container {
-            margin-bottom: 32px;
+        /* Fixed Site Logo Header */
+        .site-logo-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--bg-color);
+            padding: 24px 0 16px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--rule-hair);
+            margin-left: -20px;
+            padding-left: 20px;
         }
 
         .site-logo {
@@ -109,8 +117,9 @@
             background: transparent;
             color: var(--text-main);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 1.35rem;
             line-height: 1;
+            padding-bottom: 2px;
             transition: border-color 0.15s ease, color 0.15s ease;
             user-select: none;
             -webkit-user-select: none;
@@ -175,7 +184,7 @@
 
         .section-label {
             position: sticky;
-            top: 20px;
+            top: 80px; /* Offset to sit below fixed logo header */
             align-self: start;
             font-size: 0.85rem;
             font-weight: 600;
@@ -268,8 +277,7 @@
         /* Responsive Breakdown for Mobile */
         @media (max-width: 868px) {
             body {
-                padding: 24px 16px 70px 32px;
-                /* Adjust vertical line to sit as a left margin armature */
+                padding: 0 16px 70px 32px;
                 background-image: linear-gradient(
                     to right,
                     transparent 16px,
@@ -281,8 +289,10 @@
                 background-clip: border-box;
             }
 
-            .site-logo-container {
-                margin-bottom: 24px;
+            .site-logo-header {
+                margin-left: -24px;
+                padding-left: 24px;
+                margin-bottom: 32px;
             }
 
             header {
@@ -322,8 +332,8 @@
 </head>
 <body>
 
-    <!-- Pilcrow Logo -->
-    <div class="site-logo-container">
+    <!-- Fixed Logo Header with Bottom Divider -->
+    <div class="site-logo-header">
         <a href="/" class="site-logo" id="site-logo" aria-label="Home">¶</a>
     </div>
 
@@ -378,7 +388,6 @@
             if (isHomePage) {
                 e.preventDefault();
                 this.classList.remove('spin');
-                // Trigger reflow to restart animation on repeated clicks
                 void this.offsetWidth; 
                 this.classList.add('spin');
             }
