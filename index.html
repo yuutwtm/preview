@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minimal Text Layout</title>
-    
+
     <!-- Pretendard Variable Font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-    
+
     <style>
         /* CSS Reset */
         *, *::before, *::after {
@@ -17,27 +17,28 @@
         }
 
         :root {
-            /* Warmer Grey Background */
+            /* Warmer Grey Palette */
             --bg-color: #EAE8E3;
-            /* Strict Monotone Text Colors */
             --text-main: #1C1B1A;
             --text-muted: #6B6965;
             --text-faint: #918E88;
-            --rule-color: #D3D0C9;
-            /* Selection Highlight */
-            --selection-bg: #FFE800; /* Lemon Yellow */
+            --rule-heavy: #1C1B1A;
+            --rule-hair: #D3D0C9;
             
+            /* Text Selection */
+            --selection-bg: #FFE800; /* Lemon Yellow */
+
             --font-body: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
         }
 
-        /* Dark Mode Override (Maintains warm grey scale tone) */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #1C1B1A;
                 --text-main: #EAE8E3;
                 --text-muted: #A09D96;
                 --text-faint: #6B6965;
-                --rule-color: #2D2C2A;
+                --rule-heavy: #EAE8E3;
+                --rule-hair: #2D2C2A;
             }
         }
 
@@ -49,99 +50,140 @@
             font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.65;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            padding: 80px 24px 120px 24px;
-            max-width: 720px;
+            padding: 60px 40px 120px 40px;
+            max-width: 1100px;
             margin: 0 auto;
+
+            /* Vertical Armature Line on 30% grid boundary */
+            background-image: linear-gradient(
+                to right,
+                transparent calc(30% - 1px),
+                var(--rule-hair) calc(30% - 1px),
+                var(--rule-hair) 30%,
+                transparent 30%
+            );
+            background-origin: content-box;
+            background-clip: content-box;
+            background-repeat: no-repeat;
         }
 
-        /* Custom Text Selection: Monotone Ink + Lemon Yellow */
+        /* Custom Text Selection */
         ::selection {
             background-color: var(--selection-bg);
             color: var(--text-main);
         }
 
-        /* Header Elements */
+        /* Header Layout */
         header {
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
-        .document-title {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
+        .site-kicker {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
             margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        h1.document-title {
+            font-size: clamp(2.5rem, 7vw, 4.8rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 18px;
             word-break: keep-all;
         }
 
         .document-subtitle {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 400;
             color: var(--text-muted);
             letter-spacing: -0.015em;
+            max-width: 52ch;
             line-height: 1.5;
         }
 
-        /* Structural Divider */
-        hr {
-            border: none;
-            border-top: 1px solid var(--rule-color);
-            margin: 40px 0;
+        /* Asymmetric Layout with Vertical Line Alignment */
+        .section-row {
+            display: grid;
+            grid-template-columns: 3fr 7fr;
+            border-top: 2px solid var(--rule-heavy);
+            padding-top: 24px;
+            margin-bottom: 70px;
         }
 
-        /* Main Content Layout */
-        section {
-            margin-bottom: 48px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 20px;
-            color: var(--text-main);
-        }
-
-        .subsection-title {
-            font-size: 1.15rem;
+        .section-label {
+            position: sticky;
+            top: 24px;
+            align-self: start;
+            font-size: 0.95rem;
             font-weight: 600;
             letter-spacing: -0.01em;
-            margin-top: 28px;
-            margin-bottom: 8px;
-            color: var(--text-main);
+            color: var(--text-muted);
+            text-align: right;
+            padding-right: 32px;
+            text-transform: uppercase;
         }
 
-        p {
-            font-size: 1.05rem;
+        .section-content {
+            padding-left: 32px;
+            min-width: 0;
+        }
+
+        .section-content p {
+            font-size: 1.1rem;
             font-weight: 400;
             letter-spacing: -0.01em;
             margin-bottom: 20px;
-            color: var(--text-main);
+            line-height: 1.65;
             word-break: keep-all;
             overflow-wrap: break-word;
         }
 
-        p:last-child {
+        .section-content p:last-child {
             margin-bottom: 0;
         }
 
-        /* List Styles */
-        ul, ol {
-            margin-bottom: 20px;
+        .subsection-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 24px;
+        }
+
+        ul li {
+            position: relative;
             padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
             color: var(--text-main);
         }
 
-        li {
-            font-size: 1.05rem;
-            margin-bottom: 8px;
-            line-height: 1.6;
+        ul li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--text-faint);
         }
 
-        /* Inline Elements */
+        blockquote {
+            border-left: 2px solid var(--text-main);
+            padding-left: 20px;
+            margin: 28px 0;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
         a {
             color: inherit;
             text-decoration: underline;
@@ -153,33 +195,51 @@
             color: var(--text-muted);
         }
 
-        blockquote {
-            border-left: 2px solid var(--text-muted);
-            padding-left: 18px;
-            margin: 24px 0;
-            color: var(--text-muted);
-            font-style: normal;
-        }
-
-        /* Footer Metadata */
+        /* Footer */
         footer {
-            margin-top: 80px;
+            margin-top: 100px;
+            border-top: 2px solid var(--rule-heavy);
             padding-top: 24px;
-            border-top: 1px solid var(--rule-color);
-            font-size: 0.9rem;
-            color: var(--text-faint);
             display: flex;
             justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-faint);
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 640px) {
+        /* Responsive Breakdown for Mobile */
+        @media (max-width: 868px) {
             body {
-                padding: 40px 20px 80px 20px;
+                padding: 32px 20px 80px 36px;
+                /* Adjust vertical line to sit as a left margin armature */
+                background-image: linear-gradient(
+                    to right,
+                    transparent 16px,
+                    var(--rule-hair) 16px,
+                    var(--rule-hair) 17px,
+                    transparent 17px
+                );
+                background-origin: border-box;
+                background-clip: border-box;
             }
-            
+
             header {
-                margin-bottom: 40px;
+                margin-bottom: 50px;
+            }
+
+            .section-row {
+                grid-template-columns: 1fr;
+                margin-bottom: 50px;
+                gap: 12px;
+            }
+
+            .section-label {
+                position: static;
+                text-align: left;
+                padding-right: 0;
+            }
+
+            .section-content {
+                padding-left: 0;
             }
 
             footer {
@@ -192,42 +252,45 @@
 <body>
 
     <header>
-        <h1 class="document-title">Untitled Note</h1>
-        <p class="document-subtitle">A simple, legibility-focused environment for reading and drafting text.</p>
+        <div class="site-kicker">notes / 001</div>
+        <h1 class="document-title">Untitled Text</h1>
+        <div class="document-subtitle">A minimal multi-page text layout built for long-form reading and seamless sharing.</div>
     </header>
 
     <main>
-        <section>
-            <h2 class="section-title">First Thoughts</h2>
-            <p>This layout prioritizes high contrast, generous whitespace, and zero visual distractions. By relying solely on natural typography scales and subtle grey tones, the content remains the primary focus.</p>
-            <p>Text wraps dynamically with balanced line lengths to ensure comfortable continuous reading across mobile and desktop screens.</p>
-        </section>
+        <div class="section-row">
+            <div class="section-label">Overview</div>
+            <div class="section-content">
+                <p>This layout preserves the structural armature of the original CV template while enforcing a strict monotone aesthetic. High legibility and zero visual noise ensure that shared texts remain easy to read across devices.</p>
+                <p>The asymmetric grid aligns section labels to the left of the hairline vertical rule, creating clear visual hierarchy without needing bright highlight colors.</p>
+            </div>
+        </div>
 
-        <hr>
+        <div class="section-row">
+            <div class="section-label">Content</div>
+            <div class="section-content">
+                <p>Documents can be split into logical sections using top border dividers and side labels.</p>
+                
+                <h2 class="subsection-title">Design Highlights</h2>
+                <ul>
+                    <li>Warmer stone grey background (`#EAE8E3`)</li>
+                    <li>Selection highlight: original ink color on lemon yellow (`#FFE800`)</li>
+                    <li>Native support for Pretendard Variable typography</li>
+                    <li>Subtle vertical armature grid line</li>
+                </ul>
 
-        <section>
-            <h2 class="section-title">Structure and Content</h2>
-            <p>Documents can be organized using standard heading structures, plain text paragraphs, blockquotes, or lists.</p>
+                <blockquote>
+                    "The details are not the details. They make the design."
+                </blockquote>
 
-            <h3 class="subsection-title">Key Principles</h3>
-            <ul>
-                <li>Monotone palette with no accent highlights</li>
-                <li>Custom lemon-yellow text selection</li>
-                <li>Responsive typography powered by Pretendard Variable</li>
-                <li>Minimalist borders separating major sections</li>
-            </ul>
-
-            <blockquote>
-                "Simplicity is about subtracting the obvious and adding the meaningful."
-            </blockquote>
-
-            <p>You can seamlessly draft ideas, store quick notes, or publish long-form essays without altering the underlying markup.</p>
-        </section>
+                <p>For additional pages in your Firebase setup, duplicate this structure and simply update the content inside the section blocks.</p>
+            </div>
+        </div>
     </main>
 
     <footer>
-        <div>Created: August 2026</div>
-        <div>Plain Text Layout</div>
+        <div>Updated: August 2026</div>
+        <div>Plain Text / Monotone</div>
     </footer>
 
 </body>
