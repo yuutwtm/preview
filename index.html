@@ -50,11 +50,11 @@
             font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            padding: 60px 40px 120px 40px;
-            max-width: 1100px;
+            padding: 50px 40px 100px 40px;
+            max-width: 1000px;
             margin: 0 auto;
 
             /* Vertical Armature Line on 30% grid boundary */
@@ -78,68 +78,70 @@
 
         /* Header Layout */
         header {
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
 
         .site-kicker {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             letter-spacing: -0.01em;
         }
 
         h1.document-title {
-            font-size: clamp(2.5rem, 7vw, 4.8rem);
+            font-size: clamp(2rem, 5.5vw, 3.8rem);
             font-weight: 700;
-            line-height: 1.05;
+            line-height: 1.08;
             letter-spacing: -0.03em;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             word-break: keep-all;
         }
 
         .document-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             font-weight: 400;
             color: var(--text-muted);
             letter-spacing: -0.015em;
-            max-width: 52ch;
-            line-height: 1.5;
+            max-width: 50ch;
+            line-height: 1.45;
         }
 
-        /* Asymmetric Layout with Vertical Line Alignment */
+        /* Asymmetric Layout — Rules cross the armature line */
         .section-row {
             display: grid;
             grid-template-columns: 3fr 7fr;
             border-top: 2px solid var(--rule-heavy);
-            padding-top: 24px;
-            margin-bottom: 70px;
+            padding-top: 20px;
+            margin-bottom: 60px;
+            margin-left: -20px;
+            padding-left: 20px;
         }
 
         .section-label {
             position: sticky;
-            top: 24px;
+            top: 20px;
             align-self: start;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: -0.01em;
             color: var(--text-muted);
             text-align: right;
-            padding-right: 32px;
+            padding-right: 28px;
             text-transform: uppercase;
         }
 
         .section-content {
-            padding-left: 32px;
+            padding-left: 28px;
             min-width: 0;
         }
 
         .section-content p {
-            font-size: 1.1rem;
+            font-size: 0.98rem;
             font-weight: 400;
             letter-spacing: -0.01em;
-            margin-bottom: 20px;
-            line-height: 1.65;
+            margin-bottom: 16px;
+            line-height: 1.6;
             word-break: keep-all;
             overflow-wrap: break-word;
         }
@@ -149,23 +151,23 @@
         }
 
         .subsection-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 600;
             letter-spacing: -0.015em;
-            margin-top: 32px;
-            margin-bottom: 12px;
+            margin-top: 26px;
+            margin-bottom: 10px;
         }
 
         ul {
             list-style-type: none;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         ul li {
             position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-            font-size: 1.05rem;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
             color: var(--text-main);
         }
 
@@ -178,9 +180,9 @@
 
         blockquote {
             border-left: 2px solid var(--text-main);
-            padding-left: 20px;
-            margin: 28px 0;
-            font-size: 1.1rem;
+            padding-left: 16px;
+            margin: 22px 0;
+            font-size: 0.98rem;
             color: var(--text-muted);
         }
 
@@ -197,19 +199,21 @@
 
         /* Footer */
         footer {
-            margin-top: 100px;
+            margin-top: 80px;
             border-top: 2px solid var(--rule-heavy);
-            padding-top: 24px;
+            padding-top: 20px;
+            margin-left: -20px;
+            padding-left: 20px;
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-faint);
         }
 
         /* Responsive Breakdown for Mobile */
         @media (max-width: 868px) {
             body {
-                padding: 32px 20px 80px 36px;
+                padding: 28px 16px 70px 32px;
                 /* Adjust vertical line to sit as a left margin armature */
                 background-image: linear-gradient(
                     to right,
@@ -223,13 +227,17 @@
             }
 
             header {
-                margin-bottom: 50px;
+                margin-bottom: 40px;
             }
 
             .section-row {
                 grid-template-columns: 1fr;
-                margin-bottom: 50px;
-                gap: 12px;
+                margin-bottom: 40px;
+                margin-left: -24px;
+                margin-right: -12px;
+                padding-left: 24px;
+                padding-right: 12px;
+                gap: 10px;
             }
 
             .section-label {
@@ -243,8 +251,12 @@
             }
 
             footer {
+                margin-left: -24px;
+                margin-right: -12px;
+                padding-left: 24px;
+                padding-right: 12px;
                 flex-direction: column;
-                gap: 8px;
+                gap: 6px;
             }
         }
     </style>
@@ -254,14 +266,14 @@
     <header>
         <div class="site-kicker">notes / 001</div>
         <h1 class="document-title">Untitled Text</h1>
-        <div class="document-subtitle">A minimal multi-page text layout built for long-form reading and seamless sharing.</div>
+        <div class="document-subtitle">A minimal text layout with crossed section rules, dense type scale, and zero visual noise.</div>
     </header>
 
     <main>
         <div class="section-row">
             <div class="section-label">Overview</div>
             <div class="section-content">
-                <p>This layout preserves the structural armature of the original CV template while enforcing a strict monotone aesthetic. High legibility and zero visual noise ensure that shared texts remain easy to read across devices.</p>
+                <p>This layout preserves the structural armature of the original design while enforcing a strict monotone aesthetic. High legibility and zero visual noise ensure that shared texts remain easy to read across devices.</p>
                 <p>The asymmetric grid aligns section labels to the left of the hairline vertical rule, creating clear visual hierarchy without needing bright highlight colors.</p>
             </div>
         </div>
@@ -269,21 +281,21 @@
         <div class="section-row">
             <div class="section-label">Content</div>
             <div class="section-content">
-                <p>Documents can be split into logical sections using top border dividers and side labels.</p>
+                <p>Documents can be split into logical sections using top border dividers that cross the vertical armature line.</p>
                 
                 <h2 class="subsection-title">Design Highlights</h2>
                 <ul>
                     <li>Warmer stone grey background (`#EAE8E3`)</li>
                     <li>Selection highlight: original ink color on lemon yellow (`#FFE800`)</li>
                     <li>Native support for Pretendard Variable typography</li>
-                    <li>Subtle vertical armature grid line</li>
+                    <li>Subtle vertical armature grid line with crossed horizontal section rules</li>
                 </ul>
 
                 <blockquote>
                     "The details are not the details. They make the design."
                 </blockquote>
 
-                <p>For additional pages in your Firebase setup, duplicate this structure and simply update the content inside the section blocks.</p>
+                <p>For additional pages in your setup, duplicate this structure and simply update the content inside the section blocks.</p>
             </div>
         </div>
     </main>
