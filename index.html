@@ -1,1115 +1,234 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>archive / textual matrix.</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='5' fill='%23E11A22'/></svg>">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
-    <link rel="stylesheet" href="https://use.typekit.net/mrb3sjs.css">
+    <title>Minimal Text Layout</title>
+    
+    <!-- Pretendard Variable Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+    
     <style>
-        :root {
-            --bg-color: #161311; /* ink black, barely warm */
-            --text-color: #EDEDED;
-
-            --mondrian-red: #E11A22;
-            --mondrian-blue: #004FFE;
-            --mondrian-yellow: #F9CC00;
-            --mondrian-white: #F2EFE9; /* paper, not monitor */
-
-            --ease: cubic-bezier(0.16, 1, 0.3, 1);
-
-            /* Hand-ruled underline, in ink and in paper-white */
-            --rule-ink: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23121212" stroke-width="1.7"/></svg>');
-            --rule-paper: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="4" preserveAspectRatio="none"><path d="M0 2.2 Q 20 1.1 40 2.0 T 80 1.7 T 120 2.5 T 160 1.9" fill="none" stroke="%23ffffff" stroke-width="1.7"/></svg>');
-        }
-
-        * {
+        /* CSS Reset */
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Selection: page-background highlight with paper text.
-           (Explicit values in the after-hours rule: highlight pseudo-elements
-           resolve CSS variables from the root, not from body.after-hours.) */
-        ::selection {
-            background: var(--bg-color);
-            color: var(--mondrian-white);
+        :root {
+            /* Warmer Grey Background */
+            --bg-color: #EAE8E3;
+            /* Strict Monotone Text Colors */
+            --text-main: #1C1B1A;
+            --text-muted: #6B6965;
+            --text-faint: #918E88;
+            --rule-color: #D3D0C9;
+            /* Selection Highlight */
+            --selection-bg: #FFE800; /* Lemon Yellow */
+            
+            --font-body: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
         }
 
-        body.after-hours ::selection {
-            background: #EDEDE9;
-            color: #1B1B1B;
+        /* Dark Mode Override (Maintains warm grey scale tone) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1C1B1A;
+                --text-main: #EAE8E3;
+                --text-muted: #A09D96;
+                --text-faint: #6B6965;
+                --rule-color: #2D2C2A;
+            }
+        }
+
+        html {
+            background-color: var(--bg-color);
         }
 
         body {
+            font-family: var(--font-body);
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: "helvetica-neue-lt-pro", Helvetica, Arial, "Pretendard", sans-serif;
-            line-height: 1.6;
-            text-transform: lowercase; /* every latin glyph on the page is lowercase */
-            min-height: 100vh;
-            padding: 12px;
-            overflow-y: scroll;
-        }
-
-        /* Grain: faint riso-paper noise over everything, never intercepts input */
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.06;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/></filter><rect width="240" height="240" filter="url(%23n)"/></svg>');
-        }
-
-        header {
-            margin-bottom: 24px;
-            border-bottom: 2px solid var(--text-color);
-            padding-bottom: 8px;
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        h1 {
-            font-size: clamp(1.4rem, 3vw, 2.2rem);
-            font-weight: 900;
-            letter-spacing: -0.02em;
-            text-transform: lowercase;
-            line-height: 1.4;
-        }
-
-        /* One word of the title is misset per load — italic serif, deliberately */
-        .misset {
-            font-family: "Times New Roman", Times, serif;
-            font-style: italic;
-            font-weight: 400;
-        }
-
-        /* Site Navigation — lowercase, small */
-        .site-nav {
-            display: flex;
-            gap: 18px;
-            font-weight: 400;
-            font-size: 1rem;
-            text-transform: lowercase;
-        }
-
-        .site-nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            opacity: 0.85;
-        }
-
-        .nav-toggle {
-            display: none;
-            font-family: inherit;
-            font-weight: 400;
-            font-size: 1rem;
-            text-transform: lowercase;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            opacity: 0.85;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .site-nav a:hover, .nav-toggle:hover { text-decoration: underline; }
-
-        /* Mobile: toggle in the header row; menu list spills open from the left */
-        @media (max-width: 767px) {
-            .nav-toggle {
-                display: block;
-                font-size: 0.85rem; /* match the credit */
-            }
-
-            .site-nav {
-                font-size: 0.85rem;
-                flex-basis: 100%;
-                flex-direction: column;
-                gap: 10px;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.45s var(--ease);
-            }
-
-            header.nav-open .site-nav {
-                max-height: 160px;
-                padding-top: 14px;
-            }
-
-            .site-nav a {
-                transform: translateX(-16px);
-                opacity: 0;
-                transition: transform 0.4s var(--ease), opacity 0.3s ease;
-            }
-
-            header.nav-open .site-nav a {
-                transform: translateX(0);
-                opacity: 0.85;
-            }
-        }
-
-        /* Page Credit — the colophon speaks in serif */
-        .credit {
-            margin-top: 40px;
-            padding-bottom: 8px;
-            text-align: center;
-            font-family: "Times New Roman", Times, serif;
-            font-weight: 400;
-            font-size: 0.85rem;
-            text-transform: lowercase;
-            opacity: 0.6;
-        }
-
-        .palette-x {
-            font-family: inherit;
-            font-size: 0.8em;
-            background: none;
-            border: none;
-            padding: 0;
-            margin-left: 4px;
-            color: inherit;
-            cursor: pointer;
-        }
-
-        .palette-x:hover { text-decoration: underline; }
-
-        /* Vertical Stack of Isolated Row Containers */
-        .matrix-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            color: var(--text-main);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 80px 24px 120px 24px;
+            max-width: 720px;
             margin: 0 auto;
-            cursor: crosshair; /* browsing as surveying */
         }
 
-        /* Each pair lives in its own row: blocks can never drift between rows,
-           even mid-transition when a pair is hidden or resizing */
-        .matrix-row {
-            display: flex;
-            gap: 8px;
-            overflow: hidden;
+        /* Custom Text Selection: Monotone Ink + Lemon Yellow */
+        ::selection {
+            background-color: var(--selection-bg);
+            color: var(--text-main);
         }
 
-        /* Structural Core Block Architecture */
-        .block {
-            position: relative; /* anchors the sold dot */
-            min-height: 120px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            transition: flex-basis 0.6s var(--ease), max-width 0.6s var(--ease),
-                        transform 0.25s var(--ease);
-            /* Composed so the broken block and hover nudges coexist */
-            transform: translate(var(--nudge-x, 0px), var(--broken-y, 0px));
+        /* Header Elements */
+        header {
+            margin-bottom: 60px;
         }
 
-        /* One block per load is deliberately, barely wrong */
-        .broken-down { --broken-y: 5px; }
-        .broken-up { --broken-y: -5px; }
-
-        /* The negative space physically resists you */
-        @media (hover: hover) {
-            .block:hover + .block { --nudge-x: 4px; }
-            .block:has(+ .block:hover) { --nudge-x: -4px; }
-
-            /* Riso misregistration: the plates slip while you hover */
-            .block:hover .label {
-                text-shadow: 1px 0 var(--mondrian-red), -1px 0 var(--mondrian-blue);
-            }
-        }
-
-        /* Year Block Typography Profile */
-        .label {
-            font-weight: 900;
-            font-size: clamp(1.15rem, 2.4vw, 1.9rem);
-            line-height: 1.1;
+        .document-title {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
             letter-spacing: -0.03em;
-            text-transform: lowercase;
-            margin-top: auto;
-            overflow-wrap: break-word;
-            pointer-events: none;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            word-break: keep-all;
         }
 
-        /* Whispered totals on closed blocks — data as decoration */
-        .label-count {
-            font-size: 0.45em;
+        .document-subtitle {
+            font-size: 1.25rem;
             font-weight: 400;
-            letter-spacing: 0;
-            margin-left: 6px;
-            opacity: 0.55;
-            vertical-align: 0.4em;
+            color: var(--text-muted);
+            letter-spacing: -0.015em;
+            line-height: 1.5;
         }
 
-        /* Quote spill: body-text size and color, left-aligned, case kept as written */
-        .media-quote {
-            font-size: 0.85rem;
-            text-align: left;
-            text-transform: none;
-            padding: 4px 16px 0 0;
-        }
-
-        .quote-attr { font-style: italic; }
-
-        .quote-serif { font-family: "Times New Roman", Times, serif; }
-
-        /* Old-website link on the red box: Times, upright, underlined */
-        .media-label {
-            font-family: "Times New Roman", Times, serif;
-            font-size: clamp(1.15rem, 1.8vw, 1.4rem); /* bigger than body, smaller than year labels */
-            line-height: 1.1;
-            text-decoration: underline;
-            margin-top: auto;
-            pointer-events: none;
-        }
-
-        .block.expand-media .media-label {
-            margin-top: 0;
-            margin-bottom: 6px;
-        }
-
-        /* Masking tape: one block per load is taped to the grid */
-        .taped::before, .taped::after {
-            content: "";
-            position: absolute;
-            width: 74px;
-            height: 22px;
-            background: rgba(222, 214, 186, 0.55);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-        }
-
-        .taped::before { top: -7px; left: -20px; transform: rotate(-40deg); }
-        .taped::after { bottom: -7px; right: -20px; transform: rotate(-43deg); }
-
-        /* Gallery sticker: one random year is sold. No explanation. */
-        .sold-dot {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: var(--mondrian-red);
-            pointer-events: none;
-        }
-
-        /* Color Layout Assignments */
-        .b-2026, .b-2024, .b-2022 { background-color: var(--mondrian-white); color: #121212; }
-        .b-2025 { background-color: var(--mondrian-blue); color: #fff; }
-        .b-2023 { background-color: var(--mondrian-yellow); color: #121212; }
-        .b-media { background-color: var(--mondrian-white); color: #121212; }
-        .b-media.m-red { background-color: var(--mondrian-red); color: var(--text-color); }
-
-        /* After hours (2-6am local): the palette inverts. Never announced. */
-        body.after-hours {
-            --bg-color: #EDEDE9;
-            --text-color: #141414;
-            --mondrian-white: #1B1B1B;
-        }
-
-        body.after-hours .b-2026,
-        body.after-hours .b-2024,
-        body.after-hours .b-2022,
-        body.after-hours .b-media { color: #EDEDED; }
-
-        body.after-hours .b-media.m-red { color: #fff; }
-
-        body.after-hours .book-item {
-            border-bottom-color: rgba(255, 255, 255, 0.15);
-        }
-
-        body.after-hours .b-2026.expand-list .label,
-        body.after-hours .b-2024.expand-list .label,
-        body.after-hours .b-2022.expand-list .label {
-            background-image: var(--rule-paper);
-        }
-
-        /* Hidden Spill Mechanics — no transition here, so closing collapses
-           instantly instead of bouncing the row while the block narrows */
-        .spill-content {
-            max-height: 0;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        /* Book Lists layout (Vertical Expand Only) */
-        .book-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .book-item {
-            font-size: 0.85rem;
-            line-height: 1.4;
-            padding-bottom: 4px;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            letter-spacing: 0.02em; /* Tracking added for content internal links/strings */
-        }
-
-        .b-2025 .book-item {
-            border-bottom: 1px solid rgba(255,255,255,0.18);
-        }
-
-        .book-title { font-weight: 700; overflow-wrap: break-word; }
-        .book-author { font-weight: 400; opacity: 0.75; margin-left: 6px; letter-spacing: 0.05em; overflow-wrap: break-word; }
-
-        /* Media Frame layout (Horizontal Fluidity Setup) */
-        .media-track-wrapper {
-            overflow-x: auto;
-            padding-top: 4px;
-            display: flex;
-        }
-
-        .media-embed {
-            flex: 1 1 auto;
-            width: 100%; /* fill the block — a fixed width clipped the player's right side */
-            height: 175px; /* Apple Music compact player's native height — anything less clips it */
-            border-radius: 2px;
+        /* Structural Divider */
+        hr {
             border: none;
+            border-top: 1px solid var(--rule-color);
+            margin: 40px 0;
         }
 
-        /* --- Global Structural Rules Applied via JS Toggles --- */
-
-        /* Rule: Year lists spill vertically, forcing row domination if narrower than 1/2 */
-        .block.expand-list {
-            flex-basis: 100% !important;
-            max-width: 100% !important;
-            /* Cap at two rows' height (2 x 120px + 8px gap); the list scrolls inside */
-            max-height: 248px;
+        /* Main Content Layout */
+        section {
+            margin-bottom: 48px;
         }
 
-        /* Rule: Media blocks spill outwards horizontally along the row,
-           matching the expanded list blocks' two-row height */
-        .block.expand-media {
-            flex-basis: calc(80% - 4px) !important;
-            max-width: calc(80% - 4px) !important;
-            min-height: 248px;
-            max-height: 248px;
-            justify-content: center; /* embed sits centered in the matched height */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            color: var(--text-main);
         }
 
-        /* Rule: Media block takes the full row when its pair is hidden */
-        .block.expand-media.expand-full {
-            flex-basis: 100% !important;
-            max-width: 100% !important;
+        .subsection-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-top: 28px;
+            margin-bottom: 8px;
+            color: var(--text-main);
         }
 
-        .block.expand-list .label {
-            flex-shrink: 0; /* the label never gives up space to the scrolling list */
-            margin-top: 0;
-            margin-bottom: 10px;
-            padding-bottom: 6px;
-            width: max-content;
-            max-width: 100%;
-            /* Hand-ruled underline: drawn with a pencil, not a machine */
-            background-image: var(--rule-ink);
-            background-repeat: repeat-x;
-            background-position: 0 100%;
-            background-size: 160px 4px;
+        p {
+            font-size: 1.05rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            word-break: keep-all;
+            overflow-wrap: break-word;
         }
 
-        /* The blue block rules its line in white */
-        .b-2025.expand-list .label {
-            background-image: var(--rule-paper);
+        p:last-child {
+            margin-bottom: 0;
         }
 
-        /* Mobile Typography Scale: short ’YY labels get significantly more presence */
-        @media (max-width: 767px) {
-            .label {
-                font-size: 1.9rem;
-            }
+        /* List Styles */
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            color: var(--text-main);
         }
 
-        /* Web Spacing: give the label's dividing line more room around it */
-        @media (min-width: 768px) {
-            .block.expand-list .label {
-                padding-bottom: 8px;
-                margin-bottom: 16px;
-            }
+        li {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            line-height: 1.6;
         }
 
-        .block.expand-list .spill-content, .block.expand-media .spill-content {
-            max-height: 250px;
-            opacity: 1;
-            visibility: visible;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            /* Slight delay lets the block reach most of its width before the
-               content spills, so list rows don't wrap-and-unwrap mid-animation */
-            transition: max-height 0.45s var(--ease) 0.15s, opacity 0.3s ease 0.15s;
+        /* Inline Elements */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-color: var(--text-muted);
         }
 
-        /* Remove associated pair block entirely so it can't occupy a phantom row */
-        .hide-pair {
-            display: none !important;
+        a:hover {
+            color: var(--text-muted);
         }
 
-        /* Desktop Constraint: entire matrix stays within 70% of the viewport width */
-        @media (min-width: 768px) {
-            .matrix-container {
-                max-width: 60vw;
-            }
+        blockquote {
+            border-left: 2px solid var(--text-muted);
+            padding-left: 18px;
+            margin: 24px 0;
+            color: var(--text-muted);
+            font-style: normal;
         }
 
-        /* The anti-website: print (Cmd/Ctrl+P) renders the whole archive as a
-           plain typewritten list — black on white, everything expanded */
-        @media print {
+        /* Footer Metadata */
+        footer {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid var(--rule-color);
+            font-size: 0.9rem;
+            color: var(--text-faint);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 640px) {
             body {
-                background: #fff;
-                color: #000;
-                padding: 0;
-                overflow: visible;
-                font-family: "Courier New", Courier, monospace;
+                padding: 40px 20px 80px 20px;
+            }
+            
+            header {
+                margin-bottom: 40px;
             }
 
-            body::after, .site-nav, .nav-toggle, .b-media, .sold-dot, .label-count, .palette-x {
-                display: none !important;
+            footer {
+                flex-direction: column;
+                gap: 8px;
             }
-
-            .taped::before, .taped::after { display: none; }
-
-            header { border-color: #000; display: block; }
-
-            h1 { font-family: inherit; font-size: 14pt; letter-spacing: 0; }
-            h1 .misset { font-family: inherit; font-style: normal; }
-
-            .matrix-container, .matrix-row {
-                display: block;
-                max-width: none;
-                overflow: visible;
-            }
-
-            .block {
-                display: block;
-                min-height: 0;
-                max-height: none !important;
-                max-width: 100% !important;
-                padding: 12pt 0;
-                background: none !important;
-                color: #000 !important;
-                overflow: visible;
-                transition: none;
-                transform: none;
-            }
-
-            .label { font-size: 12pt; letter-spacing: 0; margin: 0 0 6pt; }
-
-            .spill-content {
-                max-height: none !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                overflow: visible !important;
-            }
-
-            .book-item { border: none; font-size: 9pt; letter-spacing: 0; padding: 0; }
-            .book-author { opacity: 1; }
-
-            .credit { font-family: inherit; opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <header id="siteHeader">
-        <h1>archive / textual matrix.</h1>
-        <button class="nav-toggle" id="navToggle" onclick="toggleNav()">more.</button>
-        <nav class="site-nav">
-            <a href="https://boxd.it/8tQ0j" target="_blank" rel="noopener">letterboxd.</a>
-            <a href="https://goodreads.com/yuutalkwaytoomuch" target="_blank" rel="noopener">goodreads.</a>
-            <a href="https://youtu.be/BxCIo_kb4AY" target="_blank" rel="noopener">27a pitfield st.</a>
-            <a href="#" onclick="window.print(); return false;">print.</a>
-        </nav>
+    <header>
+        <h1 class="document-title">Untitled Note</h1>
+        <p class="document-subtitle">A simple, legibility-focused environment for reading and drafting text.</p>
     </header>
 
-    <main class="matrix-container" id="matrixContainer"></main>
+    <main>
+        <section>
+            <h2 class="section-title">First Thoughts</h2>
+            <p>This layout prioritizes high contrast, generous whitespace, and zero visual distractions. By relying solely on natural typography scales and subtle grey tones, the content remains the primary focus.</p>
+            <p>Text wraps dynamically with balanced line lengths to ensure comfortable continuous reading across mobile and desktop screens.</p>
+        </section>
 
-    <footer class="credit"><span id="creditText">© pitfieldstreet.web.app. all rights reserved.</span> <button class="palette-x" onclick="togglePalette()">x.</button></footer>
+        <hr>
 
-    <script>
-        // Source Data Matrix
-        const archiveData = [
-            { year: "twenty twenty-six", short: "’26", class: "b-2026", mediaClass: "m-red", mediaTitle: "close the door, not all the way…", mediaSrc: "https://embed.music.apple.com/kr/song/call-it-fate-call-it-karma/601140646", data: [
-                ["금각사", "미시마 유키오"],
-                ["나의 곰", "메리언 엥겔"],
-                ["MAIN STREET", "SINCLAIR LEWIS"],
-                ["NAKED", "DAVID SEDARIS"],
-                ["영화의 맨살: 하스미 시게히코 영화비평선", "하스미 시게히코"],
-                ["THE HEART'S INVISIBLE FURIES", "JOHN BOYNE"],
-                ["VERNON GOD LITTLE", "DBC PIERRE"],
-                ["THE GO-BETWEEN", "L. P. HARTLEY"],
-                ["THE NARROW ROAD TO THE DEEP NORTH", "RICHARD FLANAGAN"],
-                ["ORBITAL", "SAMANTHA HARVEY"],
-                ["THE CHILDREN ACT", "IAN MCEWAN"],
-                ["NIGHT", "ELIE WIESEL"],
-                ["LINCOLN IN THE BARDO", "GEORGE SAUNDERS"],
-                ["MEMOIRS OF HADRIAN", "MARGUERITE YOURCENAR"],
-                ["MADONNA IN A FUR COAT", "SABAHATTIN ALI"],
-                ["BROOKLYN", "COLM TÓIBÍN"],
-                ["THE PILLOWMAN", "MARTIN MCDONAGH"],
-                ["THE BANSHEES OF INISHERIN", "MARTIN MCDONAGH"],
-                ["ÁGUA VIVA", "CLARICE LISPECTOR"],
-                ["THE KITES", "ROMAIN GARY"],
-                ["사이클로노피디아: 작자미상의 자료들을 엮음", "레자 네가레스타니/윤원화 역"],
-                ["DRIVE YOUR PLOW OVER THE BONES OF THE DEAD", "OLGA TOKARCZUK"],
-                ["HAVING AND BEING HAD", "EULA BISS"],
-                ["CHESS", "STEFAN ZWEIG"],
-                ["A BEHANDING IN SPOKANE", "MARTIN MCDONAGH"],
-                ["A SWIM IN A POND IN THE RAIN", "GEORGE SAUNDERS"],
-                ["CUTE ACCELERATIONISM", "AMY IRELAND, MAYA B. KRONIC"],
-                ["FLESH", "DAVID SZALAY"],
-                ["CAPITALIST REALISM: IS THERE NO ALTERNATIVE?", "MARK FISHER"],
-                ["TRANSLATIONS", "BRIAN FRIEL"],
-                ["21세기 사상의 최전선", "김종갑 외"],
-                ["K-PUNK: MUSIC", "MARK FISHER"],
-                ["랭스로 되돌아가다", "디디에 에리봉/이상길 역"],
-                ["룰루", "프랑크 베데킨트/이재진 역"],
-                ["A GOOD MAN IS HARD TO FIND", "FLANNERY O'CONNOR"],
-                ["개인적인 체험", "오에 겐자부로/서은혜 역"],
-                ["눈뜨는 봄", "프랑크 베데킨트/김미란 역"],
-                ["OBJECT-ORIENTED ONTOLOGY: A NEW THEORY OF EVERYTHING", "GRAHAM HARMAN"],
-                ["LOOK BACK IN ANGER", "JOHN OSBORNE"],
-                ["대머리 여가수 - 수업 - 의자", "외젠 이오네스코/오세곤 역/민음사"],
-                ["어느 아이 이야기", "김안나/최윤영 역"],
-                ["유진 오닐 단막극선", "유진 오닐/이근삼 역"],
-                ["엘리펀트 송", "니컬러스 빌런/주하영 역"],
-                ["A HORSE WALKS INTO A BAR", "DAVID GROSSMAN"],
-                ["HAPPINESS", "JACK UNDERWOOD"],
-                ["THE SAVAGE DETECTIVES", "ROBERTO BOLAÑO"],
-                ["악수도 없이 헤어졌다", "피천득"],
-                ["가을날의 꿈 외", "욘 포세/정민영 역"],
-                ["A MAN’S PLACE", "ANNIE ERNAUX"],
-                ["무대", "필립 라쿠-라바르트, 장-뤽 낭시/조만수 역"],
-                ["단지 세상의 끝", "장뤼크 라가르스/임혜경 역"],
-                ["140 ARTISTS’ IDEAS FOR PLANET EARTH", "EDITED BY HANS ULRICH OBRIST & KOSTAS STASINOPOULOS"],
-                ["Between Riverside and Crazy", "Stephen Adly Guirgis"],
-                ["Ways of Curating", "Hans Ulrich Obrist"]
-            ] },
-            { year: "twenty twenty-five", short: "’25", class: "b-2025", flip: true, mediaQuote: {
-                speaker: "KATURIAN.",
-                text: "The story was going to finish in fashionably downbeat mode, …… A fact which would have ruined the writer’s fashionably downbeat ending, but was somehow ... somehow ... more in keeping with the spirit of the thing.",
-                attribution: "(Martin McDonagh, The Pillowman)"
-            }, data: [
-                ["A GRIEF OBSERVED", "C. S. LEWIS"],
-                ["LUCKY JIM", "KINGSLEY AMIS"],
-                ["QUEER", "WILLIAM S. BURROUGHS"],
-                ["윤리 21", "가라타니 고진"],
-                ["스페인 영화", "임호준"],
-                ["THE BRIDGE OF SAN LUIS REY", "THORNTON WILDER"],
-                ["WAYS OF SEEING", "JOHN BERGER"],
-                ["THE SUN ALSO RISES", "ERNEST HEMINGWAY"],
-                ["BETWEEN THE WORLD AND ME", "TA-NEHISI COATES"],
-                ["THE INVENTION OF SOLITUDE", "PAUL AUSTER"],
-                ["THE PLOT AGAINST AMERICA", "PHILIP ROTH"],
-                ["SHORT LETTER, LONG FAREWELL", "PETER HANDKE"],
-                ["뭔가 배 속에서 부글거리는 기분", "윤아랑"],
-                ["사양", "다자이 오사무"],
-                ["아메토라: 일본은 어떻게 아메리칸 스타일을 구원했는가", "W. 데이비드 막스"],
-                ["천사를 거부하는 우울한 연인에게", "양안다"],
-                ["EXILE AND PRIDE: DISABILITY, QUEERNESS, AND LIBERATION", "ELI CLARE"],
-                ["시네마토그라프에 대한 노트", "로베르 브레송"],
-                ["천사들의 엄격함", "윌리엄 에긴턴"],
-                ["THE GLASS MENAGERIE", "TENNESSEE WILLIAMS"],
-                ["SHAME", "ANNIE ERNAUX"],
-                ["매체의 역사 읽기: 동굴벽화에서 가상현실까지", "안드레아스 뵌, 안드레아스 자이들러"],
-                ["BEAUTIFUL WORLD, WHERE ARE YOU", "SALLY ROONEY"],
-                ["소설의 이론", "게오르그 루카치"],
-                ["EVERYMAN", "PHILIP ROTH"],
-                ["INDIGNATION", "PHILIP ROTH"],
-                ["THE WILD IRIS", "LOUISE GLÜCK"],
-                ["FOREVERISM", "GRAFTON TANNER"],
-                ["어쨌거나 밤은 무척 짧을 것이다", "유운성"],
-                ["PENANCE", "ELIZA CLARK"],
-                ["GOOD MORNING, MONSTER", "CATHERINE GILDINER"],
-                ["에센셜 시네마: 영화 정전을 위하여", "조너선 로젠봄"],
-                ["서푼짜리 오페라", "베르톨트 브레히트"],
-                ["PALE FIRE", "VLADIMIR NABOKOV"],
-                ["A LEOPARD-SKIN HAT", "ANNE SERRE"],
-                ["MARTYR!", "KAVEH AKBAR"],
-                ["젊은 날의 초상", "이문열"],
-                ["매트릭스로 철학하기", "윌리엄 어윈 외"],
-                ["NAKED LUNCH", "WILLIAM BURROUGHS"],
-                ["LADY L.", "ROMAIN GARY"],
-                ["THE NETANYAHUS", "JOSHUA COHEN"],
-                ["SHE'S ALWAYS HUNGRY", "ELIZA CLARK"],
-                ["WHERE EVERYTHING IS MUSIC", "RUMI"],
-                ["BAUMGARTNER", "PAUL AUSTER"],
-                ["THE PERIODIC TABLE", "PRIMO LEVI"],
-                ["NEMESIS", "PHILIP ROTH"],
-                ["MELANCHOLY I~II", "JON FOSSE"],
-                ["KAIROS", "JENNY ERPENBECK"],
-                ["암호해독사", "잇시키 마코토"],
-                ["KLARA AND THE SUN", "KAZUO ISHIGURO"],
-                ["STORIES OF YOUR LIFE AND OTHERS", "TED CHIANG"],
-                ["THE REAL THING", "TOM STOPPARD"],
-                ["EXHALATION", "TED CHIANG"],
-                ["ROSENCRANTZ AND GUILDENSTERN ARE DEAD", "TOM STOPPARD"],
-                ["THE SAVAGE GOD: A STUDY OF SUICIDE", "AL ÁLVAREZ"],
-                ["MY DARK VANESSA", "KATE ELIZABETH RUSSELL"],
-                ["PLAYS 1: 'ART' - THE UNEXPECTED MAN - CONVERSATIONS AFTER A BURIAL - LIFE X 3", "YASMINA REZA"],
-                ["MY YEAR OF REST AND RELAXATION", "OTTESSA MOSHFEGH"],
-                ["PORTNOY'S COMPLAINT", "PHILIP ROTH"],
-                ["ENGLAND, ENGLAND", "JULIAN BARNES"],
-                ["GOOD OMENS", "TERRY PRATCHETT, NEIL GAIMAN"],
-                ["WHITE NOISE", "DON DELILLO"],
-                ["SHADOW TICKET", "THOMAS PYNCHON"],
-                ["식물성의 유혹", "유운성"],
-                ["<자본>에 대한 노트", "세르게이 에이젠슈타인, 알렉산더 클루게"],
-                ["물듦 - 상호감염의 미학", "유운성"],
-                ["LIBRA", "DON DELILLO"],
-                ["KINDRED", "OCTAVIA BUTLER"],
-                ["THE GOD OF SMALL THINGS", "ARUNDHATI ROY"],
-                ["중력과 은총", "시몬 베유"],
-                ["THE 42ND PARALLEL", "JOHN DOS PASSOS"],
-                ["THE NEW YORK TRILOGY", "PAUL AUSTER"],
-                ["지옥변", "아쿠타가와 류노스케"],
-                ["오후의 예항 / 짐승들의 유희", "미시마 유키오"],
-                ["GONE GIRL", "GILLIAN FLYNN"]
-            ] },
-            { year: "twenty twenty-four", short: "’24", class: "b-2024", flip: true, mediaSrc: "https://embed.music.apple.com/kr/song/music-and-me/1817373541", data: [
-                ["행복의 기원", "서은국"],
-                ["THE SENSE OF AN ENDING", "JULIAN BARNES"],
-                ["THE HUMAN STAIN", "PHILIP ROTH"],
-                ["SONS AND LOVERS", "D. H. LAWRENCE"],
-                ["AMERICAN PASTORAL", "PHILIP ROTH"],
-                ["I MARRIED A COMMUNIST", "PHILIP ROTH"],
-                ["REVOLUTIONARY ROAD", "RICHARD YATES"],
-                ["영화도둑일기", "한민수"],
-                ["4 3 2 1", "PAUL AUSTER"],
-                ["ETHAN FROME", "EDITH WHARTON"],
-                ["THE CRYING OF LOT 49", "THOMAS PYNCHON"],
-                ["THE ARMIES OF THE NIGHT", "NORMAN MAILER"],
-                ["FIRST LOVE", "IVAN TURGENEV"],
-                ["ACCELERATE: THE ACCELERATIONIST READER", "ROBIN MACKAY, ARMEN AVANESSIAN"],
-                ["SNUFF", "CHUCK PALAHNIUK"],
-                ["THE RULES OF ATTRACTION", "BRET EASTON ELLIS"],
-                ["AMERICAN PSYCHO", "BRET EASTON ELLIS"],
-                ["WHAT WE TALK ABOUT WHEN WE TALK ABOUT LOVE", "RAYMOND CARVER"],
-                ["LESS THAN ZERO", "BRET EASTON ELLIS"],
-                ["THE LINE OF BEAUTY", "ALAN HOLLINGHURST"],
-                ["THE SHARDS", "BRET EASTON ELLIS"],
-                ["RABBIT, RUN", "JOHN UPDIKE"],
-                ["PLAY IT AS IT LAYS", "JOAN DIDION"],
-                ["SPEAK, MEMORY", "VLADIMIR NABOKOV"],
-                ["EILEEN", "OTTESSA MOSHFEGH"],
-                ["BUNNY", "MONA AWAD"],
-                ["A SPORT AND A PASTIME", "JAMES SALTER"],
-                ["SLAUGHTERHOUSE-FIVE", "KURT VONNEGUT"],
-                ["PHANTOM LADY", "CORNELL WOOLRICH"],
-                ["EMPIRE OF THE SUN", "J. G. BALLARD"],
-                ["INTERMEZZO", "SALLY ROONEY"],
-                ["BOY PARTS", "ELIZA CLARK"],
-                ["I'M GLAD MY MOM DIED", "JENNETTE MCCURDY"],
-                ["A LITTLE LIFE", "HANYA YANAGIHARA"],
-                ["DESIGN AS ART", "BRUNO MUNARI"],
-                ["슬픔을 공부하는 슬픔", "신형철"],
-                ["NO MAN'S LAND", "HAROLD PINTER"],
-                ["MONSTERS: A FAN'S DILEMMA", "CLAIRE DEDERER"],
-                ["OUTLINE", "RACHEL CUSK"],
-                ["A MOVEABLE FEAST", "ERNEST HEMINGWAY"],
-                ["CIRCE", "MADELINE MILLER"],
-                ["GALATEA", "MADELINE MILLER"],
-                ["THE GOALKEEPER'S ANXIETY AT THE PENALTY KICK", "PETER HANDKE"],
-                ["ANGELS IN AMERICA PART ONE: MILLENNIUM APPROACHES", "TONY KUSHNER"],
-                ["ANGELS IN AMERICA PART TWO: PERESTROIKA", "TONY KUSHNER"]
-            ] },
-            { year: "twenty twenty-three", short: "’23", class: "b-2023", mediaQuote: {
-                serif: true,
-                text: [
-                    "I AM EXPERIENCED IN STREET AGITATION. I HAVE A FAR MEAN STREAK OF INDEPENDENCE BROUGHT ON BY NEGLECT.",
-                    "AEROSPACE.",
-                    ""
-                ],
-                attribution: "DON DELILLO, LIBRA"
-            }, data: [
-                ["THE ANTHROPOCENE REVIEWED", "JOHN GREEN"],
-                ["SOUTH OF THE BORDER, WEST OF THE SUN", "HARUKI MURAKAMI"],
-                ["COLORLESS TAZAKI TSUKURU AND HIS YEAR OF PILGRIMAGE", "HARUKI MURAKAMI"],
-                ["악어 노트", "구묘진"],
-                ["SPUTNIK SWEETHEART", "HARUKI MURAKAMI"],
-                ["A WILD SHEEP CHASE", "HARUKI MURAKAMI"],
-                ["갈증", "아멜리 노통"],
-                ["내게 무해한 사람", "최은영"],
-                ["UNDERGROUND: THE TOKYO GAS ATTACK AND THE JAPANESE PSYCHE", "HARUKI MURAKAMI"],
-                ["HEAVEN", "MIEKO KAWAKAMI"],
-                ["DANCE DANCE DANCE", "HARUKI MURAKAMI"],
-                ["HEAR THE WIND SING", "HARUKI MURAKAMI"],
-                ["트렌드 코리아 2023", ""],
-                ["이어령의 마지막 수업", "김지수"],
-                ["달리기를 말할 때 내가 하고 싶은 이야기", "무라카미 하루키"],
-                ["설탕의 맛", "김사과"],
-                ["KILLING COMMENDATORE", "HARUKI MURAKAMI"],
-                ["흰 장미의 심연까지", "나카야마 가호"],
-                ["AMERICAN PSYCHO", "BRET EASTON ELLIS"],
-                ["ALMOST TRANSPARENT BLUE", "RYU MURAKAMI"],
-                ["AUDITION", "RYU MURAKAMI"],
-                ["화염", "와즈디 무아와드"],
-                ["THE LONG GOODBYE", "RAYMOND CHANDLER"],
-                ["COSMOPOLIS", "DON DELILLO"],
-                ["FEAR AND LOATHING IN LAS VEGAS", "HUNTER S. THOMPSON"],
-                ["THE HOURS", "MICHAEL CUNNINGHAM"],
-                ["THE POSTMAN ALWAYS RINGS TWICE", "JAMES M. CAIN"],
-                ["도시와 그 불확실한 벽", "무라카미 하루키"],
-                ["SEIZE THE DAY", "SAUL BELLOW"],
-                ["POOR THINGS", "ALASDAIR GRAY"],
-                ["THE ENGLISH PATIENT", "MICHAEL ONDAATJE"],
-                ["MINIMA MORALIA", "THEODOR ADORNO"],
-                ["ENEMIES OF PROMISE", "CYRIL CONNOLLY"],
-                ["EATING THE DINOSAUR", "CHUCK KLOSTERMAN"],
-                ["THE DEATH OF THE YOUNG BRITISH PILOT", "MARGUERITE DURAS"],
-                ["NUPTIALS AT TIPASA - THE WIND AT DJEMILA - SUMMER IN ALGIERS - THE DESERT - HELEN'S EXILE - THE SEA CLOSE BY", "ALBERT CAMUS"],
-                ["SUCH, SUCH WERE THE JOYS - POLITICS AND THE ENGLISH LANGUAGE", "GEORGE ORWELL"],
-                ["DECLINE AND FALL", "EVELYN WAUGH"],
-                ["TOUCHED WITH FIRE", "KAY REDFIELD JAMISON"],
-                ["BIRTHDAY LETTERS", "TED HUGHES"],
-                ["THE UNABRIDGED JOURNALS OF SYLVIA PLATH", "SYLVIA PLATH"],
-                ["LEAVING LAS VEGAS", "JOHN O'BRIEN"],
-                ["THE CONQUEST OF HAPPINESS", "BERTRAND RUSSELL"],
-                ["THE ELEMENTARY PARTICLES", "MICHEL HOUELLEBECQ"]
-            ] },
-            { year: "twenty twenty-two", short: "’22", class: "b-2022", mediaSrc: "https://embed.music.apple.com/kr/song/%E5%86%B7%E3%81%9F%E3%81%84%E3%82%AE%E3%83%95%E3%83%88/1404166608", data: [
-                ["혁명의 시대", "에릭 홉스봄"],
-                ["1Q84", "HARUKI MURAKAMI"],
-                ["자유로부터의 도피", "에리히 프롬"],
-                ["인간실격", "다자이 오사무"],
-                ["애프터 다크", "무라카미 하루키"],
-                ["일기에도 거짓말을 쓰는 사람", "차도하"],
-                ["I KISSED SHARA WHEELER", "CASEY MCQUISTON"],
-                ["LITTLE STARS", "JACQUELINE WILSON"],
-                ["ROSE RIVERS", "JACQUELINE WILSON"],
-                ["THE YEAR OF MAGICAL THINKING", "JOAN DIDION"],
-                ["WHY FISH DON'T EXIST", "LULU MILLER"],
-                ["일인칭 단수", "무라카미 하루키"],
-                ["나는 나를 파괴할 권리가 있다", "김영하"],
-                ["THE SEA, THE SEA!", "IRIS MURDOCH"],
-                ["여름의 빌라", "백수린"],
-                ["사랑을 위한 되풀이", "황인찬"],
-                ["나의 이브 생 로랑에게", "피에르 베르쥬"],
-                ["수전 손택의 말", "수전 손택, 조너선 콧"],
-                ["재와 물거품", "김청귤"],
-                ["파과", "구병모"],
-                ["CRYING IN H MART", "MICHELLE ZAUNER"],
-                ["모순", "양귀자"],
-                ["나는 소망한다 내게 금지된 것을", "양귀자"],
-                ["미워하는 미워하는 미워하는 마음 없이", "유지혜"],
-                ["철학, 장애를 논하다", "크리스티야나 크리스티안센 외"],
-                ["BITTERSWEET: HOW SORROW AND LONGING MAKE US WHOLE", "SUSAN CAIN"],
-                ["NORMAL PEOPLE", "SALLY ROONEY"],
-                ["아몬드", "손원평"],
-                ["지구에서 한아뿐", "정세랑"],
-                ["아가미", "구병모"],
-                ["얼음나무 숲", "하지은"],
-                ["연의 편지", "조현아"],
-                ["I FEAR MY PAIN INTERESTS YOU", "STEPHANIE LACAVA"],
-                ["THE SUPERRATIONALS", "STEPHANIE LACAVA"],
-                ["내 생애 마지막 다이어트", "권여름"],
-                ["집착", "아니 에르노"],
-                ["개인주의자 선언", "문유석"],
-                ["KAFKA ON THE SHORE", "HARUKI MURAKAMI"]
-            ] }
-        ];
+        <section>
+            <h2 class="section-title">Structure and Content</h2>
+            <p>Documents can be organized using standard heading structures, plain text paragraphs, blockquotes, or lists.</p>
 
-        // Media Embed Bank
-        const mediaSrcs = [
-            "https://embed.music.apple.com/us/album/supernatural/1747043133?i=1747043134",
-            "https://embed.music.apple.com/us/album/hype-boy/1635217435?i=1635217436"
-        ];
+            <h3 class="subsection-title">Key Principles</h3>
+            <ul>
+                <li>Monotone palette with no accent highlights</li>
+                <li>Custom lemon-yellow text selection</li>
+                <li>Responsive typography powered by Pretendard Variable</li>
+                <li>Minimalist borders separating major sections</li>
+            </ul>
 
-        const buildEmbed = src => `<iframe class="media-embed" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="${src}"></iframe>`;
+            <blockquote>
+                "Simplicity is about subtracting the obvious and adding the meaningful."
+            </blockquote>
 
-        const container = document.getElementById('matrixContainer');
-        const isMobile = window.innerWidth < 768;
+            <p>You can seamlessly draft ideas, store quick notes, or publish long-form essays without altering the underlying markup.</p>
+        </section>
+    </main>
 
-        // Titles/authors are injected via innerHTML; escape markup characters
-        // so entries like "<자본>에 대한 노트" render literally
-        const escapeHtml = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    <footer>
+        <div>Created: August 2026</div>
+        <div>Plain Text Layout</div>
+    </footer>
 
-        // Mathematical Grid Fractional Slices
-        const mobileFractions = [1/2, 1/3, 2/3];
-        const webFractions = [1/2, 1/3, 2/3, 1/4, 3/4, 2/5, 3/5];
-
-        function generateMatrix() {
-            container.innerHTML = "";
-            const fractions = isMobile ? mobileFractions : webFractions;
-
-            let prevFraction = null;
-
-            archiveData.forEach((item, index) => {
-                // Generate primary random fraction slice — never the same split
-                // as the row directly above, so no two adjacent rows align
-                const pool = fractions.filter(f => f !== prevFraction);
-                const randomFraction = pool[Math.floor(Math.random() * pool.length)];
-                prevFraction = randomFraction;
-
-                // Deduce perfect complementary mathematical negative space profile
-                const primaryPercent = (randomFraction * 100);
-                const complementPercent = (100 - primaryPercent);
-
-                // Gap calculation correction rules
-                const stylePrimary = `flex: 0 0 calc(${primaryPercent}% - 4px); max-width: calc(${primaryPercent}% - 4px);`;
-                const styleComplement = `flex: 0 0 calc(${complementPercent}% - 4px); max-width: calc(${complementPercent}% - 4px);`;
-
-                // Build Primary Year Block Structure
-                const yearId = `block-year-${index}`;
-                const mediaId = `block-media-${index}`;
-
-                const yearBlock = document.createElement('div');
-                yearBlock.className = `block ${item.class}`;
-                yearBlock.id = yearId;
-                yearBlock.style.cssText = stylePrimary;
-                yearBlock.dataset.baseStyle = stylePrimary;
-                yearBlock.setAttribute('onclick', `toggleList('${yearId}', '${mediaId}')`);
-
-                let listHtml = `<div class="label" data-full="${item.year}" data-short="${item.short}" data-count="${item.data.length}">${item.year}</div><div class="spill-content"><ul class="book-list">`;
-                item.data.forEach(book => {
-                    const authorHtml = book[1] ? `<span class="book-author">${escapeHtml(book[1])}</span>` : '';
-                    listHtml += `<li class="book-item"><span class="book-title">${escapeHtml(book[0])}</span>${authorHtml}</li>`;
-                });
-                listHtml += `</ul></div>`;
-                yearBlock.innerHTML = listHtml;
-
-                // Build Complementary Unlabeled White Box Negative Space Block
-                const mediaBlock = document.createElement('div');
-                mediaBlock.className = `block b-media${item.mediaClass ? ' ' + item.mediaClass : ''}`;
-                mediaBlock.id = mediaId;
-                mediaBlock.style.cssText = styleComplement;
-                mediaBlock.dataset.baseStyle = styleComplement;
-                mediaBlock.setAttribute('onclick', `toggleMedia('${mediaId}', '${yearId}', ${primaryPercent})`);
-
-                // Spill space carries a quote when the data provides one,
-                // otherwise a single running media frame
-                const mediaLabel = item.mediaTitle ? `<div class="media-label">${item.mediaTitle}</div>` : '';
-                let spillInner;
-                if (item.mediaQuote) {
-                    const q = item.mediaQuote;
-                    const speaker = q.speaker ? `<strong>${q.speaker}</strong> ` : '';
-                    const body = Array.isArray(q.text) ? q.text.join('<br>') : q.text;
-                    spillInner = `<blockquote class="media-quote${q.serif ? ' quote-serif' : ''}">${speaker}${body}<br><em class="quote-attr">${q.attribution}</em></blockquote>`;
-                } else {
-                    spillInner = `<div class="media-track-wrapper">${buildEmbed(item.mediaSrc || mediaSrcs[index % mediaSrcs.length])}</div>`;
-                }
-                mediaBlock.innerHTML = `${mediaLabel}<div class="spill-content">${spillInner}</div>`;
-
-                // Render each pair inside its own isolated row container;
-                // flipped rows put the year block on the right
-                const rowEl = document.createElement('div');
-                rowEl.className = 'matrix-row';
-                if (item.flip) {
-                    rowEl.appendChild(mediaBlock);
-                    rowEl.appendChild(yearBlock);
-                } else {
-                    rowEl.appendChild(yearBlock);
-                    rowEl.appendChild(mediaBlock);
-                }
-                container.appendChild(rowEl);
-            });
-
-            // One random year is sold. No explanation.
-            const soldIndex = Math.floor(Math.random() * archiveData.length);
-            const soldDot = document.createElement('span');
-            soldDot.className = 'sold-dot';
-            document.getElementById(`block-year-${soldIndex}`).appendChild(soldDot);
-
-            // Two blocks per load are deliberately, consistently wrong, and two
-            // are taped to the grid — picked independently, so a block can be
-            // broken, taped, or both
-            const blocks = container.querySelectorAll('.block');
-            // Two distinct blocks from two different rows, so a single row can
-            // never carry both treatments' offsets at once
-            const pickTwo = n => {
-                const rows = n / 2;
-                const r1 = Math.floor(Math.random() * rows);
-                let r2 = Math.floor(Math.random() * (rows - 1));
-                if (r2 >= r1) r2++;
-                const side = () => (Math.random() < 0.5 ? 0 : 1);
-                return [r1 * 2 + side(), r2 * 2 + side()];
-            };
-            pickTwo(blocks.length).forEach(i => blocks[i].classList.add(Math.random() < 0.5 ? 'broken-down' : 'broken-up'));
-            pickTwo(blocks.length).forEach(i => blocks[i].classList.add('taped'));
-
-            fitLabels();
-        }
-
-        // Label fitting: if a block is so narrow that the label's longest word
-        // would have to break mid-word, switch to the short ’YY form instead
-        const measureCtx = document.createElement('canvas').getContext('2d');
-
-        function fitLabels() {
-            const mobileView = window.innerWidth < 768;
-
-            document.querySelectorAll('.label').forEach(label => {
-                const full = label.dataset.full;
-                if (!full) return;
-
-                const block = label.closest('.block');
-                let next;
-
-                if (block.classList.contains('expand-list')) {
-                    // An opened block always carries its full name
-                    next = full;
-                } else if (mobileView) {
-                    // On mobile, closed blocks default to the short ’YY form
-                    next = label.dataset.short;
-                } else {
-                    const avail = block.clientWidth - 24; // block padding: 12px per side
-                    if (avail <= 0) return; // hidden pair, leave as is
-
-                    const cs = getComputedStyle(label);
-                    measureCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-                    const tracking = parseFloat(cs.letterSpacing) || 0;
-
-                    const longestWord = full.split(/\s+/).reduce((max, word) => {
-                        const w = measureCtx.measureText(word).width + tracking * word.length;
-                        return Math.max(max, w);
-                    }, 0);
-
-                    next = longestWord > avail ? label.dataset.short : full;
-                }
-
-                // Every block whispers its total, open or closed
-                const html = `${next} <span class="label-count">(${label.dataset.count})</span>`;
-                if (label.dataset.rendered !== html) {
-                    label.innerHTML = html;
-                    label.dataset.rendered = html;
-                }
-            });
-        }
-
-        // Re-fit whenever a block finishes resizing, and on viewport changes
-        container.addEventListener('transitionend', e => {
-            if (e.propertyName === 'flex-basis' || e.propertyName === 'max-width') fitLabels();
-        });
-        window.addEventListener('resize', fitLabels);
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabels);
-
-        // Restore a single pair to its generated baseline; other rows are never touched,
-        // so previously opened blocks keep their state until the user acts on them directly
-        function resetPair(yearEl, mediaEl) {
-            [yearEl, mediaEl].forEach(b => {
-                b.classList.remove('expand-list', 'expand-media', 'expand-full', 'hide-pair');
-                b.style.cssText = b.dataset.baseStyle || "";
-            });
-        }
-
-        // Action Rules: Lists spill vertically, never narrower than 50% (snap full width if needed)
-        function toggleList(yearId, mediaId) {
-            const yearEl = document.getElementById(yearId);
-            const mediaEl = document.getElementById(mediaId);
-            const active = yearEl.classList.contains('expand-list');
-
-            resetPair(yearEl, mediaEl);
-
-            if (!active) {
-                yearEl.classList.add('expand-list');
-                mediaEl.classList.add('hide-pair');
-                // Opening: keep the current (short) label until the block reaches
-                // full width — transitionend runs fitLabels. Swapping to the full
-                // name while still narrow forces mid-word breaks and a height bounce.
-            } else {
-                fitLabels();
-            }
-        }
-
-        // Action Rules: Media blocks spill horizontally along their paired space line
-        function toggleMedia(mediaId, yearId, primaryWidth) {
-            const mediaEl = document.getElementById(mediaId);
-            const yearEl = document.getElementById(yearId);
-            const active = mediaEl.classList.contains('expand-media');
-
-            resetPair(yearEl, mediaEl);
-
-            if (!active) {
-                mediaEl.classList.add('expand-media');
-
-                // If native remaining space drops behind 50%, safety lock structural layout bounds
-                if (primaryWidth < 50) {
-                    yearEl.classList.add('hide-pair');
-                    mediaEl.classList.add('expand-full');
-                } else {
-                    yearEl.style.flexBasis = "calc(20% - 4px)";
-                    yearEl.style.maxWidth = "calc(20% - 4px)";
-                }
-            }
-
-            fitLabels();
-        }
-
-        // Mobile navigation spill toggle
-        function toggleNav() {
-            const header = document.getElementById('siteHeader');
-            const open = header.classList.toggle('nav-open');
-            document.getElementById('navToggle').textContent = open ? 'less.' : 'more.';
-        }
-
-        // One word of the title is misset per load — italic serif, deliberately
-        function missetTitle() {
-            const h1 = document.querySelector('h1');
-            const words = h1.textContent.split(' ');
-            const candidates = words.map((w, i) => w !== '/' ? i : -1).filter(i => i >= 0);
-            const pick = candidates[Math.floor(Math.random() * candidates.length)];
-            h1.innerHTML = words.map((w, i) => i === pick ? `<span class="misset">${w}</span>` : w).join(' ');
-        }
-
-        // On a few loads, the credit quietly lies
-        function equivocateCredit() {
-            if (Math.random() < 0.05) {
-                const credit = document.getElementById('creditText');
-                credit.textContent = credit.textContent.replace('all rights', 'some rights');
-            }
-        }
-
-        // The tiny x: flips the palette into (and out of) the 2-6am variant
-        function togglePalette() {
-            document.body.classList.toggle('after-hours');
-        }
-
-        // After hours the palette inverts. Never announced.
-        const hour = new Date().getHours();
-        if (hour >= 2 && hour < 6) document.body.classList.add('after-hours');
-
-        // The tab waits for you
-        const siteTitle = document.title;
-        document.addEventListener('visibilitychange', () => {
-            document.title = document.hidden ? 'waiting here…' : siteTitle;
-        });
-
-        // For the five people who open the console
-        console.log(String.raw`
-
-      b a s s v i c t i m
-
-      ___________________________
-     |  _______________________  |
-     | |  ___   ___   ___   __ | |
-     | | |   | |   | |   | |  || |
-     | | |___| |___| |___| |__|| |
-     | |_______________________| |
-     |   ___   ___    _______    |
-     |  |   | |   |  | 2 7 a |   |
-     |  |   | |   |  |   o   |   |
-     |__|___|_|___|__|_______|___|
-
-      2 7 a   p i t f i e l d   s t .
-
-`);
-
-        // Init System Matrix on fresh session load
-        window.onload = () => {
-            generateMatrix();
-            missetTitle();
-            equivocateCredit();
-        };
-    </script>
 </body>
 </html>
