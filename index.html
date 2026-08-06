@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minimal Text Layout</title>
 
+    <!-- Dynamic Favicon Generation Script -->
+    <script>
+        (function() {
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="#1C1B1A" stroke-width="4"/>
+                <text x="50%" y="55%" dominant-baseline="central" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Pretendard, sans-serif" font-size="52" font-weight="600" fill="#1C1B1A">¶</text>
+            </svg>`;
+            const link = document.createElement('link');
+            link.rel = 'icon';
+            link.type = 'image/svg+xml';
+            link.href = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+            document.head.appendChild(link);
+        })();
+    </script>
+
     <!-- Pretendard Variable Font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 
@@ -24,6 +39,7 @@
             --text-faint: #918E88;
             --rule-heavy: #1C1B1A;
             --rule-hair: #D3D0C9;
+            --circle-border: rgba(28, 27, 26, 0.35);
             
             /* Text Selection */
             --selection-bg: #FFE800; /* Lemon Yellow */
@@ -39,6 +55,7 @@
                 --text-faint: #6B6965;
                 --rule-heavy: #EAE8E3;
                 --rule-hair: #2D2C2A;
+                --circle-border: rgba(234, 232, 227, 0.35);
             }
         }
 
@@ -53,7 +70,7 @@
             line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            padding: 50px 40px 100px 40px;
+            padding: 40px 40px 100px 40px;
             max-width: 1000px;
             margin: 0 auto;
 
@@ -74,6 +91,44 @@
         ::selection {
             background-color: var(--selection-bg);
             color: var(--text-main);
+        }
+
+        /* Site Logo */
+        .site-logo-container {
+            margin-bottom: 32px;
+        }
+
+        .site-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--circle-border);
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            line-height: 1;
+            transition: border-color 0.15s ease, color 0.15s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+        }
+
+        .site-logo:hover {
+            border-color: var(--text-main);
+        }
+
+        /* Spin Animation when clicked on main page */
+        .site-logo.spin {
+            animation: logo-spin 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* Header Layout */
@@ -213,7 +268,7 @@
         /* Responsive Breakdown for Mobile */
         @media (max-width: 868px) {
             body {
-                padding: 28px 16px 70px 32px;
+                padding: 24px 16px 70px 32px;
                 /* Adjust vertical line to sit as a left margin armature */
                 background-image: linear-gradient(
                     to right,
@@ -224,6 +279,10 @@
                 );
                 background-origin: border-box;
                 background-clip: border-box;
+            }
+
+            .site-logo-container {
+                margin-bottom: 24px;
             }
 
             header {
@@ -262,6 +321,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Pilcrow Logo -->
+    <div class="site-logo-container">
+        <a href="/" class="site-logo" id="site-logo" aria-label="Home">¶</a>
+    </div>
 
     <header>
         <div class="site-kicker">notes / 001</div>
@@ -305,5 +369,20 @@
         <div>Plain Text / Monotone</div>
     </footer>
 
+    <script>
+        // Spin effect when clicking the logo on the home page
+        document.getElementById('site-logo').addEventListener('click', function(e) {
+            const currentPath = window.location.pathname;
+            const isHomePage = currentPath === '/' || currentPath === '/index.html';
+
+            if (isHomePage) {
+                e.preventDefault();
+                this.classList.remove('spin');
+                // Trigger reflow to restart animation on repeated clicks
+                void this.offsetWidth; 
+                this.classList.add('spin');
+            }
+        });
+    </script>
 </body>
 </html>
