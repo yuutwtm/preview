@@ -1,9 +1,15 @@
+Here is the updated code incorporating all your requested changes:
+ * Title updated to @pitfieldst.
+ * Link names changed to you are definitely coming, and so why not?*.
+ * Apple Music embed link updated to As Serious As Your Life by Four Tet.
+ * ASCII art letter spacing reduced to -1px (along with a slightly adjusted line-height to keep the proportions intact).
+ * Footer credits added at the bottom: @pitfieldst on X. last updated august 2026.
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimal Site</title>
+    <title>@pitfieldst</title>
     
     <!-- Fonts -->
     <link rel="stylesheet" href="https://use.typekit.net/mrb3sjs.css">
@@ -53,6 +59,7 @@
             font-family: var(--font-body);
             min-height: 100dvh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             transition: color 0.3s;
@@ -88,8 +95,8 @@
         .ascii-art {
             font-family: monospace;
             font-size: 8px;
-            line-height: 1;
-            letter-spacing: 0;
+            line-height: 0.95;
+            letter-spacing: -1px; /* Reduced letter spacing */
             white-space: pre;
             color: var(--text-color);
             opacity: 0.85;
@@ -240,6 +247,17 @@
             border-radius: 8px;
             margin-top: 0.8rem;
         }
+
+        /* Small Footer Credits */
+        footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: -0.01em;
+            text-align: center;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -263,38 +281,25 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⣀⡠⠤⠒⠊⢹⡯⡉⠙⣏⣁⣸⠁⢰⠇⠀⠀⢰⠃⠀⠀⠀⠀⠘⣽⣿⢷⣶⣬⣿⢉⣧⣿⡇⢸⣶⠀⣿⠈⠻⣿⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠀⠀⠀⠀⠀⠀⢧⠈⠓⣬⡻⣇⣠⡟⠓⠒⠒⠋⠀⠀⠀⠀⠀⠸⣩⣿⣿⡟⢻⣿⠾⣻⠃⣷⢸⡿⣆⢿⠀⠀⣿⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣀⡀⢠⠃⠀⠀⠸⡄⡄⠀⠈⢧⠀⠘⣟⢿⣯⠀⠀⠀⠀⡰⠋⡇⡄⠀⠀⠀⠀⠉⠙⠒⠋⠁⣼⣡⠀⣾⣾⠇⠘⣾⡄⠀⠏⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣻⡞⠀⠀⠀⢱⣸⡄⠀⠀⠳⣄⠘⣆⠈⠓⠀⠀⠀⢇⣤⣿⡇⠀⠀⠀⠀⠀⠀⣠⠴⢚⣉⣠⡴⢻⡏⠀⠀⠘⠿⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⠇⢠⠀⠀⠀⣷⣿⠢⡀⠀⠹⣷⢼⣦⠀⠀⠀⠀⠀⠀⠋⠁⠀⠀⠀⠀⠐⠛⢉⣿⠋⢁⡼⠃⠸⣿⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠹⡇⢸⣇⢀⠀⢧⢻⣦⢈⣷⣄⠙⣆⠉⠓⠀⠐⠒⠲⠄⠀⠀⠀⠀⠀⠀⠀⣠⣾⣣⠴⠋⠀⢠⡀⢻⡇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢳⣿⢿⣸⣆⢸⡀⢹⣧⢿⢯⣳⣸⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡖⠿⠋⠁⠀⡆⠀⡾⡇⠘⡇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡟⠈⣟⣿⣷⡇⢸⠈⢿⡷⡙⢿⣧⠀⠀⠀⠀⠀⠀⠀⢀⡠⠖⠋⠁⠀⠀⠀⠀⢠⡇⠀⡇⣷⠀⡇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠚⠃⠀⣿⠇⢹⠳⣘⡇⠈⠃⠈⢦⡙⠀⠀⠀⢀⣠⣴⣾⣿⠀⠀⢀⣇⠀⢰⡀⠀⢸⣧⢸⣽⠸⣆⡇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡏⠀⠈⢻⠄⠀⠀⠀⠈⠓⠒⠚⠉⣸⠃⠹⡟⣧⠀⢸⠉⢧⠘⣧⠀⣿⢹⢸⠇⠀⣿⠃⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡤⠚⠉⠉⠒⢤⡼⠁⠀⠀⠘⡄⠀⠀⠀⠀⠀⠀⠀⢀⡇⠀⠀⠀⠈⠳⣼⡲⠈⢧⡏⣧⠟⣟⣿⠀⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡠⠴⠋⠀⠀⠀⠀⠀⠀⠈⠲⣄⠀⠀⢇⠀⠀⠀⠀⠀⠀⠀⣸⠀⠀⠀⠀⠀⠀⠈⡃⠀⠸⠃⠘⠀⠉⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣒⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠸⡄⠀⠀⠀⠀⠀⠀⣟⣀⣀⠀⠀⠀⠀⠘⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣀⡼⠟⠛⠙⠛⠯⣗⡢⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢢⡇⠀⠀⠀⠀⠀⠀⡇⢢⡙⡝⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⣠⠔⠋⠁⠀⠀⠀⠀⠀⠀⠈⠻⣷⣦⣍⡒⠤⠤⠤⠐⠒⠒⠈⠉⠳⢄⠙⣄⠀⠀⠀⠀⠀⢧⠀⡇⠘⡜⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⡏⠒⣦⠤⣀⣀⠀⠀⠀⠀⠀⠑⢌⢆⠀⠀⠀⠀⠘⣧⡇⠀⠘⡬⡙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣤⠤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣷⠀⢸⡀⠀⢫⠉⠓⢲⣦⣄⣀⠀⠙⢆⠀⢀⡠⠴⡾⠁⠀⠀⠀⠈⠳⣝⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⡄⢉⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⡆⠀⢧⡇⠀⢧⠀⠀⢯⠻⣿⣿⣶⣌⣆⠀⠀⡼⢁⣀⠀⠀⠀⠀⠀⠀⠉⣹⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠁⡸⣠⠋⠙⢎⠳⡄⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣷⠀⠘⣷⠀⠈⢧⠀⠈⢧⠀⠙⠻⢷⣿⣦⣴⣿⡿⠋⠉⡗⠲⡤⠖⠒⠛⣿⣿⣷⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠁⠁⠀⠀⡸⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⢹⣿⡇⠀⠀⠀⠀⠈⢧⠀⠈⢧⠀⠀⢀⣼⣿⣿⣿⣦⡀⠀⡇⠀⣇⠀⠀⠀⢻⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        </pre>
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣻⡞⠀⠀⠀⢱⣸⡄⠀⠀⠳⣄⠘⣆⠈⠓⠀⠀⠀⢇```html
+            <footer>
+                @pitfieldst on X. last updated august 2026.
+            </footer>
+        </div>
 
         <!-- Item 1 -->
         <div class="section-item" id="item-2">
-            <button class="trigger-btn" onclick="toggleSpill('item-2', event)">radio shack programs</button>
+            <button class="trigger-btn" onclick="toggleSpill('item-2', event)">you are definitely coming,</button>
             <div class="spill-content">
                 <div class="card-inner">
                     <button class="card-close-btn" onclick="closeSpill('item-2', event)">&times;</button>
-                    <h2 class="card-title">Radio Shack Programs</h2>
+                    <h2 class="card-title">You Are Definitely Coming,</h2>
                     <div class="card-body">
                         <p>성인 여성</p>
                         <p>일상 야구 셀털(heavy) 매체 소비(책 영상 음악 2D) etc …</p>
-                        <p>bub free 용건 👉🏻 <a href="https://open.kakao.com/me/beatpoetry" target="_blank" rel="noopener">open kakao</a></p><br>
+                        <p>bub free 용건 👉🏻 <a href="[https://open.kakao.com/me/beatpoetry](https://open.kakao.com/me/beatpoetry)" target="_blank" rel="noopener">open kakao</a></p><br>
                         <div class="embed-container">
-                            <iframe src="https://www.youtube.com/embed/jvkbnhPsC38?si=mtje1KukkYqm7pvC" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe src="[https://www.youtube.com/embed/jvkbnhPsC38?si=mtje1KukkYqm7pvC](https://www.youtube.com/embed/jvkbnhPsC38?si=mtje1KukkYqm7pvC)" title="YouTube video player" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -303,11 +308,11 @@
 
         <!-- Item 2 -->
         <div class="section-item" id="item-3">
-            <button class="trigger-btn" onclick="toggleSpill('item-3', event)">disc drives</button>
+            <button class="trigger-btn" onclick="toggleSpill('item-3', event)">so why not?*</button>
             <div class="spill-content">
                 <div class="card-inner">
                     <button class="card-close-btn" onclick="closeSpill('item-3', event)">&times;</button>
-                    <h2 class="card-title">Disc Drives</h2>
+                    <h2 class="card-title">So Why Not?*</h2>
                     <div class="card-body">
                         <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>KBO</b></span>&nbsp;&nbsp;&nbsp;&nbsp;한화이글스 ^.^</p>
                         <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>FORMULA ONE</b></span>&nbsp;&nbsp;&nbsp;&nbsp;mclaren🧡 / 드라이버는 팀 무관 골고루 좋아합니다</p>
@@ -315,7 +320,7 @@
                         <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>SERIES</b></span>&nbsp;&nbsp;&nbsp;&nbsp;hbo euphoria / 2 broke girls etc …</p>
                         <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>KPOP</b></span>&nbsp;&nbsp;&nbsp;&nbsp;여돌 언급 多多多 h2h (& sm ent.) cortis izna etc …</p>
                         <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>2D</b></span>&nbsp;&nbsp;&nbsp;&nbsp;hunter x hunter (⛓️🕷️) / (•••ing) bleach / chainsaw man / bang dream!! (ave mujica) / girls band cry (トゲナシトゲアリ) etc …</p><br>
-                        <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;" src="https://embed.music.apple.com/kr/album/remnants-of-castle-rock/6781025039?i=6781025436"></iframe>
+                        <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;" src="[https://embed.music.apple.com/kr/album/as-serious-as-your-life/308893811?i=308893948&l=en-GB](https://embed.music.apple.com/kr/album/as-serious-as-your-life/308893811?i=308893948&l=en-GB)"></iframe>
                     </div>
                 </div>
             </div>
@@ -357,3 +362,4 @@
     </script>
 </body>
 </html>
+
