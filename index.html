@@ -17,7 +17,7 @@
             /* Single Point Color */
             --accent-color: #FF8000;
 
-            /* Lighter Background (Light Mode) */
+            /* Lighter Background */
             --bg-color: #fafafa;
             --text-color: #222222;
             --text-muted: #888888;
@@ -25,7 +25,6 @@
 
         @media (prefers-color-scheme: dark) {
             :root {
-                /* Dark Mode Theme */
                 --bg-color: #161617;
                 --text-color: #e4e4e5;
                 --text-muted: #8e8e93;
@@ -38,11 +37,17 @@
             padding: 0;
         }
 
+        html {
+            /* Fits device height on 1st load, enables scrolling only when content spills */
+            height: 100dvh;
+            overflow-y: auto;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: var(--font-body);
-            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -58,6 +63,7 @@
             flex-direction: column;
             gap: 1.2rem;
             align-items: center;
+            margin: auto; /* Keeps perfectly centered vertically on initial fit */
             
             /* Stack from bottom effect on load */
             animation: stackFromBottom 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -115,14 +121,14 @@
         }
 
         .section-item.active .spill-content {
-            max-height: 800px;
+            max-height: 1200px; /* Allows full height expansion */
             opacity: 1;
             margin-top: 0.75rem;
         }
 
         /* Seamless Inner Content Card */
         .card-inner {
-            background-color: var(--bg-color); /* Seamless with background */
+            background-color: var(--bg-color);
             border: none;
             border-radius: 0;
             padding: 1rem 0.5rem;
@@ -258,7 +264,7 @@
                 }
             });
 
-            // Toggle selected section (clicking link again closes it)
+            // Toggle selected section
             targetItem.classList.toggle('active');
         }
 
