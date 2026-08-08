@@ -38,7 +38,6 @@
         }
 
         html {
-            /* Fits device height on 1st load, enables scrolling only when content spills */
             height: 100dvh;
             overflow-y: auto;
         }
@@ -63,7 +62,7 @@
             flex-direction: column;
             gap: 1.2rem;
             align-items: center;
-            margin: auto; /* Keeps perfectly centered vertically on initial fit */
+            margin: auto;
             
             /* Stack from bottom effect on load */
             animation: stackFromBottom 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -77,6 +76,36 @@
             100% {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        /* Uncopiable, Non-breaking ASCII Art */
+        .ascii-art {
+            font-family: monospace;
+            font-size: 8px;
+            line-height: 1;
+            letter-spacing: 0;
+            white-space: pre;
+            color: var(--text-color);
+            opacity: 0.85;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            
+            /* Non-copiable & non-selectable */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: none;
+
+            /* Responsive scaling to prevent line breaks on smaller devices */
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        @media (max-width: 400px) {
+            .ascii-art {
+                font-size: 6px;
             }
         }
 
@@ -121,7 +150,7 @@
         }
 
         .section-item.active .spill-content {
-            max-height: 1200px; /* Allows full height expansion */
+            max-height: 1200px;
             opacity: 1;
             margin-top: 0.75rem;
         }
@@ -211,6 +240,35 @@
 <body>
 
     <div class="container">
+        <!-- ASCII Art Header (Uncopiable) -->
+        <pre class="ascii-art">
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠞⠓⠲⣤⠎⠁⠀⠀⠈⠙⠧⢄⣒⡲⠦⠤⠕⠀⠀⠀⠀⠀⠈⠽⠲⠤⢤⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠑⠲⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠳⢄⣀⢠⡤
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠖⢉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⠦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⣄⠙
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⠊⢀⠔⠁⠀⠀⡠⠒⠀⢠⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⡀⠈⠳⡄⠀⠀⠀⠀⠀⠀⠀⠀⠈⢣
+⠀⠀⠀⠀⠀⠀⠀⠀⢠⠎⡠⡰⠋⠀⠀⡠⠊⠀⠀⠀⡎⢀⠀⠀⠀⡀⠘⡆⠀⠀⠀⠀⠀⠀⠀⠀⠈⠢⡄⠈⢦⠀⠀⠀⠀⠀⠀⠀⠀⠈
+⠀⠀⠀⠀⠀⠀⠀⢠⢃⠞⡰⠁⠀⣴⡿⠁⠀⠀⠀⢸⠁⠸⠀⠀⠀⢆⠀⠘⣆⠀⠀⠀⣄⠀⠀⠀⠀⠀⠈⢦⠀⣷⡀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⣧⠋⡰⠁⢀⣾⣷⠃⠀⠀⠀⢠⣶⣿⠀⡆⠀⠀⠀⢸⠀⠀⡜⣧⡀⠀⠈⢣⡀⢂⠀⠀⠀⠀⠀⠀⠙⠲⣖⡊⠉⠀⠀⠠
+⠀⠀⠀⠀⠀⠀⢸⡏⢀⠇⠀⣼⣿⡏⠀⠀⢠⣿⡿⢻⠀⣿⡀⠀⠀⢸⡆⠀⢳⡈⢿⠀⠀⠀⠱⡄⠑⣄⠀⠀⠀⠀⠰⣦⣀⠙⢆⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢸⡇⢸⠀⢰⡏⢹⡇⠀⠀⣾⡿⠀⠸⡄⢸⣇⠀⠀⡏⣷⡀⠸⣷⣌⢣⡀⠀⠀⢹⣄⠈⢳⡀⠀⠀⠀⠸⣮⠓⣤⣻⡀⠀
+⠀⠀⠀⠀⠀⠀⠀⠧⠘⡄⣸⠀⢸⣷⠀⢰⡿⡧⡀⠀⢣⠈⣿⡀⠀⣷⢻⢣⠀⢹⣿⣦⡑⣄⠀⠀⢻⣆⠀⠹⣦⡀⠀⠀⢹⣏⠀⠙⣧⣾
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⡏⠀⠈⠻⡆⣸⣧⣷⠿⣆⠈⢆⢻⣷⡀⢹⣿⠀⠱⡄⢻⡷⡑⢮⣳⡀⠈⣿⣄⠀⢻⣏⠳⢄⡀⢻⣄⣴⣿⡃
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠙⢿⣿⡷⠀⣿⣧⣼⢦⣿⣳⣄⣿⣧⠀⢈⣓⣷⣼⠮⣿⡿⢦⣽⣿⣧⠘⣿⣀⠠⣿⣾⣿⠋⠙⣧
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠚⢻⡗⠀⠹⡿⢠⠀⠙⣮⠻⢿⡟⢿⣿⣩⣿⣿⠻⢾⠷⡀⢸⠻⣯⠳⣿⡟⢉⣻⣿⣧⠀⠀⢹
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⢶⠟⠁⠀⢸⡇⠈⠉⠁⠀⠀⠀⠈⠷⠀⠈⠈⠹⢿⣿⠏⠀⠈⢳⣼⢾⡆⢿⣴⣿⡗⢫⠈⢻⢿⣷⡀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣡⠏⠀⠀⠀⢸⡆⠀⢠⡖⠃⠀⠀⠀⠀⠀⠀⠀⠀⠙⠒⠀⠀⠠⠞⠁⠀⠁⠸⣧⡼⠇⠚⣠⠏⠈⠻⣷⡄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡿⢉⡤⠠⣤⡀⠀⠳⣄⠈⠻⠄⠀⠀⢀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣴⡟⠁⠀⠀⢀⠈⠓
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡇⣸⡇⣼⠋⣷⢠⠀⠙⢦⠀⠀⠻⣿⡟⠁⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠋⢹⣿⢧⠀⠀⠀⠀⠉⠂
+⠀⠀⠀⠀⠀⠀⠀⢀⣰⠏⠀⢿⣿⣷⡿⣃⣾⣤⣤⣼⣷⣄⠀⠹⠇⠀⠀⠀⠀⢸⡄⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠓⡌⡎⢢⡀⠀⠀⠀
+⠀⠀⠀⠀⠀⣠⠴⠋⠁⠀⠀⠀⠉⢩⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⣸⠁⠀⠀⠀⢀⣤⣂⣤⣶⡿⠋⣀⣴⣿⣘⣆⠻⣦⡀⠀
+⠀⠀⢀⠴⠊⠁⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠑⠒⠚⢁⣀⣠⠴⠾⣿⣿⠟⠋⠁⠀⢾⡿⠟⠋⠉⣯⠳⡘⢿⡦
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⡿⠟⢻⡏⣿⠀⠉⠻⣿⡿⠋⠉⠻⢄⠀⠛⠋⠀⠀⠀⠀⠀⢀⣠⠴⠛⠁⠀⠈⣷⢝
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⠟⠉⠀⠀⡜⣷⡏⢷⠀⢸⣿⣧⡀⠀⠀⠸⡇⠀⠀⠀⢀⡤⠒⠋⠁⠀⠀⣀⣠⣴⠾⢿⡄
+⢀⡂⠀⠀⠀⠀⠀⠀⠀⣀⣴⣾⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⢻⢻⢸⠀⣼⠁⠈⠳⣦⠀⠀⣿⢻⡇⣴⠟⠀⢀⣠⣴⠾⠛⠋⠁⠀⠀⠀⢷
+⠉⠀⠀⠀⠀⣀⣤⣶⣿⣿⣿⣿⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠸⡆⢟⣳⡟⠀⢤⡀⠘⣧⠀⣿⢸⡾⠃⠀⣴⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈
+⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣼⣟⠁⠀⠀⠳⣄⠘⣧⣙⠛⢁⣠⡾⠃⠀⠀⣀⣠⠴⠚⠁⠘⠦⡀⠀
+        </pre>
+
         <!-- Item 1 -->
         <div class="section-item" id="item-2">
             <button class="trigger-btn" onclick="toggleSpill('item-2', event)">radio shack programs</button>
@@ -255,7 +313,6 @@
         function toggleSpill(id, event) {
             event.stopPropagation();
             const targetItem = document.getElementById(id);
-            const isActive = targetItem.classList.contains('active');
 
             // Close all other open sections
             document.querySelectorAll('.section-item').forEach(item => {
