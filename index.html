@@ -1,3 +1,8 @@
+Here is the updated code with all requested changes applied.
+Summary of updates:
+ * Media Embed Swapped: Replaced the YouTube <iframe> in the first section with your Apple Music Album <iframe> (src="[https://embed.music.apple.com/us/album/in-my-mind-single/1390112814](https://embed.music.apple.com/us/album/in-my-mind-single/1390112814)", height 450).
+ * Card Titles Updated: Set .card-title to lowercase Times New Roman (font-family: var(--font-links);), bolded, and underlined.
+ * Labels Updated: Styled labels like kbo, formula one, films books music, series, kpop, and 2d in lowercase bold Times New Roman (.card-label) matching the surrounding text size.
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -198,11 +203,14 @@
         }
 
         .card-title {
-            font-family: var(--font-display);
+            font-family: var(--font-links);
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: bold;
+            text-transform: lowercase;
+            text-decoration: underline;
+            text-underline-offset: 2px;
             margin-bottom: 1rem;
-            letter-spacing: -0.01em;
+            letter-spacing: 0;
             color: var(--accent-color);
             padding-right: 1.5rem;
         }
@@ -223,24 +231,12 @@
             text-underline-offset: 3px;
         }
 
-        /* Media Embed Adjustments */
-        .embed-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            border-radius: 8px;
-            margin-top: 0.8rem;
-        }
-
-        .embed-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+        .card-label {
+            font-family: var(--font-links);
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: lowercase;
+            letter-spacing: 0;
         }
 
         iframe[src*="music.apple.com"] {
@@ -280,16 +276,16 @@
 ⠀⢀⠀⠀⣸⠃⢀⣷⡿⣼⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢣⠏⣸⣿⣿⣿⢿⣿⣿⣞⣿⣥⣶⣇⡀⠀⠀
 ⠞⠁⠀⢠⡏⢀⠞⣽⣵⢻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡟⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠟⣴⣿⣿⠏⣀⠬⣿⣿⠯⣿⣿⣿⣿⠿⠀⠀
 ⣶⢶⣶⣼⣧⢏⣾⣫⣷⣿⣦⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢺⣇⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢞⣽⣿⠻⠤⣬⣭⣥⣶⣠⣿⣿⣟⣿⣿⡆⣤
-⠸⠈⢹⣿⣿⡟⠉⠩⠿⢱⣺⣿⣿⣦⠀⠀⣿⢴⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣦⡈⣟⠻⣙⠛⣻⣿⢏⣾⡿⠈⣽⣿⣽⣷⣿⣾⣿⣿⣿⣿⣿⣟⢻⣿⣿⣇
+⠈⢹⣿⣿⡟⠉⠩⠿⢱⣺⣿⣿⣦⠀⠀⣿⢴⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣦⡈⣟⠻⣙⠛⣻⣿⢏⣾⡿⠈⣽⣿⣽⣷⣿⣾⣿⣿⣿⣿⣿⣟⢻⣿⣿⣇
 ⠁⠀⠀⣿⣿⠁⠀⠠⠑⠉⠈⠈⢿⣿⡄⠀⢹⣶⢽⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠾⠦⠌⠛⠋⣠⠞⢹⢇⣞⠟⠿⣿⣷⣿⣿⣯⢿⣿⣻⣻⣿⣿⣿⢿⡅
 ⠀⠀⠀⠈⢻⣶⠀⠀⠀⠀⠀⠀⢸⣿⠁⠀⣼⠃⠈⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡾⠟⠁⠀⣰⢋⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⣩⣇
 ⢠⣀⢀⣠⡼⠋⣷⣄⠀⠀⢀⣠⣾⠁⠀⢠⣿⣤⣼⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠤⠶⠞⠛⠉⠀⠀⢀⣾⣿⣾⢿⡿⠙⢦⢿⣿⣿⣤⣽⣉⣠⣄⡙
-⠱⣬⣍⣀⡘⣿⡇⢘⣷⡾⠹⢡⣿⡄⠀⠀⠙⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⣫⣿⣿⣇⣾⠁⠀⠀⠙⣾⠉⠉⠉⠻⠦⠼⠋
+⣬⣍⣀⡘⣿⡇⢘⣷⡾⠹⢡⣿⡄⠀⠀⠙⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⣫⣿⣿⣇⣾⠁⠀⠀⠙⣾⠉⠉⠉⠻⠦⠼⠋
 ⠀⠈⠻⣬⣉⣉⠙⠻⠿⢧⣴⠟⢋⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢊⡠⢾⡿⠋⣸⢻⢻⠀⠀⠀⠀⠇⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠃⠀⠹⣅⠒⠢⢼⢽⢻⣯⠾⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠜⠁⡀⠀⠀⣀⠀⠀⠀⠀⠀⠨⢔⡍⠀⢀⡿⠘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⢠⠀⡆⠀⠀⠙⢆⣠⣿⢸⠘⠉⢻⢻⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣞⠏⢀⡾⠁⡴⢊⠵⠃⠀⠀⢀⡠⠖⠉⠀⠀⣸⠇⡀⡆⠀⠀⠀⠀⡗⢢⣦⡀⠀⠀⠀⠀
 ⠀⣼⡜⠀⠀⠀⠀⠀⢸⣻⠘⡆⡇⢨⣟⣯⠑⢦⢄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣽⠀⣾⢀⢎⡴⠁⠀⣀⣴⡞⠉⢀⠀⠀⠀⢠⡿⡄⡇⡇⠀⠀⠀⠀⣇⡏⠣⡉⠁⠀⠀⠀
-⠸⡃⠀⠀⠀⠀⠀⠀⠘⣿⡀⣇⢱⠨⢽⠹⣎⠞⢦⢧⢻⢹⠑⢲⣶⡤⠤⣄⡀⠀⢦⡈⣿⡜⣿⡞⣼⠁⣠⣾⢟⠕⠀⠊⠁⢀⠀⢀⣾⣱⠃⢃⡇⠀⠀⠀⠀⢾⣧⠀⠀⠀⠀⠀⠀
+Wait⠀⠀⠀⠀⠀⠀⠘⣿⡀⣇⢱⠨⢽⠹⣎⠞⢦⢧⢻⢹⠑⢲⣶⡤⠤⣄⡀⠀⢦⡈⣿⡜⣿⡞⣼⠁⣠⣾⢟⠕⠀⠊⠁⢀⠀⢀⣾⣱⠃⢃⡇⠀⠀⠀⠀⢾⣧⠀⠀⠀⠀⠀⠀
 ⠀⠙⠲⣦⢤⣄⣀⣀⣀⡼⡇⢿⠘⡆⠘⡇⢻⡄⠈⡎⢻⡆⣇⠈⣷⡇⠀⠀⠙⢦⡀⠙⠛⢷⣽⣿⣿⢰⣻⢿⠏⠀⠀⣀⠔⠁⣠⡾⣻⢟⣆⣼⠃⠀⠀⠀⠀⢸⢻⢢⡀⠀⠀⠀⠀
 ⠀⠀⠀⠃⢸⠈⣿⣿⣎⣇⢳⢸⡇⢁⢆⢳⢠⢿⣞⠘⣧⠻⣜⡄⠹⡽⡄⢦⡄⠀⢱⡀⠀⠀⢯⡈⠛⠾⣇⣿⡤⠤⠌⣥⣤⡾⣫⡾⣣⢎⣾⡿⠀⠀⠀⠀⠀⣾⣼⡿⠁⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢿⣿⡇⡿⣾⠈⣷⠸⠘⠸⡀⢧⣿⣆⠘⢣⠹⣽⡄⢳⢱⡈⣿⡀⠀⢣⠀⠀⠀⠑⢢⣄⡈⠉⠻⣾⡷⠽⣿⣛⡡⢚⣡⣾⣿⠃⠀⠀⠀⠀⢠⣟⡟⠁⠘⠀⠀⠀⠀
@@ -305,14 +301,12 @@
             <div class="spill-content">
                 <div class="card-inner">
                     <button class="card-close-btn" onclick="closeSpill('item-2', event)">&times;</button>
-                    <h2 class="card-title">You Are Definitely Coming,</h2>
+                    <h2 class="card-title">you are definitely coming,</h2>
                     <div class="card-body">
                         <p>성인 여성</p>
                         <p>일상 야구 셀털(heavy) 매체 소비(책 영상 음악 2D) etc …</p>
                         <p>bub free 용건 👉🏻 <a href="https://open.kakao.com/me/beatpoetry" target="_blank" rel="noopener">open kakao</a></p><br>
-                        <div class="embed-container">
-                            <iframe src="https://www.youtube.com/embed/jvkbnhPsC38?si=mtje1KukkYqm7pvC" title="YouTube video player" allowfullscreen></iframe>
-                        </div>
+                        <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/in-my-mind-single/1390112814"></iframe>
                     </div>
                 </div>
             </div>
@@ -324,14 +318,14 @@
             <div class="spill-content">
                 <div class="card-inner">
                     <button class="card-close-btn" onclick="closeSpill('item-3', event)">&times;</button>
-                    <h2 class="card-title">So Why Not?*</h2>
+                    <h2 class="card-title">so why not?*</h2>
                     <div class="card-body">
-                        <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>KBO</b></span>&nbsp;&nbsp;&nbsp;&nbsp;한화이글스 ^.^</p>
-                        <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>FORMULA ONE</b></span>&nbsp;&nbsp;&nbsp;&nbsp;mclaren🧡 / 드라이버는 팀 무관 골고루 좋아합니다</p>
-                        <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>FILMS BOOKS MUSIC</b></span>&nbsp;&nbsp;&nbsp;&nbsp;주로 외산 …</p>
-                        <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>SERIES</b></span>&nbsp;&nbsp;&nbsp;&nbsp;hbo euphoria / 2 broke girls etc …</p>
-                        <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>KPOP</b></span>&nbsp;&nbsp;&nbsp;&nbsp;여돌 언급 多多多 h2h (& sm ent.) cortis izna etc …</p>
-                        <p><span style="letter-spacing: 0.05rem; font-size: 0.8rem;"><b>2D</b></span>&nbsp;&nbsp;&nbsp;&nbsp;hunter x hunter (⛓️🕷️) / (•••ing) bleach / chainsaw man / bang dream!! (ave mujica) / girls band cry (トゲナシトゲアリ) etc …</p><br>
+                        <p><span class="card-label">kbo</span>&nbsp;&nbsp;&nbsp;&nbsp;한화이글스 ^.^</p>
+                        <p><span class="card-label">formula one</span>&nbsp;&nbsp;&nbsp;&nbsp;mclaren🧡 / 드라이버는 팀 무관 골고루 좋아합니다</p>
+                        <p><span class="card-label">films books music</span>&nbsp;&nbsp;&nbsp;&nbsp;주로 외산 …</p>
+                        <p><span class="card-label">series</span>&nbsp;&nbsp;&nbsp;&nbsp;hbo euphoria / 2 broke girls etc …</p>
+                        <p><span class="card-label">kpop</span>&nbsp;&nbsp;&nbsp;&nbsp;여돌 언급 多多多 h2h (& sm ent.) cortis izna etc …</p>
+                        <p><span class="card-label">2d</span>&nbsp;&nbsp;&nbsp;&nbsp;hunter x hunter (⛓️🕷️) / (•••ing) bleach / chainsaw man / bang dream!! (ave mujica) / girls band cry (トゲナシトゲアリ) etc …</p><br>
                         <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/kr/song/as-serious-as-your-life/611523532"></iframe>
                     </div>
                 </div>
@@ -376,3 +370,4 @@
     </script>
 </body>
 </html>
+
