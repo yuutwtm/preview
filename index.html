@@ -17,7 +17,6 @@
             --card-bg: #ffffff;
             --border-color: #ccd2cc;
             --accent-color: #274735;
-            --sub-accent: #3a634c;
         }
 
         * {
@@ -47,11 +46,11 @@
             }
         }
 
-        /* Header Styles - Classic Retro without Heavy Outlines */
+        /* Header Styles */
         header {
             background-color: var(--header-footer-bg);
             color: #ffffff;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             height: 65px;
             display: flex;
             justify-content: space-between;
@@ -65,6 +64,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            flex-shrink: 0;
         }
 
         .logo-emblem {
@@ -97,29 +97,32 @@
             letter-spacing: -0.5px;
         }
 
-        /* Desktop Nav - Classic Soft Tab Look */
+        /* Desktop Nav - Clean Text Spread Across Viewport */
         .desktop-nav {
             display: flex;
-            gap: 0.4rem;
+            justify-content: space-evenly;
+            align-items: center;
+            flex: 1;
+            max-width: 650px;
+            margin-left: 2rem;
         }
 
         .nav-link {
             color: #e2ece6;
             text-decoration: none;
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            padding: 0.45rem 0.8rem;
-            background: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 0.75rem;
+            background: none;
             border: none;
-            border-radius: 3px;
             font-family: inherit;
-            transition: all 0.15s ease;
+            transition: color 0.15s ease;
         }
 
         .nav-link:hover {
             color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.2);
+            text-decoration: underline;
         }
 
         /* Mobile Menu Toggle Button */
@@ -153,8 +156,6 @@
         .mobile-nav .nav-link {
             padding: 0.9rem 1.5rem;
             text-align: left;
-            border-radius: 0;
-            background: transparent;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             width: 100%;
         }
@@ -164,8 +165,8 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 1.25rem;
-            gap: 1.25rem;
+            padding: 1rem 1.25rem;
+            gap: 1rem;
             max-width: 1100px;
             width: 100%;
             margin: 0 auto;
@@ -175,7 +176,7 @@
         .slideshow-container {
             position: relative;
             width: 100%;
-            height: 220px;
+            height: 190px;
             background-color: #1a1a1a;
             border-radius: 2px;
             overflow: hidden;
@@ -209,8 +210,8 @@
             right: 0;
             background: rgba(39, 71, 53, 0.9);
             color: #ffffff;
-            padding: 0.65rem 1rem;
-            font-size: 0.92rem;
+            padding: 0.55rem 1rem;
+            font-size: 0.9rem;
             font-weight: 700;
         }
 
@@ -238,7 +239,7 @@
             background-color: #5cdb95;
         }
 
-        /* Two Column Layout - Retro Bulletin Board Style */
+        /* Two Column Layout - Bullet Points Guarantee */
         .content-columns {
             display: flex;
             gap: 1.25rem;
@@ -250,11 +251,12 @@
             flex: 1;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 1rem;
+            padding: 0.85rem 1rem;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             border-radius: 2px;
+            min-height: 160px;
         }
 
         .column-header {
@@ -263,25 +265,25 @@
             align-items: center;
             background-color: #e9ece9;
             border-left: 4px solid var(--accent-color);
-            padding: 0.5rem 0.75rem;
-            margin-bottom: 0.75rem;
+            padding: 0.4rem 0.65rem;
+            margin-bottom: 0.5rem;
         }
 
         .column-title {
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: var(--accent-color);
             letter-spacing: -0.3px;
         }
 
         .more-btn {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: #444444;
             text-decoration: none;
             font-weight: 700;
             background: #ffffff;
             border: 1px solid #c0c6c0;
-            padding: 1px 6px;
+            padding: 1px 5px;
             border-radius: 2px;
         }
 
@@ -297,12 +299,12 @@
         }
 
         .list-item {
-            padding: 0.55rem 0.25rem;
+            padding: 0.4rem 0.2rem;
             border-bottom: 1px dashed var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
         }
 
         .list-item:hover {
@@ -320,10 +322,10 @@
 
         .list-item-title::before {
             content: "■ ";
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--accent-color);
             vertical-align: middle;
-            margin-right: 3px;
+            margin-right: 4px;
         }
 
         .list-item-title:hover {
@@ -338,16 +340,16 @@
             flex-shrink: 0;
         }
 
-        /* Footer Styles with Natural Mobile Flow & High Bottom Padding */
+        /* Footer Styles - Reduced Padding for Web */
         footer {
             background-color: var(--header-footer-bg);
             color: #a8c2b3;
-            padding: 2rem 1.5rem 4rem 1.5rem;
-            font-size: 0.82rem;
+            padding: 1rem 1.5rem;
+            font-size: 0.8rem;
             text-align: center;
             flex-shrink: 0;
             z-index: 10;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         footer strong {
@@ -355,8 +357,8 @@
         }
 
         footer .footer-links {
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.75rem;
+            margin-bottom: 0.4rem;
+            padding-bottom: 0.4rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
 
@@ -370,7 +372,7 @@
             text-decoration: underline;
         }
 
-        /* Popup Modal Styles */
+        /* Popup Modal Styles - At least 60% Width */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -393,8 +395,9 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-top: 4px solid var(--header-footer-bg);
-            width: 100%;
-            max-width: 520px;
+            width: 65vw; /* At least 60% horizontal width */
+            min-width: 320px;
+            max-width: 850px;
             max-height: 80vh;
             display: flex;
             flex-direction: column;
@@ -403,7 +406,7 @@
         }
 
         .modal-header {
-            padding: 0.85rem 1rem;
+            padding: 0.85rem 1.25rem;
             background-color: #f4f6f4;
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -412,7 +415,7 @@
         }
 
         .modal-title {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--accent-color);
         }
@@ -436,7 +439,7 @@
         .modal-body {
             padding: 1.25rem;
             overflow-y: auto;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             line-height: 1.6;
             color: #333333;
         }
@@ -456,15 +459,19 @@
             }
 
             .slideshow-container {
-                height: 160px;
+                height: 150px;
             }
 
             main {
-                padding: 0.85rem;
+                padding: 0.75rem;
             }
 
             footer {
-                padding-bottom: 5rem;
+                padding-bottom: 3.5rem; /* Comfort margin for mobile navigation bars */
+            }
+
+            .modal-content {
+                width: 90vw; /* Wider overlay adapt for mobile screens */
             }
         }
     </style>
@@ -481,7 +488,7 @@
             </div>
         </div>
 
-        <!-- Desktop Navigation -->
+        <!-- Desktop Navigation - Evenly Spread Across Viewport -->
         <nav class="desktop-nav">
             <button class="nav-link" onclick="openModal('군정소개', '풍요로운 자연과 함께하는 경기도 망소군청 공식 웹사이트입니다. 망소군 발전과 군민 행복을 위해 최선을 다하겠습니다.')">군정소개</button>
             <button class="nav-link" onclick="openModal('민원봉사실', '원스톱 민원서비스, 주민등록, 인허가 업무 등 군민 여러분을 위한 신속하고 정확한 행정 서비스를 제공합니다.')">민원봉사실</button>
@@ -546,14 +553,6 @@
                         <span class="list-item-title" onclick="openModal('망소읍 군도 5호선 도로 포장공사 통제', '도로 환경 개선을 위한 덧씌우기 공사로 인해 8월 12일 하루 동안 한시적으로 부분 통제가 실시됩니다.')">망소읍 군도 5호선 도로 포장공사 통제</span>
                         <span class="list-item-date">2026-08-05</span>
                     </li>
-                    <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('농기계 임대사업소 하반기 운영 안내', '망소군 농업기술센터 농기계 임대사업소 하반기 이용 신청 및 장비 정비 일정을 안내해 드립니다.')">농기계 임대사업소 하반기 운영 안내</span>
-                        <span class="list-item-date">2026-08-02</span>
-                    </li>
-                    <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('망소 군립도서관 여름 독서교실 참가자 모집', '관내 초등학생을 대상으로 진행되는 여름철 독서 교실 참가자를 선착순 모집합니다.')">망소 군립도서관 여름 독서교실 모집</span>
-                        <span class="list-item-date">2026-07-28</span>
-                    </li>
                 </ul>
             </section>
 
@@ -576,14 +575,6 @@
                         <span class="list-item-title" onclick="openModal('2026년 하반기 공공근로사업 참여자 모집', '취약계층 생계 지원 및 일자리 창출을 위한 2026년도 하반기 공공근로사업 참여자를 모집합니다.')">2026년 하반기 공공근로사업 참여자 모집</span>
                         <span class="list-item-date">2026-08-03</span>
                     </li>
-                    <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('[망소군 종합사회복지관] 요양보호사 모집', '망소군 종합사회복지관 노인돌봄서비스 담당 요양보호사를 신규 채용합니다.')">[망소군 복지관] 요양보호사 모집</span>
-                        <span class="list-item-date">2026-07-30</span>
-                    </li>
-                    <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('[망소읍] 마을버스 운전원 기간제 채용 공고', '망소읍 공영 마을버스 운행을 담당할 특수면허 소지 운전원을 모집합니다.')">[망소읍] 마을버스 운전원 채용 공고</span>
-                        <span class="list-item-date">2026-07-25</span>
-                    </li>
                 </ul>
             </section>
         </div>
@@ -596,8 +587,7 @@
             <a href="#" onclick="openModal('저작권보호정책', '망소군청 홈페이지에서 제공하는 모든 콘텐츠는 저작권법의 보호를 받습니다.'); return false;">저작권보호정책</a> | 
             <a href="#" onclick="openModal('행정전화번호부', '망소군청 각 부서별 직통 전화번호 및 팩스번호를 안내합니다.'); return false;">부서안내</a>
         </div>
-        <p><strong>경기도 망소군청</strong> (우 12345) 경기도 망소군 망소읍 망소로 100</p>
-        <p>대표전화: 031-999-0000 | 팩스: 031-999-0001 | 민원콜센터: 120</p>
+        <p><strong>경기도 망소군청</strong> (우 12345) 경기도 망소군 망소읍 망소로 100 | 대표전화: 031-999-0000</p>
         <p>Copyright &copy; 2026 <strong>MANGSO COUNTY</strong>. All Rights Reserved.</p>
     </footer>
 
