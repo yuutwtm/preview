@@ -11,13 +11,13 @@
     
     <style>
         :root {
-            --bg-color: #e5e7eb;
-            --header-footer-bg: #1e3a2b;
-            --text-color: #222222;
+            --bg-color: #f0f2f0;
+            --header-footer-bg: #274735;
+            --text-color: #2b2b2b;
             --card-bg: #ffffff;
-            --border-color: #b0b7c0;
-            --accent-color: #1e3a2b;
-            --banner-bg: #e2e8f0;
+            --border-color: #ccd2cc;
+            --accent-color: #274735;
+            --sub-accent: #3a634c;
         }
 
         * {
@@ -33,11 +33,21 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            height: 100vh;
-            overflow: hidden;
         }
 
-        /* Header Styles - Retro Classic Government Banner */
+        /* Desktop Fixed Height Layout */
+        @media (min-width: 769px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            main {
+                overflow-y: auto;
+            }
+        }
+
+        /* Header Styles - Classic Retro without Heavy Outlines */
         header {
             background-color: var(--header-footer-bg);
             color: #ffffff;
@@ -49,8 +59,6 @@
             position: relative;
             flex-shrink: 0;
             z-index: 10;
-            border-bottom: 3px solid #0f2318;
-            box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.1);
         }
 
         .logo-container {
@@ -63,16 +71,13 @@
             width: 32px;
             height: 32px;
             background-color: #ffffff;
-            border: 2px solid #8ba898;
             border-radius: 50%;
             display: flex;
-            align-items: justify;
             justify-content: center;
             align-items: center;
-            font-size: 0.7rem;
-            font-weight: 900;
+            font-size: 0.75rem;
+            font-weight: 800;
             color: var(--header-footer-bg);
-            box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
         }
 
         .logo-text {
@@ -81,52 +86,51 @@
         }
 
         .logo-sub {
-            font-size: 0.7rem;
-            color: #a3c2b0;
-            letter-spacing: 1px;
+            font-size: 0.68rem;
+            color: #b5cebf;
+            letter-spacing: 0.5px;
         }
 
         .logo-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
 
-        /* Desktop Nav - Tabbed Classic Look */
+        /* Desktop Nav - Classic Soft Tab Look */
         .desktop-nav {
             display: flex;
-            gap: 0.25rem;
+            gap: 0.4rem;
         }
 
         .nav-link {
-            color: #d1e0d7;
+            color: #e2ece6;
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 700;
             cursor: pointer;
-            padding: 0.5rem 0.85rem;
-            background: rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 2px;
+            padding: 0.45rem 0.8rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            border-radius: 3px;
             font-family: inherit;
-            transition: all 0.1s ease;
+            transition: all 0.15s ease;
         }
 
         .nav-link:hover {
             color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Mobile Three Dots Toggle */
+        /* Mobile Menu Toggle Button */
         .mobile-menu-btn {
             display: none;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
             color: #ffffff;
             font-size: 1.2rem;
             cursor: pointer;
-            padding: 0.2rem 0.6rem;
+            padding: 0.3rem 0.6rem;
             border-radius: 3px;
         }
 
@@ -138,8 +142,7 @@
             right: 0;
             width: 100%;
             background-color: var(--header-footer-bg);
-            border-top: 2px solid #0f2318;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             flex-direction: column;
         }
 
@@ -148,10 +151,10 @@
         }
 
         .mobile-nav .nav-link {
-            padding: 0.85rem 1.5rem;
+            padding: 0.9rem 1.5rem;
             text-align: left;
             border-radius: 0;
-            border: none;
+            background: transparent;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             width: 100%;
         }
@@ -166,17 +169,15 @@
             max-width: 1100px;
             width: 100%;
             margin: 0 auto;
-            overflow-y: auto;
         }
 
-        /* Official Banner / Slideshow Box */
+        /* Retro Banner / Slideshow Box */
         .slideshow-container {
             position: relative;
             width: 100%;
             height: 220px;
-            background-color: #000;
-            border: 2px solid #333333;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.15);
+            background-color: #1a1a1a;
+            border-radius: 2px;
             overflow: hidden;
             flex-shrink: 0;
         }
@@ -198,7 +199,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: contrast(105%) brightness(95%);
+            filter: contrast(102%) brightness(96%);
         }
 
         .slide-caption {
@@ -206,11 +207,10 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(15, 35, 24, 0.88);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(39, 71, 53, 0.9);
             color: #ffffff;
-            padding: 0.6rem 1rem;
-            font-size: 0.95rem;
+            padding: 0.65rem 1rem;
+            font-size: 0.92rem;
             font-weight: 700;
         }
 
@@ -219,26 +219,26 @@
             top: 10px;
             right: 12px;
             display: flex;
-            gap: 4px;
+            gap: 5px;
             z-index: 2;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.4);
             padding: 4px 6px;
-            border-radius: 2px;
+            border-radius: 3px;
         }
 
         .dot {
-            width: 10px;
-            height: 10px;
-            background-color: #888;
-            border: 1px solid #fff;
+            width: 9px;
+            height: 9px;
+            background-color: #aaa;
+            border-radius: 1px;
             cursor: pointer;
         }
 
         .dot.active {
-            background-color: #4ade80;
+            background-color: #5cdb95;
         }
 
-        /* Two Column Layout - Classic Board Style */
+        /* Two Column Layout - Retro Bulletin Board Style */
         .content-columns {
             display: flex;
             gap: 1.25rem;
@@ -250,44 +250,44 @@
             flex: 1;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.06);
             padding: 1rem;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            border-radius: 2px;
         }
 
         .column-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #f0f3f1;
-            border: 1px solid #c8d1ca;
-            border-left: 5px solid var(--accent-color);
+            background-color: #e9ece9;
+            border-left: 4px solid var(--accent-color);
             padding: 0.5rem 0.75rem;
             margin-bottom: 0.75rem;
         }
 
         .column-title {
-            font-size: 1rem;
+            font-size: 0.98rem;
             font-weight: 800;
             color: var(--accent-color);
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
         }
 
         .more-btn {
             font-size: 0.75rem;
-            color: #555555;
+            color: #444444;
             text-decoration: none;
             font-weight: 700;
-            background: #fff;
-            border: 1px solid #b0b7c0;
-            padding: 1px 5px;
+            background: #ffffff;
+            border: 1px solid #c0c6c0;
+            padding: 1px 6px;
+            border-radius: 2px;
         }
 
         .more-btn:hover {
             background-color: #f0f0f0;
-            color: #000;
+            color: #000000;
         }
 
         .list-container {
@@ -298,7 +298,7 @@
 
         .list-item {
             padding: 0.55rem 0.25rem;
-            border-bottom: 1px dotted #a0a6b0;
+            border-bottom: 1px dashed var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -306,7 +306,7 @@
         }
 
         .list-item:hover {
-            background-color: #f8faf9;
+            background-color: #f4f6f4;
         }
 
         .list-item-title {
@@ -314,38 +314,39 @@
             overflow: hidden;
             text-overflow: ellipsis;
             padding-right: 0.5rem;
-            color: #222;
+            color: #2b2b2b;
             cursor: pointer;
         }
 
         .list-item-title::before {
-            content: "• ";
+            content: "■ ";
+            font-size: 0.65rem;
             color: var(--accent-color);
-            font-weight: bold;
+            vertical-align: middle;
+            margin-right: 3px;
         }
 
         .list-item-title:hover {
             text-decoration: underline;
-            color: #000;
+            color: #000000;
         }
 
         .list-item-date {
-            font-size: 0.8rem;
-            color: #666;
+            font-size: 0.78rem;
+            color: #666666;
             font-family: monospace;
             flex-shrink: 0;
         }
 
-        /* Footer Styles with Enhanced Bottom Padding */
+        /* Footer Styles with Natural Mobile Flow & High Bottom Padding */
         footer {
             background-color: var(--header-footer-bg);
-            color: #9eb5a8;
-            padding: 2rem 1.5rem 3.5rem 1.5rem; /* Generous bottom padding added */
+            color: #a8c2b3;
+            padding: 2rem 1.5rem 4rem 1.5rem;
             font-size: 0.82rem;
             text-align: center;
             flex-shrink: 0;
             z-index: 10;
-            border-top: 3px solid #0f2318;
             line-height: 1.6;
         }
 
@@ -356,11 +357,11 @@
         footer .footer-links {
             margin-bottom: 0.75rem;
             padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         footer .footer-links a {
-            color: #d1e0d7;
+            color: #d8e6de;
             text-decoration: none;
             margin: 0 0.5rem;
         }
@@ -369,7 +370,7 @@
             text-decoration: underline;
         }
 
-        /* Modal / Popup Styles */
+        /* Popup Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -377,7 +378,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 100;
             justify-content: center;
             align-items: center;
@@ -390,19 +391,21 @@
 
         .modal-content {
             background-color: var(--card-bg);
-            border: 2px solid var(--header-footer-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--header-footer-bg);
             width: 100%;
             max-width: 520px;
             max-height: 80vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            border-radius: 2px;
         }
 
         .modal-header {
-            padding: 0.75rem 1rem;
-            background-color: var(--header-footer-bg);
-            color: #ffffff;
+            padding: 0.85rem 1rem;
+            background-color: #f4f6f4;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -410,22 +413,24 @@
 
         .modal-title {
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 800;
+            color: var(--accent-color);
         }
 
         .modal-close {
             background: #ffffff;
-            border: 1px solid #000;
-            font-size: 0.9rem;
+            border: 1px solid #b0b0b0;
+            font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
-            color: #000;
-            padding: 0 5px;
-            line-height: 1.2;
+            color: #333;
+            padding: 2px 7px;
+            border-radius: 2px;
+            line-height: 1;
         }
 
         .modal-close:hover {
-            background: #e2e8f0;
+            background: #e5e5e5;
         }
 
         .modal-body {
@@ -433,10 +438,10 @@
             overflow-y: auto;
             font-size: 0.9rem;
             line-height: 1.6;
-            color: #333;
+            color: #333333;
         }
 
-        /* Mobile Optimization */
+        /* Mobile Optimization Rules */
         @media (max-width: 768px) {
             .desktop-nav {
                 display: none;
@@ -448,24 +453,18 @@
 
             .content-columns {
                 flex-direction: column;
-                overflow-y: visible;
             }
 
             .slideshow-container {
-                height: 170px;
-            }
-
-            .column {
-                min-height: 230px;
+                height: 160px;
             }
 
             main {
-                overflow-y: auto;
-                padding: 0.75rem;
+                padding: 0.85rem;
             }
-            
+
             footer {
-                padding-bottom: 4rem; /* Additional safety padding on mobile devices */
+                padding-bottom: 5rem;
             }
         }
     </style>
@@ -490,7 +489,7 @@
             <button class="nav-link" onclick="openModal('청사안내', '경기도 망소군 망소읍 망소로 100 (망소군청)<br>대표전화: 031-999-0000<br>팩스: 031-999-0001<br>근무시간: 평일 09:00 ~ 18:00')">청사안내</button>
         </nav>
 
-        <!-- Mobile Three Dots Menu Button -->
+        <!-- Mobile Menu Toggle Button -->
         <button class="mobile-menu-btn" id="menuBtn" aria-label="메뉴 열기">&#8226;&#8226;&#8226;</button>
 
         <!-- Mobile Dropdown Navigation -->
@@ -582,7 +581,7 @@
                         <span class="list-item-date">2026-07-30</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('[망소읍] 마을버운전원 기간제 채용 공고', '망소읍 공영 마을버스 운행을 담당할 특수면허 소지 운전원을 모집합니다.')">[망소읍] 마을버스 운전원 채용 공고</span>
+                        <span class="list-item-title" onclick="openModal('[망소읍] 마을버스 운전원 기간제 채용 공고', '망소읍 공영 마을버스 운행을 담당할 특수면허 소지 운전원을 모집합니다.')">[망소읍] 마을버스 운전원 채용 공고</span>
                         <span class="list-item-date">2026-07-25</span>
                     </li>
                 </ul>
@@ -610,7 +609,7 @@
                 <button class="modal-close" onclick="closeModal()" aria-label="닫기">X</button>
             </div>
             <div class="modal-body" id="modalBody">
-                <!-- Content injected dynamically -->
+                <!-- Dynamic Content -->
             </div>
         </div>
     </div>
@@ -635,7 +634,7 @@
             modalBody.innerHTML = text;
             modalOverlay.classList.add('active');
             
-            // Close mobile nav if open when clicking a link
+            // Close mobile menu if open
             mobileNav.classList.remove('open');
         }
 
