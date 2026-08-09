@@ -3,36 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@pitfieldst</title>
+    <title>서울특별시 희망구청</title>
     
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/mrb3sjs.css">
+    <!-- External Fonts -->
+    <link rel="stylesheet" href="https://use.typekit.net/rnx1nvu.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-
+    
     <style>
         :root {
-            --font-display: "helvetica-neue-lt-pro", "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-body: "helvetica-neue-lt-pro", "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-            --font-links: "Times New Roman", Times, serif;
-
-            /* Single Point Color */
-            --accent-color: #FF8000;
-
-            /* Light Mode Background Gradient */
-            --bg-top: #f1f1f2;
-            --bg-bottom: #fafafa;
-            --text-color: #222222;
-            --text-muted: #888888;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Dark Mode Background Gradient */
-                --bg-top: #101011;
-                --bg-bottom: #161617;
-                --text-color: #e4e4e5;
-                --text-muted: #8e8e93;
-            }
+            --bg-color: #f4f5f7;
+            --header-footer-bg: #1b3b2b;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --accent-color: #2e5a44;
         }
 
         * {
@@ -41,329 +25,568 @@
             padding: 0;
         }
 
-        html {
-            height: 100dvh;
+        body {
+            font-family: "franklin-gothic-std", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #ffffff;
+            padding: 0 1.5rem;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Desktop Nav */
+        .desktop-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        /* Mobile Three Dots Toggle */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+        }
+
+        /* Mobile Dropdown Nav */
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 100%;
+            background-color: var(--header-footer-bg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            flex-direction: column;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav .nav-link {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+        }
+
+        /* Main Content Container */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 1.5rem;
+            gap: 1rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
             overflow-y: auto;
         }
 
-        body {
-            /* Linear Gradient Background */
-            background: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
-            background-attachment: fixed;
-            color: var(--text-color);
-            font-family: var(--font-body);
-            min-height: 100dvh;
+        /* Photo Slideshow */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: #ffffff;
+            padding: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .slideshow-dots {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #ffffff;
+        }
+
+        /* Two Column Layout */
+        .content-columns {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .column {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+        }
+
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .column-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .more-btn {
+            font-size: 0.8rem;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .list-container {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .list-item {
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 0.5rem;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .list-item-title:hover {
+            text-decoration: underline;
+        }
+
+        .list-item-date {
+            font-size: 0.8rem;
+            color: #888;
+            flex-shrink: 0;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: #a0a0a0;
+            padding: 1rem 1.5rem;
+            font-size: 0.8rem;
+            text-align: center;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        footer p {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Modal / Popup Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
             justify-content: center;
             align-items: center;
-            transition: color 0.3s;
-            padding: 2rem 1rem;
+            padding: 1rem;
         }
 
-        /* Center Layout Container with Load Animation */
-        .container {
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 8px;
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
+            max-height: 80vh;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
-            align-items: center;
-            margin: auto;
-            
-            /* Stack from bottom effect on load */
-            animation: stackFromBottom 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.2s ease;
         }
 
-        @keyframes stackFromBottom {
-            0% {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Uncopiable, Non-breaking ASCII Art */
-        .ascii-art {
-            font-family: monospace;
-            font-size: 8px;
-            line-height: 0.95;
-            letter-spacing: -1.5px;
-            white-space: pre;
-            color: var(--text-color);
-            opacity: 0.85;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            
-            /* Non-copiable & non-selectable */
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            pointer-events: none;
-
-            /* Responsive scaling */
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        @media (max-width: 420px) {
-            .ascii-art {
-                font-size: 6px;
-                letter-spacing: -1.5px;
-            }
-        }
-
-        .section-item {
-            width: 100%;
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
         }
 
-        /* Old Website Style: Times New Roman, Smaller, Reduced Line Height */
-        .trigger-btn {
-            font-family: var(--font-links);
-            font-size: 1rem;
-            line-height: 1.1;
-            letter-spacing: 0;
-            text-transform: lowercase;
-            color: var(--text-color);
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.1rem 0.4rem;
-            transition: opacity 0.2s ease, color 0.2s ease;
-            outline: none;
-        }
-
-        .trigger-btn:hover {
-            opacity: 0.7;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        .section-item.active .trigger-btn {
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
             color: var(--accent-color);
-            text-decoration: underline;
-            text-underline-offset: 2px;
         }
 
-        /* Inline Spilling Content Drawer */
-        .spill-content {
-            width: 100%;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin 0.3s ease;
-            margin-top: 0;
-        }
-
-        .section-item.active .spill-content {
-            max-height: 1200px;
-            opacity: 1;
-            margin-top: 0.75rem;
-        }
-
-        /* Seamless Inner Content Card */
-        .card-inner {
-            background-color: transparent;
-            border: none;
-            border-radius: 0;
-            padding: 1rem 0.5rem;
-            box-shadow: none;
-            text-align: left;
-            position: relative;
-        }
-
-        /* Top Right Close 'x' Toggle */
-        .card-close-btn {
-            position: absolute;
-            top: 0.8rem;
-            right: 0.5rem;
+        .modal-close {
             background: none;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: #666;
             line-height: 1;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 0.2rem;
-            transition: color 0.2s ease;
         }
 
-        .card-close-btn:hover {
-            color: var(--accent-color);
+        .modal-body {
+            padding: 1rem;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .card-title {
-            font-family: var(--font-links);
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: lowercase;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            margin-bottom: 1rem;
-            letter-spacing: 0;
-            color: var(--accent-color);
-            padding-right: 1.5rem;
-        }
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
 
-        .card-body {
-            font-size: 0.85rem;
-            line-height: 1.65;
-            color: var(--text-color);
-        }
+            .mobile-menu-btn {
+                display: block;
+            }
 
-        .card-body p {
-            margin-bottom: 0.5rem;
-        }
+            .content-columns {
+                flex-direction: column;
+                overflow-y: visible;
+            }
 
-        .card-body a {
-            color: var(--accent-color);
-            text-decoration: underline;
-            text-underline-offset: 3px;
-        }
+            .slideshow-container {
+                height: 160px;
+            }
 
-        .card-label {
-            font-family: var(--font-links);
-            font-size: 0.9rem;
-            font-style: italic;
-            font-weight: normal;
-            text-transform: lowercase;
-            letter-spacing: 0;
-        }
+            .column {
+                min-height: 220px;
+            }
 
-        iframe[src*="music.apple.com"] {
-            margin-top: 0.8rem;
-        }
-
-        /* Small Footer Credits */
-        footer {
-            margin-top: 3.5rem;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: -0.01em;
-            text-align: center;
-            opacity: 0.8;
-            white-space: nowrap;
+            main {
+                overflow-y: auto;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- ASCII Art Header (Uncopiable) -->
-        <pre class="ascii-art">
-⠀⠀⠀⠀⠀⠀⣸⠋⠀⠀⢀⡞⢱⡆⣸⠳⠀⠀⢠⡿⡙⠀⢀⠎⢠⣾⠋⢜⠎⢀⡾⢫⠋⠀⠀⡀⢠⠖⣰⠟⠀⢀⡼⠋⡇⠘⢿⠐⣆⠀⠀⠄⠀⠀⠶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⣀⣠⠃⠀⠀⠠⡾⢠⣿⠀⡇⠀⠀⣀⣿⢷⠷⠶⠯⣤⡿⠁⢀⠏⢠⡾⣱⠃⠀⢠⢞⡴⣡⡾⠃⠀⡠⠋⢠⣾⢿⠀⢏⣷⠘⡄⠀⢱⠀⠀⢸⢇⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠈⠀⠀⠀⠉⠳⣼⠁⣼⣿⢰⠃⠠⠞⣹⠇⠀⠀⡜⣰⣿⠃⢠⢏⢤⠏⡴⠁⠀⢠⣯⢎⣾⡿⠁⠀⠜⠀⣠⣿⠋⢸⣇⠸⣭⣇⢹⣶⠀⣇⠀⠘⣞⣆⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢸⣯⣇⢸⡀⠄⠀⣿⠀⠀⢶⢡⣿⡇⢀⡞⣞⡎⣰⠁⠀⢠⠇⣰⣿⣿⠁⠀⠀⠀⣼⣿⡇⠀⢸⣿⡀⢿⣸⣇⠹⣆⠘⣆⠀⢹⠸⡄⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠲⡔⢦⡀⠀⠀⠀⣸⣸⣿⢸⡇⣆⣄⣿⣤⣄⠀⢸⣿⠀⡞⠰⡽⢠⠃⡀⠀⠎⣼⣟⢿⠇⠀⣠⣀⡞⣽⣿⠀⠀⣼⠀⣧⠘⠟⣿⣧⠹⡄⠸⣆⠀⢧⢱⢂⠐⡄⠈⢆⠀⠀
-⠀⠀⠀⠀⠹⡄⠉⣆⠀⠀⣏⢹⣿⣾⣷⣿⢿⣿⣿⣿⣷⡜⠋⢸⠃⢀⣇⡏⢀⠁⣼⣼⡏⡎⡞⠀⢠⡏⡙⣿⣿⣧⡀⠀⡏⠀⢹⣆⠀⢹⡟⢧⠙⣄⠙⢆⠈⢆⢣⢃⠱⡀⠀⠀⠀
-⠀⠀⠀⠀⠀⢣⠀⡇⠰⣠⢻⡞⣿⣿⢿⡏⣼⣿⣿⣿⣿⣿⠀⠀⠀⠸⣼⠀⠀⢀⣿⡟⡸⢰⠇⠀⣾⢱⣹⡏⢸⡏⠙⢶⣇⠀⣼⢹⡄⢠⢻⢮⢳⡌⢆⠈⣆⠈⢏⢫⣆⠃⠀⠀⠀
-⠀⠀⠀⠀⠀⢸⠈⡇⢠⠭⠾⣇⣿⣿⣼⢠⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠃⠀⠀⢸⢿⢁⠇⢸⠀⢰⡇⣇⡟⠀⣿⠁⠀⢸⠙⢷⣇⣸⣿⡌⣆⢾⡆⢻⣦⡁⠘⢆⠰⡓⢯⠙⡆⠀⠀
-⠀⠀⠀⠀⠀⢠⢬⣧⣧⠀⠒⠻⣽⡇⠇⣸⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠘⠏⠰⠀⠀⠀⠈⢸⣸⠃⠀⣿⠀⠀⢸⠀⢀⡿⣧⡏⣷⡘⡞⢿⡀⢹⡻⣦⡈⢆⠱⡀⢿⠇⠀⠀
-⠀⠀⠀⠀⠀⢼⢻⣿⠾⣄⠄⠀⠈⢿⠀⣿⡻⣿⠻⢿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡿⠐⠤⢽⠀⠀⢼⠀⢸⢸⣿⢿⡇⣷⡐⣎⣷⣀⣑⣼⣷⠬⠦⢶⡟⠀⠐⠀
-⠀⠀⠀⠀⠀⡇⣾⡇⠀⠀⢀⣠⠾⠋⠀⠙⢿⣿⣷⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣼⣷⣶⣦⣾⣤⡀⡌⠀⣎⣿⡏⢸⡟⣏⣣⣿⠏⣁⠀⠀⠀⠀⣠⣾⡆⠀⠀⠀
-⠀⠀⣆⠀⠀⣿⣿⣇⠖⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠛⠛⠉⣽⣿⣿⣿⣿⣷⣤⣼⠟⠀⣼⡇⡏⣿⡇⠀⠀⣴⣶⡒⢉⣿⣿⣷⠀⠀⠀
-⠀⠀⢈⡿⢤⡿⢸⡏⢠⣟⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡄⢰⣿⢰⠃⣿⣷⣤⣤⣬⡉⢉⣿⡿⠃⠀⠀⠀⠀
-⠀⢀⠀⠀⣸⠃⢀⣷⡿⣼⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢣⠏⣸⣿⣿⣿⢿⣿⣿⣞⣿⣥⣶⣇⡀⠀⠀
-⠞⠁⠀⢠⡏⢀⠞⣽⣵⢻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡟⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠟⣴⣿⣿⠏⣀⠬⣿⣿⠯⣿⣿⣿⣿⠿⠀⠀
-⣶⢶⣶⣼⣧⢏⣾⣫⣷⣿⣦⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢺⣇⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢞⣽⣿⠻⠤⣬⣭⣥⣶⣠⣿⣿⣟⣿⣿⡆⣤
-⠈⢹⣿⣿⡟⠉⠩⠿⢱⣺⣿⣿⣦⠀⠀⣿⢴⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣦⡈⣟⠻⣙⠛⣻⣿⢏⣾⡿⠈⣽⣿⣽⣷⣿⣾⣿⣿⣿⣿⣿⣟⢻⣿⣿⣇
-⠁⠀⠀⣿⣿⠁⠀⠠⠑⠉⠈⠈⢿⣿⡄⠀⢹⣶⢽⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠾⠦⠌⠛⠋⣠⠞⢹⢇⣞⠟⠿⣿⣷⣿⣿⣯⢿⣿⣻⣻⣿⣿⣿⢿⡅
-⠀⠀⠀⠈⢻⣶⠀⠀⠀⠀⠀⠀⢸⣿⠁⠀⣼⠃⠈⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡾⠟⠁⠀⣰⢋⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⣩⣇
-⣀⢀⣠⡼⠋⣷⣄⠀⠀⢀⣠⣾⠁⠀⢠⣿⣤⣼⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠤⠶⠞⠛⠉⠀⠀⢀⣾⣿⣾⢿⡿⠙⢦⢿⣿⣿⣤⣽⣉⣠⣄⡙
-⣀⡘⣿⡇⢘⣷⡾⠹⢡⣿⡄⠀⠀⠙⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⣫⣿⣿⣇⣾⠁⠀⠀⠙⣾⠉⠉⠉⠻⠦⠼⠋
-⠀⠈⠻⣬⣉⣉⠙⠻⠿⢧⣴⠟⢋⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢊⡠⢾⡿⠋⣸⢻⢻⠀⠀⠀⠀⠇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠃⠀⠹⣅⠒⠢⢼⢽⢻⣯⠾⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠜⠁⡀⠀⠀⣀⠀⠀⠀⠀⠀⠨⢔⡍⠀⢀⡿⠘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⢠⠀⡆⠀⠀⠙⢆⣠⣿⢸⠘⠉⢻⢻⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣞⠏⢀⡾⠁⡴⢊⠵⠃⠀⠀⢀⡠⠖⠉⠀⠀⣸⠇⡀⡆⠀⠀⠀⠀⡗⢢⣦⡀⠀⠀⠀⠀
-⠀⣼⡜⠀⠀⠀⠀⠀⢸⣻⠘⡆⡇⢨⣟⣯⠑⢦⢄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣽⠀⣾⢀⢎⡴⠁⠀⣀⣴⡞⠉⢀⠀⠀⠀⢠⡿⡄⡇⡇⠀⠀⠀⠀⣇⡏⠣⡉⠁⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⡀⣇⢱⠨⢽⠹⣎⠞⢦⢧⢻⢹⠑⢲⣶⡤⠤⣄⡀⠀⢦⡈⣿⡜⣿⡞⣼⠁⣠⣾⢟⠕⠀⠊⠁⢀⠀⢀⣾⣱⠃⢃⡇⠀⠀⠀⠀⢾⣧⠀⠀⠀⠀⠀⠀
-⠀⠙⠲⣦⢤⣄⣀⣀⣀⡼⡇⢿⠘⡆⠘⡇⢻⡄⠈⡎⢻⡆⣇⠈⣷⡇⠀⠀⠙⢦⡀⠙⠛⢷⣽⣿⣿⢰⣻⢿⠏⠀⠀⣀⠔⠁⣠⡾⣻⢟⣆⣼⠃⠀⠀⠀⠀⢸⢻⢢⡀⠀⠀⠀⠀
-⠀⠀⠀⠃⢸⠈⣿⣿⣎⣇⢳⢸⡇⢁⢆⢳⢠⢿⣞⠘⣧⠻⣜⡄⠹⡽⡄⢦⡄⠀⢱⡀⠀⠀⢯⡈⠛⠾⣇⣿⡤⠤⠌⣥⣤⡾⣫⡾⣣⢎⣾⡿⠀⠀⠀⠀⠀⣾⣼⡿⠁⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢿⣿⡇⡿⣾⠈⣷⠸⠘⠸⡀⢧⣿⣆⠘⢣⠹⣽⡄⢳⢱⡈⣿⡀⠀⢣⠀⠀⠀⠑⢢⣄⡈⠉⠻⣾⡷⠽⣿⣛⡡⢚⣡⣾⣿⠃⠀⠀⠀⠀⢠⣟⡟⠁⠘⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢸⡿⢱⡇⡿⡇⢹⡄⡇⢣⢣⡜⣿⣟⣧⠀⢣⠹⣷⡌⢧⢳⠸⣧⠀⠈⡇⠀⠀⠀⠘⢱⠌⠛⠲⣤⠼⣿⣿⣒⣺⣿⡿⠟⠁⠀⠀⢀⠔⣿⣿⣤⣤⡴⣤⡀⠀⠀
-⠀⠀⠀⠀⠀⠀⢸⡇⠸⢹⡇⣧⠈⣧⢱⠈⡎⣷⠘⣟⣏⢷⡀⠳⡘⣏⢎⠆⢧⢻⣧⢠⠴⣄⠀⠀⠀⠈⣀⠀⣾⣥⣴⣬⣻⣶⡄⠀⠀⠀⠴⣋⣠⣴⣻⢍⠀⠸⡜⣿⣿⡹⡹⡀⠀
-⠀⠀⠀⠀⠀⠀⢸⣃⣰⡾⠿⠛⠒⠛⠋⠁⠒⠳⢇⠘⣿⣮⣻⣦⠀⠈⢯⢣⡈⣶⡿⠻⣄⠈⠁⠀⠀⠀⠀⠈⣿⡿⠋⠹⣿⡟⠈⡑⣶⣿⣿⣿⣯⣝⡽⣿⡿⣄⣹⣽⣿⢷⡱⠁⠀
-⠀⠀⠀⠀⠀⠤⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣞⣯⣿⣝⣷⣤⣀⣳⣿⠋⡠⢾⠯⠿⠦⣄⣀⢀⡀⠘⠿⠇⠀⠀⠀⢰⣿⡿⣿⠏⠀⠀⠀⢹⠿⠹⡷⠿⠾⢷⣽⡏⠇⠀⠀
-        </pre>
-
-        <!-- Item 1 -->
-        <div class="section-item" id="item-2">
-            <button class="trigger-btn" onclick="toggleSpill('item-2', event)">you are definitely coming,</button>
-            <div class="spill-content">
-                <div class="card-inner">
-                    <button class="card-close-btn" onclick="closeSpill('item-2', event)">&times;</button>
-                    <h2 class="card-title">you are definitely coming,</h2>
-                    <div class="card-body">
-                        <p>⁕  성인 여성</p>
-                        <p>⁕  일상 야구 셀털(heavy) 매체 소비(책 영상 음악 2D) etc …</p>
-                        <p>⁕  bub free 용건 👉🏻 <a href="https://open.kakao.com/me/beatpoetry" target="_blank" rel="noopener">open kakao</a></p><br>
-                        <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/kr/song/in-my-mind/1390113209"></iframe>
-                    </div>
-                </div>
-            </div>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span class="logo-icon"></span>
+            희망구청
         </div>
 
-        <!-- Item 2 -->
-        <div class="section-item" id="item-3">
-            <button class="trigger-btn" onclick="toggleSpill('item-3', event)">so why not?*</button>
-            <div class="spill-content">
-                <div class="card-inner">
-                    <button class="card-close-btn" onclick="closeSpill('item-3', event)">&times;</button>
-                    <h2 class="card-title">so why not?*</h2>
-                    <div class="card-body">
-                        <p><span class="card-label">kbo</span>&nbsp;&nbsp;&nbsp;&nbsp;한화이글스 ^.^</p>
-                        <p><span class="card-label">formula one</span>&nbsp;&nbsp;&nbsp;&nbsp;mclaren🧡 / 드라이버는 팀 무관 골고루 좋아합니다</p>
-                        <p><span class="card-label">films books music</span>&nbsp;&nbsp;&nbsp;&nbsp;주로 외산 …</p>
-                        <p><span class="card-label">series</span>&nbsp;&nbsp;&nbsp;&nbsp;hbo euphoria / 2 broke girls etc …</p>
-                        <p><span class="card-label">kpop</span>&nbsp;&nbsp;&nbsp;&nbsp;여돌 언급 多多多 h2h (& sm ent.) cortis izna etc …</p>
-                        <p><span class="card-label">2d</span>&nbsp;&nbsp;&nbsp;&nbsp;hunter x hunter (⛓️🕷️) / (•••ing) bleach / chainsaw man / bang dream!! (ave mujica) / girls band cry (トゲナシトゲアリ) etc …</p><br>
-                        <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/kr/song/as-serious-as-your-life/611523532"></iframe>
-                    </div>
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+            <button class="nav-link" onclick="openModal('구정소개', '희망구청은 시민 여러분의 더 나은 삶과 지역 사회의 발전을 위해 최선을 다하고 있습니다. 주민과 함께 만드는 깨끗하고 안전한 희망구입니다.')">구정소개</button>
+            <button class="nav-link" onclick="openModal('민원서비스', '온라인 민원신청, 제증명 발급, 주민등록 업무 등 다양한 민원 서비스를 빠르고 편리하게 이용하실 수 있습니다.')">민원서비스</button>
+            <button class="nav-link" onclick="openModal('참여마당', '구민 여러분의 소중한 의견을 듣습니다. 정책 제안, 시민 토론방, 열린 구청장실을 통해 자유롭게 참여해 보세요.')">참여마당</button>
+            <button class="nav-link" onclick="openModal('오시는 길', '서울특별시 희망구 희망대로 123 (희망동)<br>지하철 2호선 희망구청역 3번 출구 도보 5분<br>대표전화: 02-123-4567')">오시는 길</button>
+        </nav>
+
+        <!-- Mobile Three Dots Menu Button -->
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="메뉴 열기">&#8226;&#8226;&#8226;</button>
+
+        <!-- Mobile Dropdown Navigation -->
+        <nav class="mobile-nav" id="mobileNav">
+            <button class="nav-link" onclick="openModal('구정소개', '희망구청은 시민 여러분의 더 나은 삶과 지역 사회의 발전을 위해 최선을 다하고 있습니다. 주민과 함께 만드는 깨끗하고 안전한 희망구입니다.')">구정소개</button>
+            <button class="nav-link" onclick="openModal('민원서비스', '온라인 민원신청, 제증명 발급, 주민등록 업무 등 다양한 민원 서비스를 빠르고 편리하게 이용하실 수 있습니다.')">민원서비스</button>
+            <button class="nav-link" onclick="openModal('참여마당', '구민 여러분의 소중한 의견을 듣습니다. 정책 제안, 시민 토론방, 열린 구청장실을 통해 자유롭게 참여해 보세요.')">참여마당</button>
+            <button class="nav-link" onclick="openModal('오시는 길', '서울특별시 희망구 희망대로 123 (희망동)<br>지하철 2호선 희망구청역 3번 출구 도보 5분<br>대표전화: 02-123-4567')">오시는 길</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Photo Slideshow -->
+        <section class="slideshow-container">
+            <div class="slide active">
+                <img class="slide-img" src="https://picsum.photos/id/1015/800/400" alt="희망구 공원">
+                <div class="slide-caption">자연과 함께하는 희망구 생태공원 개장</div>
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="https://picsum.photos/id/1040/800/400" alt="청사 전경">
+                <div class="slide-caption">2026년도 주민참여예산 사업 신청 안내</div>
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="https://picsum.photos/id/1060/800/400" alt="문화 행사">
+                <div class="slide-caption">구민과 함께하는 주말 밤 문화 축제 개최</div>
+            </div>
+
+            <div class="slideshow-dots">
+                <span class="dot active" onclick="setSlide(0)"></span>
+                <span class="dot" onclick="setSlide(1)"></span>
+                <span class="dot" onclick="setSlide(2)"></span>
+            </div>
+        </section>
+
+        <!-- Two Columns Container -->
+        <div class="content-columns">
+            <!-- Notices Column (공지) -->
+            <section class="column">
+                <div class="column-header">
+                    <h2 class="column-title">공지사항</h2>
+                    <a href="#" class="more-btn" onclick="openModal('공지사항 전체보기', '현재 등록된 모든 공지사항 목록을 확인할 수 있는 페이지입니다.'); return false;">더보기 +</a>
                 </div>
+                <ul class="list-container">
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('2026년 정기분 재산세 납부 안내', '2026년도 정기분 재산세 납부 기간 및 방법에 대한 상세 안내입니다. 기한 내 납부하시어 가산금 불이익을 받지 않도록 유의하시기 바랍니다.')">2026년 정기분 재산세 납부 안내</span>
+                        <span class="list-item-date">08.09</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('희망구 보건소 무료 건강검진 실시', '구민 건강 증진을 위해 관내 만 40세 이상 구민을 대상으로 무료 건강검진 프로그램을 운영합니다.')">희망구 보건소 무료 건강검진 실시</span>
+                        <span class="list-item-date">08.07</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('하계 종합대책 기간 도로 정비공사 안내', '쾌적한 도로 환경 조성을 위해 도로 보수 공사를 진행합니다. 통행에 불편을 드려 죄송합니다.')">하계 종합대책 기간 도로 정비공사 안내</span>
+                        <span class="list-item-date">08.05</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('주민센터 야간 민원실 운영 일시 중단', '청사 전산 시스템 교체 작업으로 인하여 금주 목요일 야간 민원실 운영이 일시 중단됩니다.')">주민센터 야간 민원실 운영 일시 중단</span>
+                        <span class="list-item-date">08.02</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('어린이 도서관 여름방학 특별프로그램', '여름방학을 맞아 초등학생을 대상으로 다양한 독서 체험 프로그램을 개최합니다.')">어린이 도서관 여름방학 특별프로그램</span>
+                        <span class="list-item-date">07.28</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Job Postings Column (구인공고) -->
+            <section class="column">
+                <div class="column-header">
+                    <h2 class="column-title">구인공고</h2>
+                    <a href="#" class="more-btn" onclick="openModal('구인공고 전체보기', '현재 진행 중인 관내 채용 및 공공근로 모집 정보 목록입니다.'); return false;">더보기 +</a>
+                </div>
+                <ul class="list-container">
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('[희망구청] 기간제 근로자(환경정비) 채용', '희망구청 도시경관과에서 근무할 기간제 근로자(가로환경정비)를 다음과 같이 공개 모집합니다.')">[희망구청] 기간제 근로자(환경정비) 채용</span>
+                        <span class="list-item-date">08.08</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('[자원봉사센터] 전담인력 기간제 채용 공고', '희망구 자원봉사센터 운영 및 기획을 담당할 역량 있는 전담인력을 모집합니다.')">[자원봉사센터] 전담인력 기간제 채용 공고</span>
+                        <span class="list-item-date">08.06</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('2026년 하반기 대학생 행정체험연수 모집', '방학 기간 동안 구정 행정 현장을 체험할 대학생 연수생을 모집하오니 많은 신청 바랍니다.')">2026년 하반기 대학생 행정체험연수 모집</span>
+                        <span class="list-item-date">08.03</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('[구립도서관] 사서직 채용 공고', '구립 희망도서관에서 근무할 신규 사서직 지원자를 모집합니다.')">[구립도서관] 사서직 채용 공고</span>
+                        <span class="list-item-date">07.30</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('지역공동체 일자리사업 참여자 추가 모집', '취약계층의 생계안정 및 일자리 제공을 위한 지역공동체 일자리사업 참여자를 모집합니다.')">지역공동체 일자리사업 참여자 추가 모집</span>
+                        <span class="list-item-date">07.25</span>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>(01234) 서울특별시 희망구 희망대로 123 | 대표전화: 02-123-4567</p>
+        <p>&copy; 2026 HOPE-GU DISTRICT OFFICE. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- Popup Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOuterClick(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">안내</h3>
+                <button class="modal-close" onclick="closeModal()" aria-label="닫기">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content injected dynamically -->
             </div>
         </div>
-
-        <footer>@pitfieldst on X. last updated august 2026. *jack underwood.</footer>
     </div>
 
+    <!-- Scripts -->
     <script>
-        function toggleSpill(id, event) {
-            event.stopPropagation();
-            const targetItem = document.getElementById(id);
+        // Mobile Navigation Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileNav = document.getElementById('mobileNav');
 
-            // Close all other open sections
-            document.querySelectorAll('.section-item').forEach(item => {
-                if (item.id !== id) {
-                    item.classList.remove('active');
-                }
-            });
-
-            // Toggle selected section
-            targetItem.classList.toggle('active');
-        }
-
-        function closeSpill(id, event) {
-            event.stopPropagation();
-            const targetItem = document.getElementById(id);
-            if (targetItem) {
-                targetItem.classList.remove('active');
-            }
-        }
-
-        // Close automatically when clicking anywhere outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.section-item')) {
-                document.querySelectorAll('.section-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-            }
+        menuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
         });
+
+        // Modal Functionality
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        function openModal(title, text) {
+            modalTitle.textContent = title;
+            modalBody.innerHTML = text;
+            modalOverlay.classList.add('active');
+            
+            // Close mobile nav if open when clicking a link
+            mobileNav.classList.remove('open');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        function closeModalOnOuterClick(event) {
+            if (event.target === modalOverlay) {
+                closeModal();
+            }
+        }
+
+        // Slideshow Functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            currentSlide = (index + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function setSlide(index) {
+            showSlide(index);
+            resetSlideInterval();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        let slideInterval = setInterval(nextSlide, 4000);
+
+        function resetSlideInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 4000);
+        }
     </script>
 </body>
 </html>
