@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>서울특별시 희망구청</title>
+    <title>경기도 망소군청</title>
     
     <!-- External Fonts -->
     <link rel="stylesheet" href="https://use.typekit.net/rnx1nvu.css">
@@ -11,12 +11,13 @@
     
     <style>
         :root {
-            --bg-color: #f4f5f7;
-            --header-footer-bg: #1b3b2b;
-            --text-color: #333333;
+            --bg-color: #e5e7eb;
+            --header-footer-bg: #1e3a2b;
+            --text-color: #222222;
             --card-bg: #ffffff;
-            --border-color: #e0e0e0;
-            --accent-color: #2e5a44;
+            --border-color: #b0b7c0;
+            --accent-color: #1e3a2b;
+            --banner-bg: #e2e8f0;
         }
 
         * {
@@ -36,79 +37,109 @@
             overflow: hidden;
         }
 
-        /* Header Styles */
+        /* Header Styles - Retro Classic Government Banner */
         header {
             background-color: var(--header-footer-bg);
             color: #ffffff;
             padding: 0 1.5rem;
-            height: 60px;
+            height: 65px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: relative;
             flex-shrink: 0;
             z-index: 10;
+            border-bottom: 3px solid #0f2318;
+            box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.1);
         }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
-        .logo-icon {
-            width: 24px;
-            height: 24px;
+        .logo-emblem {
+            width: 32px;
+            height: 32px;
             background-color: #ffffff;
+            border: 2px solid #8ba898;
             border-radius: 50%;
-            display: inline-block;
+            display: flex;
+            align-items: justify;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: var(--header-footer-bg);
+            box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
         }
 
-        /* Desktop Nav */
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            color: #a3c2b0;
+            letter-spacing: 1px;
+        }
+
+        .logo-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        /* Desktop Nav - Tabbed Classic Look */
         .desktop-nav {
             display: flex;
-            gap: 1.5rem;
+            gap: 0.25rem;
         }
 
         .nav-link {
-            color: #e0e0e0;
+            color: #d1e0d7;
             text-decoration: none;
             font-size: 0.95rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: color 0.2s ease;
-            background: none;
-            border: none;
+            padding: 0.5rem 0.85rem;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
             font-family: inherit;
+            transition: all 0.1s ease;
         }
 
         .nav-link:hover {
             color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         /* Mobile Three Dots Toggle */
         .mobile-menu-btn {
             display: none;
-            background: none;
-            border: none;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            padding: 0.5rem;
-            line-height: 1;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
         }
 
         /* Mobile Dropdown Nav */
         .mobile-nav {
             display: none;
             position: absolute;
-            top: 60px;
+            top: 65px;
             right: 0;
             width: 100%;
             background-color: var(--header-footer-bg);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 2px solid #0f2318;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             flex-direction: column;
         }
 
@@ -117,9 +148,11 @@
         }
 
         .mobile-nav .nav-link {
-            padding: 1rem 1.5rem;
+            padding: 0.85rem 1.5rem;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             width: 100%;
         }
 
@@ -128,22 +161,23 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 1rem 1.5rem;
-            gap: 1rem;
-            max-width: 1200px;
+            padding: 1.25rem;
+            gap: 1.25rem;
+            max-width: 1100px;
             width: 100%;
             margin: 0 auto;
             overflow-y: auto;
         }
 
-        /* Photo Slideshow */
+        /* Official Banner / Slideshow Box */
         .slideshow-container {
             position: relative;
             width: 100%;
-            height: 200px;
-            border-radius: 8px;
+            height: 220px;
+            background-color: #000;
+            border: 2px solid #333333;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.15);
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             flex-shrink: 0;
         }
 
@@ -164,6 +198,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: contrast(105%) brightness(95%);
         }
 
         .slide-caption {
@@ -171,37 +206,42 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            background: rgba(15, 35, 24, 0.88);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
-            padding: 1rem;
+            padding: 0.6rem 1rem;
             font-size: 0.95rem;
+            font-weight: 700;
         }
 
         .slideshow-dots {
             position: absolute;
-            bottom: 10px;
-            right: 15px;
+            top: 10px;
+            right: 12px;
             display: flex;
-            gap: 6px;
+            gap: 4px;
             z-index: 2;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 6px;
+            border-radius: 2px;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: #888;
+            border: 1px solid #fff;
             cursor: pointer;
         }
 
         .dot.active {
-            background-color: #ffffff;
+            background-color: #4ade80;
         }
 
-        /* Two Column Layout */
+        /* Two Column Layout - Classic Board Style */
         .content-columns {
             display: flex;
-            gap: 1rem;
+            gap: 1.25rem;
             flex: 1;
             min-height: 0;
         }
@@ -209,10 +249,9 @@
         .column {
             flex: 1;
             background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.06);
+            padding: 1rem;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -222,21 +261,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 0.5rem;
+            background-color: #f0f3f1;
+            border: 1px solid #c8d1ca;
+            border-left: 5px solid var(--accent-color);
+            padding: 0.5rem 0.75rem;
             margin-bottom: 0.75rem;
         }
 
         .column-title {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1rem;
+            font-weight: 800;
             color: var(--accent-color);
+            letter-spacing: -0.5px;
         }
 
         .more-btn {
-            font-size: 0.8rem;
-            color: #666;
+            font-size: 0.75rem;
+            color: #555555;
             text-decoration: none;
+            font-weight: 700;
+            background: #fff;
+            border: 1px solid #b0b7c0;
+            padding: 1px 5px;
+        }
+
+        .more-btn:hover {
+            background-color: #f0f0f0;
+            color: #000;
         }
 
         .list-container {
@@ -246,16 +297,16 @@
         }
 
         .list-item {
-            padding: 0.6rem 0;
-            border-bottom: 1px dashed var(--border-color);
+            padding: 0.55rem 0.25rem;
+            border-bottom: 1px dotted #a0a6b0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
-        .list-item:last-child {
-            border-bottom: none;
+        .list-item:hover {
+            background-color: #f8faf9;
         }
 
         .list-item-title {
@@ -263,33 +314,59 @@
             overflow: hidden;
             text-overflow: ellipsis;
             padding-right: 0.5rem;
-            color: #444;
+            color: #222;
             cursor: pointer;
+        }
+
+        .list-item-title::before {
+            content: "• ";
+            color: var(--accent-color);
+            font-weight: bold;
         }
 
         .list-item-title:hover {
             text-decoration: underline;
+            color: #000;
         }
 
         .list-item-date {
             font-size: 0.8rem;
-            color: #888;
+            color: #666;
+            font-family: monospace;
             flex-shrink: 0;
         }
 
-        /* Footer Styles */
+        /* Footer Styles with Enhanced Bottom Padding */
         footer {
             background-color: var(--header-footer-bg);
-            color: #a0a0a0;
-            padding: 1rem 1.5rem;
-            font-size: 0.8rem;
+            color: #9eb5a8;
+            padding: 2rem 1.5rem 3.5rem 1.5rem; /* Generous bottom padding added */
+            font-size: 0.82rem;
             text-align: center;
             flex-shrink: 0;
             z-index: 10;
+            border-top: 3px solid #0f2318;
+            line-height: 1.6;
         }
 
-        footer p {
-            margin-bottom: 0.25rem;
+        footer strong {
+            color: #ffffff;
+        }
+
+        footer .footer-links {
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer .footer-links a {
+            color: #d1e0d7;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer .footer-links a:hover {
+            text-decoration: underline;
         }
 
         /* Modal / Popup Styles */
@@ -300,7 +377,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
             z-index: 100;
             justify-content: center;
             align-items: center;
@@ -313,49 +390,50 @@
 
         .modal-content {
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border: 2px solid var(--header-footer-bg);
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
             max-height: 80vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            animation: modalFadeIn 0.2s ease;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
         }
 
         .modal-header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            background-color: var(--header-footer-bg);
+            color: #ffffff;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .modal-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: var(--accent-color);
         }
 
         .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.25rem;
+            background: #ffffff;
+            border: 1px solid #000;
+            font-size: 0.9rem;
+            font-weight: bold;
             cursor: pointer;
-            color: #666;
-            line-height: 1;
+            color: #000;
+            padding: 0 5px;
+            line-height: 1.2;
+        }
+
+        .modal-close:hover {
+            background: #e2e8f0;
         }
 
         .modal-body {
-            padding: 1rem;
+            padding: 1.25rem;
             overflow-y: auto;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #333;
         }
 
         /* Mobile Optimization */
@@ -374,15 +452,20 @@
             }
 
             .slideshow-container {
-                height: 160px;
+                height: 170px;
             }
 
             .column {
-                min-height: 220px;
+                min-height: 230px;
             }
 
             main {
                 overflow-y: auto;
+                padding: 0.75rem;
+            }
+            
+            footer {
+                padding-bottom: 4rem; /* Additional safety padding on mobile devices */
             }
         }
     </style>
@@ -391,17 +474,20 @@
 
     <!-- Header -->
     <header>
-        <div class="logo">
-            <span class="logo-icon"></span>
-            희망구청
+        <div class="logo-container">
+            <div class="logo-emblem">망소</div>
+            <div class="logo-text">
+                <span class="logo-sub">경기도</span>
+                <span class="logo-title">망소군청</span>
+            </div>
         </div>
 
         <!-- Desktop Navigation -->
         <nav class="desktop-nav">
-            <button class="nav-link" onclick="openModal('구정소개', '희망구청은 시민 여러분의 더 나은 삶과 지역 사회의 발전을 위해 최선을 다하고 있습니다. 주민과 함께 만드는 깨끗하고 안전한 희망구입니다.')">구정소개</button>
-            <button class="nav-link" onclick="openModal('민원서비스', '온라인 민원신청, 제증명 발급, 주민등록 업무 등 다양한 민원 서비스를 빠르고 편리하게 이용하실 수 있습니다.')">민원서비스</button>
-            <button class="nav-link" onclick="openModal('참여마당', '구민 여러분의 소중한 의견을 듣습니다. 정책 제안, 시민 토론방, 열린 구청장실을 통해 자유롭게 참여해 보세요.')">참여마당</button>
-            <button class="nav-link" onclick="openModal('오시는 길', '서울특별시 희망구 희망대로 123 (희망동)<br>지하철 2호선 희망구청역 3번 출구 도보 5분<br>대표전화: 02-123-4567')">오시는 길</button>
+            <button class="nav-link" onclick="openModal('군정소개', '풍요로운 자연과 함께하는 경기도 망소군청 공식 웹사이트입니다. 망소군 발전과 군민 행복을 위해 최선을 다하겠습니다.')">군정소개</button>
+            <button class="nav-link" onclick="openModal('민원봉사실', '원스톱 민원서비스, 주민등록, 인허가 업무 등 군민 여러분을 위한 신속하고 정확한 행정 서비스를 제공합니다.')">민원봉사실</button>
+            <button class="nav-link" onclick="openModal('군민참여', '군정 발전을 위한 군민 제안, 열린 군수실, 자유게시판을 통해 군민의 소중한 의견을 적극 반영합니다.')">군민참여</button>
+            <button class="nav-link" onclick="openModal('청사안내', '경기도 망소군 망소읍 망소로 100 (망소군청)<br>대표전화: 031-999-0000<br>팩스: 031-999-0001<br>근무시간: 평일 09:00 ~ 18:00')">청사안내</button>
         </nav>
 
         <!-- Mobile Three Dots Menu Button -->
@@ -409,28 +495,28 @@
 
         <!-- Mobile Dropdown Navigation -->
         <nav class="mobile-nav" id="mobileNav">
-            <button class="nav-link" onclick="openModal('구정소개', '희망구청은 시민 여러분의 더 나은 삶과 지역 사회의 발전을 위해 최선을 다하고 있습니다. 주민과 함께 만드는 깨끗하고 안전한 희망구입니다.')">구정소개</button>
-            <button class="nav-link" onclick="openModal('민원서비스', '온라인 민원신청, 제증명 발급, 주민등록 업무 등 다양한 민원 서비스를 빠르고 편리하게 이용하실 수 있습니다.')">민원서비스</button>
-            <button class="nav-link" onclick="openModal('참여마당', '구민 여러분의 소중한 의견을 듣습니다. 정책 제안, 시민 토론방, 열린 구청장실을 통해 자유롭게 참여해 보세요.')">참여마당</button>
-            <button class="nav-link" onclick="openModal('오시는 길', '서울특별시 희망구 희망대로 123 (희망동)<br>지하철 2호선 희망구청역 3번 출구 도보 5분<br>대표전화: 02-123-4567')">오시는 길</button>
+            <button class="nav-link" onclick="openModal('군정소개', '풍요로운 자연과 함께하는 경기도 망소군청 공식 웹사이트입니다. 망소군 발전과 군민 행복을 위해 최선을 다하겠습니다.')">군정소개</button>
+            <button class="nav-link" onclick="openModal('민원봉사실', '원스톱 민원서비스, 주민등록, 인허가 업무 등 군민 여러분을 위한 신속하고 정확한 행정 서비스를 제공합니다.')">민원봉사실</button>
+            <button class="nav-link" onclick="openModal('군민참여', '군정 발전을 위한 군민 제안, 열린 군수실, 자유게시판을 통해 군민의 소중한 의견을 적극 반영합니다.')">군민참여</button>
+            <button class="nav-link" onclick="openModal('청사안내', '경기도 망소군 망소읍 망소로 100 (망소군청)<br>대표전화: 031-999-0000<br>팩스: 031-999-0001<br>근무시간: 평일 09:00 ~ 18:00')">청사안내</button>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main>
-        <!-- Photo Slideshow -->
+        <!-- Photo Slideshow Banner -->
         <section class="slideshow-container">
             <div class="slide active">
-                <img class="slide-img" src="https://picsum.photos/id/1015/800/400" alt="희망구 공원">
-                <div class="slide-caption">자연과 함께하는 희망구 생태공원 개장</div>
+                <img class="slide-img" src="https://picsum.photos/id/1015/800/400" alt="망소군 전경">
+                <div class="slide-caption">[군정소식] 제15회 망소군 청정 자연 특산물 축제 개최 안내</div>
             </div>
             <div class="slide">
-                <img class="slide-img" src="https://picsum.photos/id/1040/800/400" alt="청사 전경">
-                <div class="slide-caption">2026년도 주민참여예산 사업 신청 안내</div>
+                <img class="slide-img" src="https://picsum.photos/id/1040/800/400" alt="망소군청 청사">
+                <div class="slide-caption">[행정공고] 2026년도 망소군 군민참여예산 제안사업 접수</div>
             </div>
             <div class="slide">
-                <img class="slide-img" src="https://picsum.photos/id/1060/800/400" alt="문화 행사">
-                <div class="slide-caption">구민과 함께하는 주말 밤 문화 축제 개최</div>
+                <img class="slide-img" src="https://picsum.photos/id/1060/800/400" alt="망소 문화행사">
+                <div class="slide-caption">[문화/관광] 망소산 국립공원 가을맞이 산책로 개방</div>
             </div>
 
             <div class="slideshow-dots">
@@ -442,32 +528,32 @@
 
         <!-- Two Columns Container -->
         <div class="content-columns">
-            <!-- Notices Column (공지) -->
+            <!-- Notice Column (공지) -->
             <section class="column">
                 <div class="column-header">
-                    <h2 class="column-title">공지사항</h2>
-                    <a href="#" class="more-btn" onclick="openModal('공지사항 전체보기', '현재 등록된 모든 공지사항 목록을 확인할 수 있는 페이지입니다.'); return false;">더보기 +</a>
+                    <h2 class="column-title">공지사항 (Notice)</h2>
+                    <a href="#" class="more-btn" onclick="openModal('공지사항 전체보기', '망소군청에서 알리는 전체 공지사항 목록입니다.'); return false;">더보기</a>
                 </div>
                 <ul class="list-container">
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('2026년 정기분 재산세 납부 안내', '2026년도 정기분 재산세 납부 기간 및 방법에 대한 상세 안내입니다. 기한 내 납부하시어 가산금 불이익을 받지 않도록 유의하시기 바랍니다.')">2026년 정기분 재산세 납부 안내</span>
-                        <span class="list-item-date">08.09</span>
+                        <span class="list-item-title" onclick="openModal('2026년 정기분 주민세 납부 안내', '2026년도 정기분 주민세 납부 기간은 8월 16일부터 8월 31일까지입니다. 관내 금융기관 및 위택스를 통해 납부해 주시기 바랍니다.')">2026년 정기분 주민세 납부 안내</span>
+                        <span class="list-item-date">2026-08-09</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('희망구 보건소 무료 건강검진 실시', '구민 건강 증진을 위해 관내 만 40세 이상 구민을 대상으로 무료 건강검진 프로그램을 운영합니다.')">희망구 보건소 무료 건강검진 실시</span>
-                        <span class="list-item-date">08.07</span>
+                        <span class="list-item-title" onclick="openModal('망소군 보건소 무료 독감 예방접종 일정', '망소군 보건소 및 면 단위 보건지소에서 만 65세 이상 어르신 및 취약계층을 대상으로 무료 예방접종을 실시합니다.')">망소군 보건소 무료 독감 예방접종 일정</span>
+                        <span class="list-item-date">2026-08-07</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('하계 종합대책 기간 도로 정비공사 안내', '쾌적한 도로 환경 조성을 위해 도로 보수 공사를 진행합니다. 통행에 불편을 드려 죄송합니다.')">하계 종합대책 기간 도로 정비공사 안내</span>
-                        <span class="list-item-date">08.05</span>
+                        <span class="list-item-title" onclick="openModal('망소읍 군도 5호선 도로 포장공사 통제', '도로 환경 개선을 위한 덧씌우기 공사로 인해 8월 12일 하루 동안 한시적으로 부분 통제가 실시됩니다.')">망소읍 군도 5호선 도로 포장공사 통제</span>
+                        <span class="list-item-date">2026-08-05</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('주민센터 야간 민원실 운영 일시 중단', '청사 전산 시스템 교체 작업으로 인하여 금주 목요일 야간 민원실 운영이 일시 중단됩니다.')">주민센터 야간 민원실 운영 일시 중단</span>
-                        <span class="list-item-date">08.02</span>
+                        <span class="list-item-title" onclick="openModal('농기계 임대사업소 하반기 운영 안내', '망소군 농업기술센터 농기계 임대사업소 하반기 이용 신청 및 장비 정비 일정을 안내해 드립니다.')">농기계 임대사업소 하반기 운영 안내</span>
+                        <span class="list-item-date">2026-08-02</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('어린이 도서관 여름방학 특별프로그램', '여름방학을 맞아 초등학생을 대상으로 다양한 독서 체험 프로그램을 개최합니다.')">어린이 도서관 여름방학 특별프로그램</span>
-                        <span class="list-item-date">07.28</span>
+                        <span class="list-item-title" onclick="openModal('망소 군립도서관 여름 독서교실 참가자 모집', '관내 초등학생을 대상으로 진행되는 여름철 독서 교실 참가자를 선착순 모집합니다.')">망소 군립도서관 여름 독서교실 모집</span>
+                        <span class="list-item-date">2026-07-28</span>
                     </li>
                 </ul>
             </section>
@@ -475,29 +561,29 @@
             <!-- Job Postings Column (구인공고) -->
             <section class="column">
                 <div class="column-header">
-                    <h2 class="column-title">구인공고</h2>
-                    <a href="#" class="more-btn" onclick="openModal('구인공고 전체보기', '현재 진행 중인 관내 채용 및 공공근로 모집 정보 목록입니다.'); return false;">더보기 +</a>
+                    <h2 class="column-title">구인공고 (Recruit)</h2>
+                    <a href="#" class="more-btn" onclick="openModal('구인공고 전체보기', '망소군 지역 채용 정보 및 공공근로 모집 전체 목록입니다.'); return false;">더보기</a>
                 </div>
                 <ul class="list-container">
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('[희망구청] 기간제 근로자(환경정비) 채용', '희망구청 도시경관과에서 근무할 기간제 근로자(가로환경정비)를 다음과 같이 공개 모집합니다.')">[희망구청] 기간제 근로자(환경정비) 채용</span>
-                        <span class="list-item-date">08.08</span>
+                        <span class="list-item-title" onclick="openModal('[망소군청] 산불감시원 및 전문진화대 모집', '2026년 하반기 산불방지 대책기간 동안 근무할 산불감시원 및 전문예방진화대를 다음과 같이 모집합니다.')">[망소군청] 산불감시원/진화대 모집</span>
+                        <span class="list-item-date">2026-08-08</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('[자원봉사센터] 전담인력 기간제 채용 공고', '희망구 자원봉사센터 운영 및 기획을 담당할 역량 있는 전담인력을 모집합니다.')">[자원봉사센터] 전담인력 기간제 채용 공고</span>
-                        <span class="list-item-date">08.06</span>
+                        <span class="list-item-title" onclick="openModal('[망소군 농업기술센터] 기간제 근로자 채용', '농업기술센터 시험포장 관리 및 행정보조 업무를 담당할 기간제 근로자를 모집합니다.')">[망소군] 농업기술센터 기간제 채용</span>
+                        <span class="list-item-date">2026-08-06</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('2026년 하반기 대학생 행정체험연수 모집', '방학 기간 동안 구정 행정 현장을 체험할 대학생 연수생을 모집하오니 많은 신청 바랍니다.')">2026년 하반기 대학생 행정체험연수 모집</span>
-                        <span class="list-item-date">08.03</span>
+                        <span class="list-item-title" onclick="openModal('2026년 하반기 공공근로사업 참여자 모집', '취약계층 생계 지원 및 일자리 창출을 위한 2026년도 하반기 공공근로사업 참여자를 모집합니다.')">2026년 하반기 공공근로사업 참여자 모집</span>
+                        <span class="list-item-date">2026-08-03</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('[구립도서관] 사서직 채용 공고', '구립 희망도서관에서 근무할 신규 사서직 지원자를 모집합니다.')">[구립도서관] 사서직 채용 공고</span>
-                        <span class="list-item-date">07.30</span>
+                        <span class="list-item-title" onclick="openModal('[망소군 종합사회복지관] 요양보호사 모집', '망소군 종합사회복지관 노인돌봄서비스 담당 요양보호사를 신규 채용합니다.')">[망소군 복지관] 요양보호사 모집</span>
+                        <span class="list-item-date">2026-07-30</span>
                     </li>
                     <li class="list-item">
-                        <span class="list-item-title" onclick="openModal('지역공동체 일자리사업 참여자 추가 모집', '취약계층의 생계안정 및 일자리 제공을 위한 지역공동체 일자리사업 참여자를 모집합니다.')">지역공동체 일자리사업 참여자 추가 모집</span>
-                        <span class="list-item-date">07.25</span>
+                        <span class="list-item-title" onclick="openModal('[망소읍] 마을버운전원 기간제 채용 공고', '망소읍 공영 마을버스 운행을 담당할 특수면허 소지 운전원을 모집합니다.')">[망소읍] 마을버스 운전원 채용 공고</span>
+                        <span class="list-item-date">2026-07-25</span>
                     </li>
                 </ul>
             </section>
@@ -506,8 +592,14 @@
 
     <!-- Footer -->
     <footer>
-        <p>(01234) 서울특별시 희망구 희망대로 123 | 대표전화: 02-123-4567</p>
-        <p>&copy; 2026 HOPE-GU DISTRICT OFFICE. ALL RIGHTS RESERVED.</p>
+        <div class="footer-links">
+            <a href="#" onclick="openModal('개인정보처리방침', '망소군청은 군민의 개인정보 보호를 최우선으로 취급합니다.'); return false;">개인정보처리방침</a> | 
+            <a href="#" onclick="openModal('저작권보호정책', '망소군청 홈페이지에서 제공하는 모든 콘텐츠는 저작권법의 보호를 받습니다.'); return false;">저작권보호정책</a> | 
+            <a href="#" onclick="openModal('행정전화번호부', '망소군청 각 부서별 직통 전화번호 및 팩스번호를 안내합니다.'); return false;">부서안내</a>
+        </div>
+        <p><strong>경기도 망소군청</strong> (우 12345) 경기도 망소군 망소읍 망소로 100</p>
+        <p>대표전화: 031-999-0000 | 팩스: 031-999-0001 | 민원콜센터: 120</p>
+        <p>Copyright &copy; 2026 <strong>MANGSO COUNTY</strong>. All Rights Reserved.</p>
     </footer>
 
     <!-- Popup Modal -->
@@ -515,7 +607,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="modalTitle">안내</h3>
-                <button class="modal-close" onclick="closeModal()" aria-label="닫기">&times;</button>
+                <button class="modal-close" onclick="closeModal()" aria-label="닫기">X</button>
             </div>
             <div class="modal-body" id="modalBody">
                 <!-- Content injected dynamically -->
@@ -581,11 +673,11 @@
             showSlide(currentSlide + 1);
         }
 
-        let slideInterval = setInterval(nextSlide, 4000);
+        let slideInterval = setInterval(nextSlide, 4500);
 
         function resetSlideInterval() {
             clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, 4000);
+            slideInterval = setInterval(nextSlide, 4500);
         }
     </script>
 </body>
