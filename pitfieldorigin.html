@@ -1,54 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <link rel="stylesheet" href="https://use.typekit.net/oji4zoy.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@pitfieldst</title>
-    <!-- Favicon: orange circle. PNGs for Safari/older browsers, SVG for crisp modern rendering -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <meta name="theme-color" content="#FF8000">
+    <title>경기도 망소군청</title>
+    
+    <!-- External Fonts -->
+    <link rel="stylesheet" href="https://use.typekit.net/rnx1nvu.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+    
     <style>
-        /* --- Designed by @pitfieldst on X --- */
         :root {
-            --bg-color: #f8f8fa;       /* Soft, cool off-white */
-            --text-color: #1a1a1a;     /* Deep off-black */
-            --accent-vivid-1: #FF8000; /* McLaren Papaya orange */
-            --accent-vivid-2: #47c7fc; /* McLaren blue */
-            --accent-vivid-3: #C82504; /* McLaren classic orange */
-            --blur-amount: 1.4px;      /* Reduced blur slightly more */
-            --border-subtle: rgba(26, 26, 26, 0.1);
-            --overlay-color: rgba(26, 26, 26, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.06);
-            --embed-bg: #e5e5e0;
-            --toggle-track: rgba(26, 26, 26, 0.18);
-        }
-
-        /* Dark theme — charcoal, not pitch black; white body text; accents unchanged */
-        :root[data-theme="dark"] {
-            --bg-color: #1c1c1a;
-            --text-color: #ffffff;
-            --border-subtle: rgba(255, 255, 255, 0.15);
-            --overlay-color: rgba(0, 0, 0, 0.5);
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --embed-bg: #2a2a28;
-            --toggle-track: rgba(255, 255, 255, 0.22);
-        }
-
-        /* Default follows the user's system setting when no explicit choice is made */
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme]) {
-                --bg-color: #1c1c1a;
-                --text-color: #ffffff;
-                --border-subtle: rgba(255, 255, 255, 0.15);
-                --overlay-color: rgba(0, 0, 0, 0.5);
-                --shadow-color: rgba(0, 0, 0, 0.4);
-                --embed-bg: #2a2a28;
-                --toggle-track: rgba(255, 255, 255, 0.22);
-            }
+            --bg-color: #f0f2f0;
+            --header-footer-bg: #274735;
+            --text-color: #2b2b2b;
+            --card-bg: #ffffff;
+            --border-color: #ccd2cc;
+            --accent-color: #274735;
+            --sub-accent: #3a634c;
         }
 
         * {
@@ -58,655 +27,657 @@
         }
 
         body {
-            font-family: neue-haas-grotesk-display,neue-haas-grotesk-text, Helvetica, Arial, sans-serif;
+            font-family: "franklin-gothic-std", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
-
-        /* Papaya text selection */
-        ::selection { background: var(--accent-vivid-1); color: #ffffff; }
-        ::-moz-selection { background: var(--accent-vivid-1); color: #ffffff; }
-
-        /* --- Film grain overlay --- */
-        #grain {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            pointer-events: none;
-            opacity: 0.05;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
-        /* --- Registration / crop marks --- */
-        .reg-marks {
-            position: fixed;
-            inset: 14px;
-            z-index: 4000;
-            pointer-events: none;
-        }
-        .reg-marks span {
-            position: absolute;
-            width: 13px;
-            height: 13px;
-            opacity: 0.32;
-        }
-        .reg-marks .tl { top: 0;    left: 0;    border-top: 1.5px solid var(--text-color); border-left: 1.5px solid var(--text-color); }
-        .reg-marks .tr { top: 0;    right: 0;   border-top: 1.5px solid var(--text-color); border-right: 1.5px solid var(--text-color); }
-        .reg-marks .bl { bottom: 0; left: 0;    border-bottom: 1.5px solid var(--text-color); border-left: 1.5px solid var(--text-color); }
-        .reg-marks .br { bottom: 0; right: 0;   border-bottom: 1.5px solid var(--text-color); border-right: 1.5px solid var(--text-color); }
-
-        /* --- NYC / London dispatch clocks --- */
-        .dispatch {
-            position: fixed;
-            left: 18px;
-            bottom: 32px;
-            z-index: 3000;
-            pointer-events: none;
             display: flex;
             flex-direction: column;
-            gap: 2px;
-            font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.06em;
-            line-height: 1.35;
-            opacity: 0.5;
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* --- Landing Screen --- */
-        #landing-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.6s ease, transform 0.6s ease;
-            padding: 20px;
-            opacity: 1; 
-        }
-
-        .landing-container {
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .landing-prompt {
-            font-size: 1.2rem;
-            text-transform: lowercase;
-            margin-bottom: 24px;
-            font-weight: bold;
-            opacity: 0.8;
-        }
-
-        /* Terminal-style entry line */
-        .entry-line {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            width: 100%;
-            border-bottom: 2px solid var(--text-color);
-            transition: border-color 0.3s ease;
-        }
-
-        .entry-line:focus-within {
-            border-color: var(--accent-vivid-1);
-        }
-
-        .prompt-sign {
-            font-size: 1.5rem;
-            font-weight: 700;
-            line-height: 1;
-            color: var(--accent-vivid-1);
-            user-select: none;
-            animation: caretBlink 1.1s step-end infinite;
-        }
-
-        @keyframes caretBlink { 50% { opacity: 0; } }
-
-        .landing-input {
-            flex: 1;
-            width: 100%;
-            background: transparent;
-            border: none;
-            padding: 12px 4px;
-            font-size: 1.5rem;
-            font-family: inherit;
-            color: var(--text-color);
-            caret-color: var(--accent-vivid-1);
-            text-align: left;
-            outline: none;
-            border-radius: 0;
-        }
-
-        .landing-hint {
-            margin-top: 12px;
-            font-size: 0.8rem;
-            opacity: 0.4;
-        }
-
-        /* --- Main Content --- */
-        #main-content {
-            display: none; 
             min-height: 100vh;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 24px;
-            opacity: 0;
-            transition: opacity 1s ease;
         }
 
-        /* Navigation Links Block - Justified Layout */
-        .links-container {
-            width: 100%;
-            max-width: 850px;
-            text-align: justify;
-            text-align-last: justify !important;
-            line-height: 1.8;
-        }
+        /* Desktop Fixed Height Layout */
+        @media (min-width: 769px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
 
-        /* Nav Items & Interpuncts */
-        .nav-item {
-            font-size: clamp(1.6rem, 4vw, 2.6rem); 
-            font-weight: 700;
-            text-decoration: none;
-            color: var(--text-color);
-            cursor: pointer;
-            filter: blur(var(--item-blur, var(--blur-amount)));
-            transition: filter 0.3s ease, color 0.3s ease;
-            display: inline;
-            text-align: justify;
-            opacity: 0;
-            position: relative;
-            top: 5px;
-        }
-
-        .nav-item:hover, .nav-item:active {
-            filter: blur(0px);
-        }
-
-        .nav-item.v1:hover { color: var(--accent-vivid-1); }
-        .nav-item.v2:hover { color: var(--accent-vivid-2); }
-        .nav-item.v3:hover { color: var(--accent-vivid-3); }
-
-        .interpunct {
-            font-size: clamp(1.4rem, 4vw, 2.6rem);
-            font-weight: 700;
-            color: var(--accent-vivid-1); /* Signature papaya accent */
-            user-select: none;
-            display: inline;
-            opacity: 0; /* revealed via .reveal animation */
-            transition: opacity 0.5s ease;
-        }
-
-        .reveal {
-            animation: pullUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        @keyframes pullUp {
-            to {
-                opacity: 1;
-                top: 0;
+            main {
+                overflow-y: auto;
             }
         }
 
-        /* --- Modals / Popups --- */
+        /* Header Styles - Classic Retro without Heavy Outlines */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #ffffff;
+            padding: 0 1.5rem;
+            height: 65px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-emblem {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--header-footer-bg);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-sub {
+            font-size: 0.68rem;
+            color: #b5cebf;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        /* Desktop Nav - Classic Soft Tab Look */
+        .desktop-nav {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .nav-link {
+            color: #e2ece6;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0.45rem 0.8rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            border-radius: 3px;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+        }
+
+        /* Mobile Dropdown Nav */
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 65px;
+            right: 0;
+            width: 100%;
+            background-color: var(--header-footer-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            flex-direction: column;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav .nav-link {
+            padding: 0.9rem 1.5rem;
+            text-align: left;
+            border-radius: 0;
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            width: 100%;
+        }
+
+        /* Main Content Container */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.25rem;
+            gap: 1.25rem;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Retro Banner / Slideshow Box */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            background-color: #1a1a1a;
+            border-radius: 2px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(102%) brightness(96%);
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(39, 71, 53, 0.9);
+            color: #ffffff;
+            padding: 0.65rem 1rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+        }
+
+        .slideshow-dots {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            display: flex;
+            gap: 5px;
+            z-index: 2;
+            background: rgba(0,0,0,0.4);
+            padding: 4px 6px;
+            border-radius: 3px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            background-color: #aaa;
+            border-radius: 1px;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #5cdb95;
+        }
+
+        /* Two Column Layout - Retro Bulletin Board Style */
+        .content-columns {
+            display: flex;
+            gap: 1.25rem;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .column {
+            flex: 1;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e9ece9;
+            border-left: 4px solid var(--accent-color);
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .column-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            letter-spacing: -0.3px;
+        }
+
+        .more-btn {
+            font-size: 0.75rem;
+            color: #444444;
+            text-decoration: none;
+            font-weight: 700;
+            background: #ffffff;
+            border: 1px solid #c0c6c0;
+            padding: 1px 6px;
+            border-radius: 2px;
+        }
+
+        .more-btn:hover {
+            background-color: #f0f0f0;
+            color: #000000;
+        }
+
+        .list-container {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .list-item {
+            padding: 0.55rem 0.25rem;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+        }
+
+        .list-item:hover {
+            background-color: #f4f6f4;
+        }
+
+        .list-item-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 0.5rem;
+            color: #2b2b2b;
+            cursor: pointer;
+        }
+
+        .list-item-title::before {
+            content: "■ ";
+            font-size: 0.65rem;
+            color: var(--accent-color);
+            vertical-align: middle;
+            margin-right: 3px;
+        }
+
+        .list-item-title:hover {
+            text-decoration: underline;
+            color: #000000;
+        }
+
+        .list-item-date {
+            font-size: 0.78rem;
+            color: #666666;
+            font-family: monospace;
+            flex-shrink: 0;
+        }
+
+        /* Footer Styles with Natural Mobile Flow & High Bottom Padding */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: #a8c2b3;
+            padding: 2rem 1.5rem 4rem 1.5rem;
+            font-size: 0.82rem;
+            text-align: center;
+            flex-shrink: 0;
+            z-index: 10;
+            line-height: 1.6;
+        }
+
+        footer strong {
+            color: #ffffff;
+        }
+
+        footer .footer-links {
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        footer .footer-links a {
+            color: #d8e6de;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Popup Modal Styles */
         .modal-overlay {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--overlay-color);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
             justify-content: center;
             align-items: center;
-            z-index: 10000; /* above the theme toggle, crop marks, and grain */
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            padding: 20px;
-            overflow-y: auto; /* tall popups scroll instead of being clipped */
-            -webkit-overflow-scrolling: touch;
+            padding: 1rem;
         }
 
         .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-wrapper {
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-subtle);
-            width: 100%;
-            max-width: 640px;
-            margin: auto; /* centers when it fits, stays scrollable when taller than the screen */
-            padding: 40px 32px 32px 32px;
-            position: relative;
-            box-shadow: 0 20px 40px var(--shadow-color);
-            transform: translateY(15px);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .modal-overlay.active .modal-wrapper {
-            transform: translateY(0);
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-            opacity: 0.4;
-            transition: opacity 0.2s ease;
-            width: 32px;
-            height: 32px;
             display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .modal-close-btn:hover {
-            opacity: 1;
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--header-footer-bg);
+            width: 100%;
+            max-width: 520px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            border-radius: 2px;
+        }
+
+        .modal-header {
+            padding: 0.85rem 1rem;
+            background-color: #f4f6f4;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .modal-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            text-align: left;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .modal-close {
+            background: #ffffff;
+            border: 1px solid #b0b0b0;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #333;
+            padding: 2px 7px;
+            border-radius: 2px;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: #e5e5e5;
         }
 
         .modal-body {
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            text-align: left;
+            padding: 1.25rem;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #333333;
         }
 
-        .embed-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: var(--embed-bg);
-            margin-top: 16px;
-        }
-
-        .embed-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* --- Popup Body Text Links --- */
-        .modal-body a {
-            color: var(--text-color);       /* Matches body font color */
-            text-decoration: underline;     /* Permanent underline */
-            text-decoration-thickness: 1px;
-            text-underline-offset: 2px;
-            padding: 1px 4px;               /* Clean padding around the text for the background box */
-            transition: background-color 0.2s ease, color 0.2s ease;
-            font-weight: bold;
-}
-
-        .modal-body a:hover {
-            background-color: var(--accent-vivid-2); /* Changes background to Vivid Electric Blue */
-            color: #ffffff;                          /* Turns the letters white */
-            text-decoration: none;                   /* Cleans up the underline on hover box */
-}
-
-
-        /* --- Theme Toggle (iOS-style switch) --- */
-        .theme-toggle {
-            position: fixed;
-            top: 18px;
-            right: 38px;
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            user-select: none;
-        }
-
-        .theme-toggle .toggle-icon {
-            font-size: 0.78rem;
-            line-height: 1;
-            cursor: pointer;
-            opacity: 0.45;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .theme-toggle.is-dark .toggle-icon.moon,
-        .theme-toggle:not(.is-dark) .toggle-icon.sun {
-            opacity: 1;
-            transform: scale(1.12);
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 38px;
-            height: 20px;
-            flex: none;
-            border: none;
-            padding: 0;
-            border-radius: 10px;
-            background: var(--toggle-track);
-            cursor: pointer;
-            transition: background 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .theme-toggle.is-dark .toggle-switch {
-            background: rgba(255, 128, 0, 0.6); /* McLaren papaya tint when dark is active */
-        }
-
-        .toggle-switch:focus-visible {
-            outline: 2px solid var(--accent-vivid-1);
-            outline-offset: 2px;
-        }
-
-        .toggle-thumb {
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #ffffff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .theme-toggle.is-dark .toggle-thumb {
-            transform: translateX(18px);
-        }
-
-        @media (max-width: 600px) {
-            .links-container {
-                line-height: 1.6;
+        /* Mobile Optimization Rules */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
             }
-            .modal-wrapper {
-                padding: 32px 20px 20px 20px;
-            }
-        }
 
-        @media (prefers-reduced-motion: reduce) {
-            body,
-            .toggle-thumb,
-            .toggle-switch,
-            .theme-toggle .toggle-icon {
-                transition: none;
+            .mobile-menu-btn {
+                display: block;
             }
-            .prompt-sign { animation: none; }
+
+            .content-columns {
+                flex-direction: column;
+            }
+
+            .slideshow-container {
+                height: 160px;
+            }
+
+            main {
+                padding: 0.85rem;
+            }
+
+            footer {
+                padding-bottom: 5rem;
+            }
         }
     </style>
-    <script>
-        /* Apply saved theme before first paint to avoid a flash.
-           If nothing is saved, no attribute is set and the CSS
-           prefers-color-scheme rule follows the user's system setting. */
-        (function () {
-            try {
-                var saved = localStorage.getItem('theme');
-                if (saved === 'dark' || saved === 'light') {
-                    document.documentElement.setAttribute('data-theme', saved);
-                }
-            } catch (e) {}
-        })();
-    </script>
 </head>
 <body>
 
-    <!-- Film grain overlay -->
-    <div id="grain" aria-hidden="true"></div>
-
-    <!-- Registration / crop marks -->
-    <div class="reg-marks" aria-hidden="true">
-        <span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span>
-    </div>
-
-    <!-- NYC / London dispatch clocks -->
-    <div class="dispatch" id="dispatch" aria-hidden="true">
-        <span class="clock" data-tz="America/New_York" data-label="NYC">NYC --:--:--</span>
-        <span class="clock" data-tz="Europe/London" data-label="LDN">LDN --:--:--</span>
-    </div>
-
-    <!-- Theme Toggle: slide toward 🪬 for dark mode, 🧡 for light -->
-    <div class="theme-toggle" id="theme-toggle">
-        <span class="toggle-icon sun" title="Light mode" role="img" aria-label="Light mode">🧡</span>
-        <button class="toggle-switch" role="switch" aria-checked="false" aria-label="Dark mode">
-            <span class="toggle-thumb"></span>
-        </button>
-        <span class="toggle-icon moon" title="Dark mode" role="img" aria-label="Dark mode">🪬</span>
-    </div>
-
-    <!-- Landing Screen -->
-    <div id="landing-screen">
-        <div class="landing-container">
-            <div class="landing-prompt">Type <b>“ team papaya ”</b> to enter</div>
-            <div class="entry-line">
-                <span class="prompt-sign" aria-hidden="true">&gt;</span>
-                <input type="text" id="entry-input" class="landing-input" autocomplete="off" autofocus>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-emblem">망소</div>
+            <div class="logo-text">
+                <span class="logo-sub">경기도</span>
+                <span class="logo-title">망소군청</span>
             </div>
-            <div class="landing-hint">Hint: Press <b>Enter</b> after typing …</div>
         </div>
-    </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+            <button class="nav-link" onclick="openModal('군정소개', '풍요로운 자연과 함께하는 경기도 망소군청 공식 웹사이트입니다. 망소군 발전과 군민 행복을 위해 최선을 다하겠습니다.')">군정소개</button>
+            <button class="nav-link" onclick="openModal('민원봉사실', '원스톱 민원서비스, 주민등록, 인허가 업무 등 군민 여러분을 위한 신속하고 정확한 행정 서비스를 제공합니다.')">민원봉사실</button>
+            <button class="nav-link" onclick="openModal('군민참여', '군정 발전을 위한 군민 제안, 열린 군수실, 자유게시판을 통해 군민의 소중한 의견을 적극 반영합니다.')">군민참여</button>
+            <button class="nav-link" onclick="openModal('청사안내', '경기도 망소군 망소읍 망소로 100 (망소군청)<br>대표전화: 031-999-0000<br>팩스: 031-999-0001<br>근무시간: 평일 09:00 ~ 18:00')">청사안내</button>
+        </nav>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="메뉴 열기">&#8226;&#8226;&#8226;</button>
+
+        <!-- Mobile Dropdown Navigation -->
+        <nav class="mobile-nav" id="mobileNav">
+            <button class="nav-link" onclick="openModal('군정소개', '풍요로운 자연과 함께하는 경기도 망소군청 공식 웹사이트입니다. 망소군 발전과 군민 행복을 위해 최선을 다하겠습니다.')">군정소개</button>
+            <button class="nav-link" onclick="openModal('민원봉사실', '원스톱 민원서비스, 주민등록, 인허가 업무 등 군민 여러분을 위한 신속하고 정확한 행정 서비스를 제공합니다.')">민원봉사실</button>
+            <button class="nav-link" onclick="openModal('군민참여', '군정 발전을 위한 군민 제안, 열린 군수실, 자유게시판을 통해 군민의 소중한 의견을 적극 반영합니다.')">군민참여</button>
+            <button class="nav-link" onclick="openModal('청사안내', '경기도 망소군 망소읍 망소로 100 (망소군청)<br>대표전화: 031-999-0000<br>팩스: 031-999-0001<br>근무시간: 평일 09:00 ~ 18:00')">청사안내</button>
+        </nav>
+    </header>
 
     <!-- Main Content -->
-    <main id="main-content">
-        <nav class="links-container">
-            <a class="nav-item v1" onclick="openModal('modal-1')">with an Apple Macintosh</a>
-            <span class="interpunct">  ·  </span>
-            <a class="nav-item v2" onclick="openModal('modal-2')">you can’t run Radio Shack programs</a>
-            <span class="interpunct">  ·  </span>
-            <a class="nav-item v3" onclick="openModal('modal-3')">in its disc drive. (Charles Bukowski)</a>
-        </nav>
+    <main>
+        <!-- Photo Slideshow Banner -->
+        <section class="slideshow-container">
+            <div class="slide active">
+                <img class="slide-img" src="https://picsum.photos/id/1015/800/400" alt="망소군 전경">
+                <div class="slide-caption">[군정소식] 제15회 망소군 청정 자연 특산물 축제 개최 안내</div>
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="https://picsum.photos/id/1040/800/400" alt="망소군청 청사">
+                <div class="slide-caption">[행정공고] 2026년도 망소군 군민참여예산 제안사업 접수</div>
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="https://picsum.photos/id/1060/800/400" alt="망소 문화행사">
+                <div class="slide-caption">[문화/관광] 망소산 국립공원 가을맞이 산책로 개방</div>
+            </div>
+
+            <div class="slideshow-dots">
+                <span class="dot active" onclick="setSlide(0)"></span>
+                <span class="dot" onclick="setSlide(1)"></span>
+                <span class="dot" onclick="setSlide(2)"></span>
+            </div>
+        </section>
+
+        <!-- Two Columns Container -->
+        <div class="content-columns">
+            <!-- Notice Column (공지) -->
+            <section class="column">
+                <div class="column-header">
+                    <h2 class="column-title">공지사항 (Notice)</h2>
+                    <a href="#" class="more-btn" onclick="openModal('공지사항 전체보기', '망소군청에서 알리는 전체 공지사항 목록입니다.'); return false;">더보기</a>
+                </div>
+                <ul class="list-container">
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('2026년 정기분 주민세 납부 안내', '2026년도 정기분 주민세 납부 기간은 8월 16일부터 8월 31일까지입니다. 관내 금융기관 및 위택스를 통해 납부해 주시기 바랍니다.')">2026년 정기분 주민세 납부 안내</span>
+                        <span class="list-item-date">2026-08-09</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('망소군 보건소 무료 독감 예방접종 일정', '망소군 보건소 및 면 단위 보건지소에서 만 65세 이상 어르신 및 취약계층을 대상으로 무료 예방접종을 실시합니다.')">망소군 보건소 무료 독감 예방접종 일정</span>
+                        <span class="list-item-date">2026-08-07</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('망소읍 군도 5호선 도로 포장공사 통제', '도로 환경 개선을 위한 덧씌우기 공사로 인해 8월 12일 하루 동안 한시적으로 부분 통제가 실시됩니다.')">망소읍 군도 5호선 도로 포장공사 통제</span>
+                        <span class="list-item-date">2026-08-05</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('농기계 임대사업소 하반기 운영 안내', '망소군 농업기술센터 농기계 임대사업소 하반기 이용 신청 및 장비 정비 일정을 안내해 드립니다.')">농기계 임대사업소 하반기 운영 안내</span>
+                        <span class="list-item-date">2026-08-02</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('망소 군립도서관 여름 독서교실 참가자 모집', '관내 초등학생을 대상으로 진행되는 여름철 독서 교실 참가자를 선착순 모집합니다.')">망소 군립도서관 여름 독서교실 모집</span>
+                        <span class="list-item-date">2026-07-28</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Job Postings Column (구인공고) -->
+            <section class="column">
+                <div class="column-header">
+                    <h2 class="column-title">구인공고 (Recruit)</h2>
+                    <a href="#" class="more-btn" onclick="openModal('구인공고 전체보기', '망소군 지역 채용 정보 및 공공근로 모집 전체 목록입니다.'); return false;">더보기</a>
+                </div>
+                <ul class="list-container">
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('[망소군청] 산불감시원 및 전문진화대 모집', '2026년 하반기 산불방지 대책기간 동안 근무할 산불감시원 및 전문예방진화대를 다음과 같이 모집합니다.')">[망소군청] 산불감시원/진화대 모집</span>
+                        <span class="list-item-date">2026-08-08</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('[망소군 농업기술센터] 기간제 근로자 채용', '농업기술센터 시험포장 관리 및 행정보조 업무를 담당할 기간제 근로자를 모집합니다.')">[망소군] 농업기술센터 기간제 채용</span>
+                        <span class="list-item-date">2026-08-06</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('2026년 하반기 공공근로사업 참여자 모집', '취약계층 생계 지원 및 일자리 창출을 위한 2026년도 하반기 공공근로사업 참여자를 모집합니다.')">2026년 하반기 공공근로사업 참여자 모집</span>
+                        <span class="list-item-date">2026-08-03</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('[망소군 종합사회복지관] 요양보호사 모집', '망소군 종합사회복지관 노인돌봄서비스 담당 요양보호사를 신규 채용합니다.')">[망소군 복지관] 요양보호사 모집</span>
+                        <span class="list-item-date">2026-07-30</span>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-title" onclick="openModal('[망소읍] 마을버스 운전원 기간제 채용 공고', '망소읍 공영 마을버스 운행을 담당할 특수면허 소지 운전원을 모집합니다.')">[망소읍] 마을버스 운전원 채용 공고</span>
+                        <span class="list-item-date">2026-07-25</span>
+                    </li>
+                </ul>
+            </section>
+        </div>
     </main>
 
-    <!-- Modals Stack -->
-    <div class="modal-overlay" id="modal-1" onclick="closeModal(event, 'modal-1')">
-        <div class="modal-wrapper">
-            <button class="modal-close-btn" onclick="document.getElementById('modal-1').classList.remove('active')">&times;</button>
-            <h2 class="modal-title" style="color: var(--accent-vivid-1);">Apple Macintosh</h2>
-            <div class="modal-body"><p>X user @pitfieldst</p><p><b>수지</b> 키도 케이 外 아시는 닉으로</p>
-            <br><p style="font-size: 0.85rem; line-height: 1.3;"><b>[1 new message]</b>&nbsp;&nbsp;&nbsp;&nbsp;you are looking at a site written & designed by @pitfieldst on X (unless otherwise endorsed).</p>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#" onclick="openModal('개인정보처리방침', '망소군청은 군민의 개인정보 보호를 최우선으로 취급합니다.'); return false;">개인정보처리방침</a> | 
+            <a href="#" onclick="openModal('저작권보호정책', '망소군청 홈페이지에서 제공하는 모든 콘텐츠는 저작권법의 보호를 받습니다.'); return false;">저작권보호정책</a> | 
+            <a href="#" onclick="openModal('행정전화번호부', '망소군청 각 부서별 직통 전화번호 및 팩스번호를 안내합니다.'); return false;">부서안내</a>
+        </div>
+        <p><strong>경기도 망소군청</strong> (우 12345) 경기도 망소군 망소읍 망소로 100</p>
+        <p>대표전화: 031-999-0000 | 팩스: 031-999-0001 | 민원콜센터: 120</p>
+        <p>Copyright &copy; 2026 <strong>MANGSO COUNTY</strong>. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Popup Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOuterClick(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">안내</h3>
+                <button class="modal-close" onclick="closeModal()" aria-label="닫기">X</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic Content -->
             </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="modal-2" onclick="closeModal(event, 'modal-2')">
-        <div class="modal-wrapper">
-            <button class="modal-close-btn" onclick="document.getElementById('modal-2').classList.remove('active')">&times;</button>
-            <h2 class="modal-title" style="color: var(--accent-vivid-2);">Radio Shack Programs</h2>
-            <div class="modal-body">
-                <p>성인 여성</p><p>일상 야구 셀털(heavy) 매체 소비(책 영상 음악 2D) etc …</p>
-                <p>bub free 용건 👉🏻 <a href="https://open.kakao.com/me/beatpoetry">open kakao</a></p><br>
-                <div class="embed-container">
-                    <iframe src="https://www.youtube.com/embed/jvkbnhPsC38?si=mtje1KukkYqm7pvC" title="YouTube video player" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-3" onclick="closeModal(event, 'modal-3')">
-        <div class="modal-wrapper">
-            <button class="modal-close-btn" onclick="document.getElementById('modal-3').classList.remove('active')">&times;</button>
-            <h2 class="modal-title" style="color: var(--accent-vivid-3);">Disc Drives</h2>
-            <div class="modal-body">
-                <p><span style="letter-spacing: 0.1rem; font-size: 0.8rem;"><b>KBO</b></span>&nbsp;&nbsp;&nbsp;&nbsp;한화이글스 ^.^</p>
-                <p><span style="letter-spacing: 0.1rem; font-size: 0.8rem;"><b>FORMULA ONE</b></span>&nbsp;&nbsp;&nbsp;&nbsp;mclaren🧡 / 드라이버는 팀 무관 골고루 좋아합니다</p>
-                <p><span style="letter-spacing: 0.1rem; font-size: 0.8rem;"><b>FILMS BOOKS MUSIC</b></span>&nbsp;&nbsp;&nbsp;&nbsp;주로 외산 …</p>
-                <p><span style="letter-spacing: 0.1rem; font-size: 0.8rem;"><b>SERIES</b></span>&nbsp;&nbsp;&nbsp;&nbsp;hbo euphoria / 2 broke girls etc …</p>
-                <p><span style="letter-spacing: 0.1rem; font-size: 0.8rem;"><b>KPOP</b></span>&nbsp;&nbsp;&nbsp;&nbsp;여돌 언급 多多多 h2h (& sm ent.) cortis izna etc …</p>
-                <p><span style="letter-spacing: 0.1rem; font-size: 0.8rem;"><b>2D</b></span>&nbsp;&nbsp;&nbsp;&nbsp;hunter x hunter (⛓️🕷️) / (•••ing) bleach / chainsaw man / bang dream!! (ave mujica) / girls band cry (トゲナシトゲアリ) etc …</p><br>
-                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:0px;" src="https://embed.music.apple.com/kr/album/remnants-of-castle-rock/6781025039?i=6781025436"></iframe>
-            </div>
-        </div>
-    </div>
-
-   
+    <!-- Scripts -->
     <script>
-        /* --- Theme toggle --- */
-        (function () {
-            const root = document.documentElement;
-            const toggle = document.getElementById('theme-toggle');
-            if (!toggle) return;
-            const sw = toggle.querySelector('.toggle-switch');
-            const media = window.matchMedia('(prefers-color-scheme: dark)');
+        // Mobile Navigation Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileNav = document.getElementById('mobileNav');
 
-            function isDark() {
-                const t = root.getAttribute('data-theme');
-                if (t === 'dark') return true;
-                if (t === 'light') return false;
-                return media.matches; // no explicit choice → follow the system
-            }
-
-            function sync() {
-                const dark = isDark();
-                toggle.classList.toggle('is-dark', dark);
-                sw.setAttribute('aria-checked', dark ? 'true' : 'false');
-            }
-
-            function setTheme(dark) {
-                root.setAttribute('data-theme', dark ? 'dark' : 'light');
-                try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
-                sync();
-            }
-
-            sw.addEventListener('click', () => setTheme(!isDark()));
-            toggle.querySelector('.toggle-icon.moon').addEventListener('click', () => setTheme(true));
-            toggle.querySelector('.toggle-icon.sun').addEventListener('click', () => setTheme(false));
-
-            // Keep following the system while the user hasn't picked a theme
-            media.addEventListener('change', () => {
-                if (!root.getAttribute('data-theme')) sync();
-            });
-
-            sync();
-        })();
-
-        const entryInput = document.getElementById('entry-input');
-        const landingScreen = document.getElementById('landing-screen');
-        const mainContent = document.getElementById('main-content');
-
-        window.addEventListener('DOMContentLoaded', () => {
-            // Check if user already authorized in this tab session
-            if (sessionStorage.getItem('siteAuthorized') === 'true') {
-                landingScreen.style.display = 'none';
-                mainContent.style.display = 'flex';
-                mainContent.offsetHeight; 
-                mainContent.style.opacity = '1';
-                revealLinksOneByOne();
-            } else {
-                entryInput.focus();
-            }
+        menuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
         });
 
-        entryInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                if (entryInput.value.trim().toLowerCase() === 'team papaya') {
-                    // Save authorization to session storage
-                    sessionStorage.setItem('siteAuthorized', 'true');
-                    
-                    landingScreen.style.opacity = '0';
-                    landingScreen.style.transform = 'scale(0.98)';
-                    
-                    setTimeout(() => {
-                        landingScreen.style.display = 'none';
-                        mainContent.style.display = 'flex';
-                        mainContent.offsetHeight; 
-                        mainContent.style.opacity = '1';
-                        revealLinksOneByOne();
-                    }, 600);
-                } else {
-                    const line = entryInput.closest('.entry-line');
-                    line.style.borderColor = 'var(--accent-vivid-1)';
-                    setTimeout(() => { line.style.borderColor = ''; }, 500);
-                }
-            }
-        });
+        // Modal Functionality
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
 
-        function revealLinksOneByOne() {
-            const elements = document.querySelectorAll('.nav-item, .interpunct');
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('reveal');
-                }, index * 180); 
-            });
+        function openModal(title, text) {
+            modalTitle.textContent = title;
+            modalBody.innerHTML = text;
+            modalOverlay.classList.add('active');
+            
+            // Close mobile menu if open
+            mobileNav.classList.remove('open');
         }
 
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
+        function closeModal() {
+            modalOverlay.classList.remove('active');
         }
 
-        function closeModal(event, id) {
-            if (event.target.classList.contains('modal-overlay')) {
-                document.getElementById(id).classList.remove('active');
+        function closeModalOnOuterClick(event) {
+            if (event.target === modalOverlay) {
+                closeModal();
             }
         }
 
-        /* --- NYC / London dispatch clocks --- */
-        (function () {
-            const clocks = document.querySelectorAll('.dispatch .clock');
-            if (!clocks.length) return;
-            function tick() {
-                const now = new Date();
-                clocks.forEach((el) => {
-                    const time = new Intl.DateTimeFormat('en-GB', {
-                        timeZone: el.dataset.tz,
-                        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-                    }).format(now);
-                    el.textContent = el.dataset.label + ' ' + time;
-                });
-            }
-            tick();
-            setInterval(tick, 1000);
-        })();
+        // Slideshow Functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
 
-        /* --- Cursor-proximity deblur on the nav links --- */
-        (function () {
-            const items = Array.from(document.querySelectorAll('.nav-item'));
-            if (!items.length) return;
-            const MAX_BLUR = 1.4;   // matches --blur-amount
-            const RADIUS = 300;     // px at which links are fully blurred
-            let mx = 0, my = 0, queued = false;
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
 
-            function apply() {
-                queued = false;
-                items.forEach((el) => {
-                    const r = el.getBoundingClientRect();
-                    if (!r.width) return;
-                    const nx = Math.max(r.left, Math.min(mx, r.right));
-                    const ny = Math.max(r.top, Math.min(my, r.bottom));
-                    const dist = Math.hypot(mx - nx, my - ny);
-                    const blur = Math.min(1, dist / RADIUS) * MAX_BLUR;
-                    el.style.setProperty('--item-blur', blur.toFixed(2) + 'px');
-                });
-            }
-            window.addEventListener('mousemove', (e) => {
-                mx = e.clientX; my = e.clientY;
-                if (!queued) { queued = true; requestAnimationFrame(apply); }
-            });
-        })();
+            currentSlide = (index + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function setSlide(index) {
+            showSlide(index);
+            resetSlideInterval();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        let slideInterval = setInterval(nextSlide, 4500);
+
+        function resetSlideInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 4500);
+        }
     </script>
 </body>
 </html>
