@@ -6,23 +6,24 @@
     <title>캐릭터 소개</title>
     <style>
         @font-face {
-            font-family: 'Soonbatang';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Medium.woff') format('woff');
-            font-weight: 500;
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+            font-weight: 400;
             font-display: swap;
         }
 
         @font-face {
-            font-family: 'Soonbatang';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Bold.woff') format('woff');
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
             font-weight: 700;
             font-display: swap;
         }
 
         :root {
-            --bg-color: #f0f2f0;
+            /* Midpoint between #f0f2f0 and #ffffff is #f8f9f8 */
+            --bg-color-start: #f8f9f8;
+            --bg-color-end: #ffffff;
             --text-color: #2b2b2b;
-            --card-bg: #ffffff;
             --border-color: #ccd2cc;
             --accent-color: #274735;
         }
@@ -34,33 +35,31 @@
         }
 
         body {
-            font-family: 'Soonbatang', serif;
-            font-weight: 500;
-            background-color: var(--bg-color);
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 400;
+            background: linear-gradient(180deg, var(--bg-color-start) 0%, var(--bg-color-end) 100%);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 24px 16px;
-            line-height: 1.7;
+            line-height: 1.5;
+            letter-spacing: -0.01em;
         }
 
         .container {
             width: 100%;
-            max-width: 580px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 36px 32px;
+            max-width: 520px;
         }
 
         .profile-header {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             align-items: center;
-            padding-bottom: 24px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .avatar-link {
@@ -70,10 +69,10 @@
         }
 
         .avatar {
-            width: 105px;
-            height: 140px; /* 3:4 aspect ratio */
+            width: 96px;
+            height: 128px; /* 3:4 aspect ratio */
             background-color: #e2e8e2;
-            border: 5px solid #ffffff;
+            border: 4px solid #ffffff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
             object-fit: cover;
             display: block;
@@ -87,26 +86,26 @@
         .info-list {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .character-name {
-            font-family: 'Soonbatang', serif;
+            font-family: 'Pretendard', sans-serif;
             font-weight: 700;
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             color: var(--text-color);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .info-item {
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             display: flex;
             gap: 8px;
         }
 
         .info-label {
             color: #666666;
-            width: 48px;
+            width: 40px;
             flex-shrink: 0;
         }
 
@@ -115,24 +114,24 @@
         }
 
         .description {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-color);
         }
 
         .description p {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             text-align: justify;
             word-break: keep-all;
         }
 
         .nav-footer {
-            margin-top: 28px;
+            margin-top: 20px;
             text-align: right;
         }
 
         .back-link {
-            font-family: 'Soonbatang', serif;
-            font-size: 0.88rem;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.82rem;
             color: var(--accent-color);
             text-decoration: none;
             border-bottom: 1px solid var(--accent-color);
@@ -145,15 +144,12 @@
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 24px 20px;
-            }
             .profile-header {
-                gap: 18px;
+                gap: 16px;
             }
             .avatar {
-                width: 90px;
-                height: 120px;
+                width: 84px;
+                height: 112px;
             }
         }
     </style>
